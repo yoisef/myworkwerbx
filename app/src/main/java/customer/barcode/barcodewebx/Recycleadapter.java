@@ -164,7 +164,7 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
         TextView namee, numberr, pricee, deleterowww;
         ImageView productimage, removeimg;
-        ImageView xremove;
+        ImageView  xremove;
         RelativeLayout removerow, productdetailss, backlayout;
         LinearLayout toplayout;
         SwipeLayout rowrecycle;

@@ -83,12 +83,6 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences("token", Context.MODE_PRIVATE);
      usertoken=prefs.getString("usertoken","def");
 
-        /**
-         *
-         */
-
-
-
         // request camera permission
         requestPermission();
 
@@ -98,10 +92,13 @@ public class MainActivity extends AppCompatActivity {
         enterbarcode = findViewById(R.id.barcodenumber);
         myrecycle = findViewById(R.id.productrecycle);
         myrecycle.setHasFixedSize(true);
-        myrecycle.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+        myrecycle.setLayoutManager(linearLayoutManager);
         myrecycle.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new Recycleadapter(this);
         myrecycle.setAdapter(mAdapter);
+
 
         mWordViewModel = ViewModelProviders.of(this).get(productViewmodel.class);
 
@@ -224,9 +221,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-
-
-
                         //when user press ok call request to api by barcode number to get info about barcode and display it
                         OkHttpClient.Builder builderr = new OkHttpClient.Builder();
                         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -252,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     if (response.body().getProduct()!=null) {
 
+
                                         String pronam, prodbar, prodimg, broddetail, brodprice, prodcat;
                                         pronam = response.body().getProduct().getName();
                                         prodbar = response.body().getProduct().getBarcode();
@@ -261,6 +256,8 @@ public class MainActivity extends AppCompatActivity {
                                         prodcat = response.body().getProduct().getCategory().getName();
                                         mytable word = new mytable(pronam, prodbar, prodimg, broddetail, brodprice, prodcat);
                                         mWordViewModel.insert(word);
+                                        myrecycle.scrollToPosition(myrecycle.getAdapter().getItemCount() - 1);
+
 
                                     }
                                     else
@@ -283,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
-                        //add total price
+
 
 
 
