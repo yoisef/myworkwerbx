@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
     <TextView
         android:layout_width="match_parent"
-        android:text="Enter Barcode "
+        android:text="@string/enterbar"
         android:textSize="@dimen/titlealertdialog"
         android:textColor="@color/blue"
         android:layout_margin="3dp"
@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="match_parent"
         android:textStyle="bold"
-        android:text="Enter the Product BarCode"
+        android:text="@string/epbarcode"
         android:textSize="18sp"
 
         android:layout_margin="5dp"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="0dp"
-            android:text="Cancel"
+            android:text="@string/cancelcamera"
             android:textAllCaps="false"
             android:layout_gravity="center"
             android:gravity="center"
@@ -60,7 +60,7 @@
         <TextView
             android:layout_width="0dp"
             android:textAllCaps="false"
-            android:text="Ok"
+            android:text="@string/ok"
             android:textColor="@color/black"
             android:id="@+id/okk"
             android:layout_gravity="center"

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="@color/appcolor"
-    android:layoutDirection="ltr"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
     <android.support.v7.widget.Toolbar
@@ -20,7 +19,6 @@
     </android.support.v7.widget.Toolbar>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layoutDirection="ltr"
         android:id="@+id/productrecycle"
         android:layout_height="0dp"
         android:layout_weight="1"></android.support.v7.widget.RecyclerView>
@@ -38,7 +36,6 @@
         android:layout_height="wrap_content" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layoutDirection="ltr"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
 

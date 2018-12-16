@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">وربكس</string>
+    <string name="enterbar">أدخل الباركود </string>
+    <string name="alertpay">يرجى الانتظار لمركز التاجر للتحقق من عناصر سلة التسوق</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="pay">أدفع</string>
+    <string name="camerausage">من فضلك ضع الباركود في المستطيل ليتم تفحصه </string>
+    <string name="cancelcamera">إلغاء</string>
+    <string name="done">تم</string>
+    <string name="scananother">تفحص اخر</string>
+    <string name="productaddedtocart">المنتج اضيف الي الكارت</string>
+    <string name="transfer">نقل</string>
+    <string name="epbarcode">أدخل باركود المنتج</string>
+    <string name="ok">موافق</string>
+    <string name="hintemail">أدخل الإيميل او رقم الموبايل</string>
+    <string name="hintpass">أدخل كلمة السر  </string>
+    <string name="logout">تسجيل الخروج</string>
+</resources>

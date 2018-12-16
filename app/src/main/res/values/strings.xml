@@ -1,10 +1,18 @@
 <resources>
-    <string name="app_name">BarcodeTask</string>
-    <string name="but1">Enter BarCode</string>
-    <string name="description">Unlock the energy with Lipton Natural Energy Premium Black Tea Bags, a great tasting aromatic tea that naturally has caffeine to keep you alert and energized throughout your day. To unleash the true tea taste and aroma, Lipton has crafted an innovative process to press fresh, high-quality tea leaves to release their natural essence.
-        The result is a delicious blend with natural theanine.
-        75mg caffeine/20mg theanine per 8 fl. oz. serving</string>
-    <string name="name">Lipton</string>
-    <string name="number">869896587</string>
+    <string name="app_name">Werpx</string>
+    <string name="enterbar">Enter Barcode </string>
     <string name="alertpay">please wait for the Merchant Terminal for verifying the Cart items</string>
+    <string name="login">Sign In</string>
+    <string name="pay">Pay</string>
+    <string name="camerausage">Please put Barcode in rectangle to scan it </string>
+    <string name="cancelcamera">Cancel</string>
+    <string name="done">Done</string>
+    <string name="scananother">Scan Another</string>
+    <string name="productaddedtocart">Product added to cart</string>
+    <string name="transfer">Transfer</string>
+    <string name="epbarcode">Enter Product Barcode</string>
+    <string name="ok">Ok</string>
+    <string name="hintemail">Enter your email or Mobile number </string>
+    <string name="hintpass">Enter your Password </string>
+    <string name="logout">Logout</string>
 </resources>
