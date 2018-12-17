@@ -17,6 +17,6 @@
     <string name="logout">تسجيل الخروج</string>
     <string name="quedeleteitem">أحذف المنتج</string>
     <string name="ansdeleteitem">نعم احذفه</string>
-    <string name="paymentver">
-التحقق من الدفع</string>
+    <string name="paymentver">التحقق من الدفع</string>
+    <string name="defayltproductname">منتج</string>
 </resources>

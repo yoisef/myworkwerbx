@@ -40,11 +40,6 @@ public class loginactivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
         signintext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

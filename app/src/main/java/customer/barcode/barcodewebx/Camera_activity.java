@@ -264,7 +264,7 @@ public class Camera_activity extends AppCompatActivity {
 
                          changelay.setVisibility(View.VISIBLE);
                          leaser.setVisibility(View.GONE);
-                         cameraView.setBackground(getResources().getDrawable(R.drawable.camerashapedark));
+                        // cameraView.setBackground(getResources().getDrawable(R.drawable.camerashapedark));
                          ring.start();
                          Intent myintent=new Intent();
                          myintent.putExtra("open", barcodes.valueAt(0).displayValue);
@@ -370,7 +370,6 @@ public class Camera_activity extends AppCompatActivity {
                      public void run() {
 
                          changelay.setVisibility(View.VISIBLE);
-                         cameraView.setBackground(getResources().getDrawable(R.drawable.camerashapedark));
                          cameraSource.stop();
                          ring.start();
                          Intent myintent=new Intent();

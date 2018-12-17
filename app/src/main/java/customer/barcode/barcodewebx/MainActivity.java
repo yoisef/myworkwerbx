@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,17 +62,12 @@ public class MainActivity extends AppCompatActivity {
     private android.app.AlertDialog alertDialog, alertDialog1;
     private Call<Rootproductdetail> mcall;
     private Recycleadapter mAdapter;
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
-    private productmodel mymodel;
     private TextView pricetotal;
     private LinearLayout paylinear;
-    private long total;
-    private List<String> allprices;
     private productViewmodel mWordViewModel;
     private SharedPreferences prefs;
     private String usertoken;
-    private List<mytable> mWords;
+    private ProgressBar payprpgressbarr;
 
 
 
@@ -90,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         pricetotal = findViewById(R.id.totalprice);
         paylinear = findViewById(R.id.paylayout);
         enterbarcode = findViewById(R.id.barcodenumber);
+        payprpgressbarr=findViewById(R.id.payprogressbar);
         myrecycle = findViewById(R.id.productrecycle);
         myrecycle.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -109,12 +106,22 @@ public class MainActivity extends AppCompatActivity {
                 Double total = 0.0;
 
                 if (words != null) {
+
+
                     int y ;
                     for (y = 0; y < words.size(); y++) {
 
                         mytable currenttable = words.get(y);
-                        Double curprice = Double.parseDouble(currenttable.getPprice());
-                        total = total + curprice;
+                        if (currenttable.getPprice()!=null)
+                        {
+                            Double curprice = Double.parseDouble(currenttable.getPprice());
+                            total = total + curprice;
+
+                        }
+                        else
+                        {
+                            //
+                        }
 
 
 
@@ -174,9 +181,43 @@ public class MainActivity extends AppCompatActivity {
         paylinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                payprpgressbarr.setVisibility(View.VISIBLE);
+
+                mWordViewModel.getAllWords().observe(MainActivity.this, new Observer<List<mytable>>() {
+                    @Override
+                    public void onChanged(@Nullable final List<mytable> words) {
+                        // Update the cached copy of the words in the adapter.
+
+                        if (words != null) {
+                            int y ;
+                            for (y = 0; y < words.size(); y++) {
+
+                                String currentproduct=words.get(y).getPbar();
+                                //retrofit connection with barcode 3shan tn2sa
+                                //response lw succful 7t7zfa mn recycle
+                                logintest(currentproduct,words,y);
+
+                                //lwmshnag7toastbarcode msh mtsgl
+                                //lw failure yb2a connecton failed
+
+
+                            }
+
+                        }
+                        else
+                        {
+                            Toast.makeText(MainActivity.this,"null",Toast.LENGTH_LONG).show();
+                        }
+
+
+
+                    }
+
+                });
+
+                /*
+
                 builder1 = new android.app.AlertDialog.Builder(MainActivity.this);
-
-
                 View view = LayoutInflater.from(MainActivity.this.getApplicationContext()).inflate(R.layout.payayout, null);
                 TextView transtext = view.findViewById(R.id.transfer);
                 builder1.setView(view);
@@ -191,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
                         toast.show();
                     }
                 });
+                */
 
             }
         });
@@ -255,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
                                         prodcat = response.body().getProduct().getCategory().getName();
                                         mytable word = new mytable(pronam, prodbar, prodimg, broddetail, brodprice, prodcat);
                                         mWordViewModel.insert(word);
-                                        myrecycle.scrollToPosition(myrecycle.getAdapter().getItemCount() - 1);
+                                       // myrecycle.scrollToPosition(myrecycle.getAdapter().getItemCount() - 1);
 
 
                                     }
@@ -274,8 +316,8 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<Rootproductdetail> call, Throwable t) {
-                                Toast.makeText(MainActivity.this,"Connection Failed",Toast.LENGTH_LONG).show();
-
+                                mytable word = new mytable(getResources().getString(R.string.defayltproductname), myedit.getText().toString(), null, null, null, null);
+                                mWordViewModel.insert(word);
                             }
                         });
 
@@ -482,8 +524,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Rootproductdetail> call, Throwable t) {
 
-                Toast.makeText(MainActivity.this,"Connection Failed",Toast.LENGTH_LONG).show();
-
+                mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, null, null, null, null);
+                mWordViewModel.insert(word);
 
 
             }
@@ -521,6 +563,65 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+    private void logintest(final String barcodedata, final List<mytable> words, final int position)
+    {
+        OkHttpClient.Builder builderr = new OkHttpClient.Builder();
+
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        builderr.addInterceptor(loggingInterceptor);
+
+
+        Retrofit retrofitt = new Retrofit.Builder()
+                .baseUrl("https://www.werpx.net/api/v1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(builderr.build())
+                .build();
+
+        final Endpoints myendpoints = retrofitt.create(Endpoints.class);
+
+        mcall = myendpoints.getdetails("Bearer "+usertoken,barcodedata);
+        mcall.enqueue(new Callback<Rootproductdetail>() {
+            @Override
+            public void onResponse(Call<Rootproductdetail> call, Response<Rootproductdetail> response) {
+
+                if (response.isSuccessful()) {
+
+                    if (response.body().getProduct()!=null) {
+
+
+
+                        mAdapter.deleterow(words,mAdapter.getadapterposition());
+
+                    }
+                    else
+                    {
+                        Toast.makeText(MainActivity.this,"not recorded in database",Toast.LENGTH_LONG).show();
+
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this,"not recorded in database",Toast.LENGTH_LONG).show();
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Rootproductdetail> call, Throwable t) {
+
+                Toast.makeText(MainActivity.this,"Please connect to internet",Toast.LENGTH_LONG).show();
+
+
+            }
+        });
+
+
+
+
+    }
 
     }
 

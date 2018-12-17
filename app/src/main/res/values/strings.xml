@@ -18,4 +18,5 @@
     <string name="quedeleteitem">Delete item ?</string>
     <string name="ansdeleteitem">Yes Delete</string>
     <string name="paymentver">Payment Verification</string>
+    <string name="defayltproductname">Product</string>
 </resources>
