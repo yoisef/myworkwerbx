@@ -38,8 +38,6 @@ public class loginactivity extends AppCompatActivity {
         signintext=findViewById(R.id.signinbutton);
         signprogress=findViewById(R.id.loginprogressbar);
 
-
-
         signintext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

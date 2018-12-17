@@ -10,15 +10,10 @@ import android.os.Bundle;
 public class Launcher_activity extends AppCompatActivity {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher_activity);
-
-
-
-
 
 
         Handler myhandler=new Handler();

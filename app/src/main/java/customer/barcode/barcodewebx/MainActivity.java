@@ -39,6 +39,8 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 import java.util.List;
 import customer.barcode.barcodewebx.RoomDatabase.mytable;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
@@ -65,9 +67,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView pricetotal;
     private LinearLayout paylinear;
     private productViewmodel mWordViewModel;
-    private SharedPreferences prefs;
+    private SharedPreferences prefs,prefessynce;
+    private SharedPreferences.Editor myeditor;
     private String usertoken;
     private ProgressBar payprpgressbarr;
+    private List<mytable> myproducts;
 
 
 
@@ -76,8 +80,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        myproducts=new ArrayList<>();
+
         prefs = getSharedPreferences("token", Context.MODE_PRIVATE);
      usertoken=prefs.getString("usertoken","def");
+
+
 
         // request camera permission
         requestPermission();
@@ -102,6 +110,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable final List<mytable> words) {
                 // Update the cached copy of the words in the adapter.
+
+                SharedPreferences prefessynce=getSharedPreferences("size",Context.MODE_PRIVATE);
+                SharedPreferences.Editor myeditor=prefessynce.edit();
+                if (prefessynce.getInt("num",0)==0)
+                {
+                    myeditor.putInt("num",words.size());
+                    myeditor.apply();
+                }
+
+                myproducts=words;
                 mAdapter.setWords(words);
                 Double total = 0.0;
 
@@ -181,39 +199,34 @@ public class MainActivity extends AppCompatActivity {
         paylinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int i;
+
+
                 payprpgressbarr.setVisibility(View.VISIBLE);
 
-                mWordViewModel.getAllWords().observe(MainActivity.this, new Observer<List<mytable>>() {
-                    @Override
-                    public void onChanged(@Nullable final List<mytable> words) {
-                        // Update the cached copy of the words in the adapter.
+                           for (i=0;i<myproducts.size();i++)
+                           {
 
-                        if (words != null) {
-                            int y ;
-                            for (y = 0; y < words.size(); y++) {
+                                    String currentproduct=myproducts.get(0).getPbar();
+                                    //retrofit connection with barcode 3shan tn2sa
+                                    //response lw succful 7t7zfa mn recycle
+                                    Toast.makeText(MainActivity.this,currentproduct,Toast.LENGTH_SHORT).show();
+                                    logintest(currentproduct);
 
-                                String currentproduct=words.get(y).getPbar();
-                                //retrofit connection with barcode 3shan tn2sa
-                                //response lw succful 7t7zfa mn recycle
-                                logintest(currentproduct,words,y);
+                                }
+
+
 
                                 //lwmshnag7toastbarcode msh mtsgl
-                                //lw failure yb2a connecton failed
+                                //lw failure yb2a connecton fail
 
-
-                            }
-
-                        }
-                        else
-                        {
-                            Toast.makeText(MainActivity.this,"null",Toast.LENGTH_LONG).show();
-                        }
+                            payprpgressbarr.setVisibility(View.GONE);
 
 
 
-                    }
 
-                });
+
+
 
                 /*
 
@@ -286,7 +299,6 @@ public class MainActivity extends AppCompatActivity {
                                 if (response.isSuccessful()) {
 
                                     if (response.body().getProduct()!=null) {
-
 
                                         String pronam, prodbar, prodimg, broddetail, brodprice, prodcat;
                                         pronam = response.body().getProduct().getName();
@@ -563,23 +575,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-    private void logintest(final String barcodedata, final List<mytable> words, final int position)
+    private void logintest(final String barcodedata)
     {
-        OkHttpClient.Builder builderr = new OkHttpClient.Builder();
+        Retrofitclient myretro=Retrofitclient.getInstance();
+      Retrofit retrofit=  myretro.getretro();
 
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        builderr.addInterceptor(loggingInterceptor);
-
-
-        Retrofit retrofitt = new Retrofit.Builder()
-                .baseUrl("https://www.werpx.net/api/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(builderr.build())
-                .build();
-
-        final Endpoints myendpoints = retrofitt.create(Endpoints.class);
+        final Endpoints myendpoints = retrofit.create(Endpoints.class);
 
         mcall = myendpoints.getdetails("Bearer "+usertoken,barcodedata);
         mcall.enqueue(new Callback<Rootproductdetail>() {
@@ -592,7 +593,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                        mAdapter.deleterow(words,mAdapter.getadapterposition());
+                        mAdapter.deleterow(0);
 
                     }
                     else

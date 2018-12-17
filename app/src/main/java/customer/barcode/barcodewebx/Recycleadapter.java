@@ -150,9 +150,9 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
         notifyDataSetChanged();
     }
 
-    void deleterow(List<mytable> products,int i)
+    void deleterow(int i)
     {
-        mWordViewModel.delterow(products.get(i));
+        mWordViewModel.delterow(mWords.get(i));
         mWords.remove(i);
         notifyItemRemoved(i);
         notifyDataSetChanged();
