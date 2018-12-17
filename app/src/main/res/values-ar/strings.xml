@@ -15,4 +15,8 @@
     <string name="hintemail">أدخل الإيميل او رقم الموبايل</string>
     <string name="hintpass">أدخل كلمة السر  </string>
     <string name="logout">تسجيل الخروج</string>
+    <string name="quedeleteitem">أحذف المنتج</string>
+    <string name="ansdeleteitem">نعم احذفه</string>
+    <string name="paymentver">
+التحقق من الدفع</string>
 </resources>

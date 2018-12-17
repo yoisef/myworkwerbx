@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
     <TextView
         android:layout_width="wrap_content"
-        android:text="Payment Verifaction"
+        android:text="@string/paymentver"
         android:textSize="@dimen/titlealertdialog"
         android:textColor="@color/blue"
         android:layout_margin="5dp"
@@ -31,7 +31,7 @@
         android:textSize="20sp"
         android:padding="10dp"
         android:id="@+id/transfer"
-        android:text="Transfer"
+        android:text="@string/transfer"
         android:gravity="center"
         android:textColor="@color/black"
         android:layout_height="wrap_content" />

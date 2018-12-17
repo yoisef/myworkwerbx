@@ -15,4 +15,7 @@
     <string name="hintemail">Enter your email or Mobile number </string>
     <string name="hintpass">Enter your Password </string>
     <string name="logout">Logout</string>
+    <string name="quedeleteitem">Delete item ?</string>
+    <string name="ansdeleteitem">Yes Delete</string>
+    <string name="paymentver">Payment Verification</string>
 </resources>

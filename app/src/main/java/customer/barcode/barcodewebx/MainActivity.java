@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         myrecycle = findViewById(R.id.productrecycle);
         myrecycle.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setStackFromEnd(true);
         myrecycle.setLayoutManager(linearLayoutManager);
         myrecycle.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new Recycleadapter(this);

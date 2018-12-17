@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
     <TextView
         android:layout_width="match_parent"
-        android:text="Enter Barcode "
+        android:text="@string/enterbar"
         android:textSize="@dimen/titlealertdialog"
         android:textColor="@color/blue"
         android:layout_margin="3dp"
@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="match_parent"
         android:textStyle="bold"
-        android:text="Enter the Product BarCode"
+        android:text="@string/epbarcode"
         android:textSize="18sp"
 
         android:layout_margin="5dp"
