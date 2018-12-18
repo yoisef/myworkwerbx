@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView pricetotal;
     private LinearLayout paylinear;
     private productViewmodel mWordViewModel;
-    private SharedPreferences prefs,prefessynce;
+    private SharedPreferences prefs;
     private SharedPreferences.Editor myeditor;
     private String usertoken;
     private ProgressBar payprpgressbarr;
@@ -482,19 +482,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void loginwithbarcode(final String barcodedata)
     {
-        OkHttpClient.Builder builderr = new OkHttpClient.Builder();
+        Retrofitclient myretro=Retrofitclient.getInstance();
+        Retrofit retrofitt=  myretro.getretro();
 
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        builderr.addInterceptor(loggingInterceptor);
-
-
-        Retrofit retrofitt = new Retrofit.Builder()
-                .baseUrl("https://www.werpx.net/api/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(builderr.build())
-                .build();
 
         final Endpoints myendpoints = retrofitt.create(Endpoints.class);
 
