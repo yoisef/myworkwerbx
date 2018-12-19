@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
                                         broddetail = response.body().getProduct().getDescription();
                                         brodprice = response.body().getProduct().getPrice();
                                         prodcat = response.body().getProduct().getCategory().getName();
-                                        mytable word = new mytable(pronam, prodbar, prodimg, broddetail, brodprice, prodcat);
+                                        mytable word = new mytable(pronam, prodbar,null, prodimg, broddetail, brodprice, prodcat);
                                         mWordViewModel.insert(word);
                                        // myrecycle.scrollToPosition(myrecycle.getAdapter().getItemCount() - 1);
 
@@ -328,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<Rootproductdetail> call, Throwable t) {
-                                mytable word = new mytable(getResources().getString(R.string.defayltproductname), myedit.getText().toString(), null, null, null, null);
+                                mytable word = new mytable(getResources().getString(R.string.defayltproductname), myedit.getText().toString(), null, null, null, null,null);
                                 mWordViewModel.insert(word);
                             }
                         });
@@ -504,7 +504,7 @@ public class MainActivity extends AppCompatActivity {
                         broddetail = response.body().getProduct().getDescription();
                         brodprice = response.body().getProduct().getPrice();
                         prodcat = response.body().getProduct().getCategory().getName();
-                        mytable word = new mytable(pronam, prodbar, prodimg, broddetail, brodprice, prodcat);
+                        mytable word = new mytable(pronam, prodbar,null, prodimg, broddetail, brodprice, prodcat);
                         mWordViewModel.insert(word);
 
 
@@ -526,7 +526,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Rootproductdetail> call, Throwable t) {
 
-                mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, null, null, null, null);
+                mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, null, null, null, null,null);
                 mWordViewModel.insert(word);
 
 

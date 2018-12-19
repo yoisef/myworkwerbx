@@ -25,8 +25,11 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +53,7 @@ import retrofit2.Retrofit;
 
 public class Camera_activity extends AppCompatActivity {
     private BarcodeDetector detector;
-    private TextView resultscan;
+    private TextView suborder;
     private SurfaceView cameraView;
     private customer.barcode.barcodewebx.CameraSource cameraSource;
     private Button cancel;
@@ -66,6 +69,9 @@ public class Camera_activity extends AppCompatActivity {
     private SharedPreferences prefs,perfscamera;
     private Call<Rootproductdetail> mcall;
     private boolean add;
+    private ImageView addbtn,removebtn;
+    private EditText itemsnum;
+    private LinearLayout layoutitems;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -90,8 +96,12 @@ public class Camera_activity extends AppCompatActivity {
     
         leaser = findViewById(R.id.leaserline);
         ring = MediaPlayer.create(Camera_activity.this, R.raw.notif);
-        resultscan = (TextView) findViewById(R.id.resultmyscan);
         cameraView = (SurfaceView) findViewById(R.id.camera_view);
+        suborder=findViewById(R.id.submit);
+        addbtn=findViewById(R.id.additem);
+        removebtn=findViewById(R.id.removeitem);
+        itemsnum=findViewById(R.id.numberofitems);
+        layoutitems=findViewById(R.id.itemslayout);
         cancel = (Button) findViewById(R.id.backtomain);
         myframe = (FrameLayout) findViewById(R.id.myframecamera);
         changelay = findViewById(R.id.mydetect);
@@ -246,7 +256,8 @@ public class Camera_activity extends AppCompatActivity {
                         @Override
                         public void run() {
                             ring.start();
-                            loginwithbarcode(barcodes.valueAt(0).displayValue);
+                            layoutitems.setVisibility(View.VISIBLE);
+                          //  loginwithbarcode(barcodes.valueAt(0).displayValue);
                             cameraSource.stop();
                             Handler myhandler = new Handler();
                             myhandler.postDelayed(new Runnable() {
@@ -368,23 +379,23 @@ public class Camera_activity extends AppCompatActivity {
 
 
                 if (barcodes.size() != 0) {
-                    perfscamera  = getSharedPreferences("condition", Context.MODE_PRIVATE);
-                    final boolean ans=perfscamera.getBoolean("addornot",true);
-
-
                         changelay.post(new Runnable() {
                             @Override
                             public void run() {
-
-                                    cameraSource.stop();
+                                synchronized (this)
+                                {
+                                    SharedPreferences sharedPreferences=getSharedPreferences("productbar",Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor=sharedPreferences.edit();
+                                    editor.putString("bar",barcodes.valueAt(0).displayValue);
+                                    editor.apply();
+                                    layoutitems.setVisibility(View.VISIBLE);
                                     ring.start();
-                                    if (ans)
-                                    {
-                                        loginwithbarcode(barcodes.valueAt(0).displayValue);
-                                        cameraSource.stop();
-                                        add=false;
-                                        resumecamera();
-                                    }
+                                    cameraSource.stop();
+                                }
+
+
+
+
 
 
 
@@ -419,10 +430,36 @@ public class Camera_activity extends AppCompatActivity {
 
 
         });
+        suborder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String num=itemsnum.getText().toString();
+                presssubmitaction(Integer.parseInt(num));
+                layoutitems.setVisibility(View.GONE);
+                resumecamera();
+            }
+        });
+        addbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              int currentnum=Integer.parseInt(itemsnum.getText().toString());
+              itemsnum.setText(String.valueOf(currentnum+1));
+
+            }
+        });
+        removebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentnum=  Integer.parseInt(itemsnum.getText().toString());
+                itemsnum.setText(String.valueOf(currentnum-1));
+
+            }
+        });
 
     }
 
-    private void loginwithbarcode(final String barcodedata) {
+
+    private void loginwithbarcode(final String barcodedata, final int itemsnum) {
         Retrofitclient myretro = Retrofitclient.getInstance();
         Retrofit retrofitt = myretro.getretro();
 
@@ -435,10 +472,6 @@ public class Camera_activity extends AppCompatActivity {
             public void onResponse(Call<Rootproductdetail> call, Response<Rootproductdetail> response) {
 
                 if (response.isSuccessful()) {
-                    perfscamera  = getSharedPreferences("condition", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor edit=perfscamera.edit();
-                    edit.putBoolean("addornot",false);
-                    edit.apply();
 
 
                     if (response.body().getProduct() != null) {
@@ -450,7 +483,7 @@ public class Camera_activity extends AppCompatActivity {
                         broddetail = response.body().getProduct().getDescription();
                         brodprice = response.body().getProduct().getPrice();
                         prodcat = response.body().getProduct().getCategory().getName();
-                        mytable word = new mytable(pronam, prodbar, prodimg, broddetail, brodprice, prodcat);
+                        mytable word = new mytable(pronam, prodbar,itemsnum, prodimg, broddetail, brodprice, prodcat);
                         mWordViewModel.insert(word);
 
 
@@ -471,7 +504,7 @@ public class Camera_activity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Rootproductdetail> call, Throwable t) {
 
-                mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, null, null, null, null);
+                mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, null, null, null, null,null);
                 mWordViewModel.insert(word);
 
 
@@ -505,13 +538,22 @@ public class Camera_activity extends AppCompatActivity {
                 }
 
             }
-        },1700);
+        },1000);
     }
 
 
     public void restart ()
     {
         this.recreate();
+    }
+
+    private void presssubmitaction(int number)
+    {
+        SharedPreferences preferences=getSharedPreferences("productbar",Context.MODE_PRIVATE);
+        String barcod=preferences.getString("bar","null");
+        loginwithbarcode(barcod,number);
+        resumecamera();
+        layoutitems.setVisibility(View.GONE);
     }
 
     @Override

@@ -19,8 +19,8 @@ public class mytable {
     private String pname;
     @ColumnInfo(name = "pbar")
     private String pbar;
-
-
+    @ColumnInfo(name = "pitemn")
+    private Integer pitemn;
     @ColumnInfo(name = "pimg")
     private String pimg;
     @ColumnInfo(name = "pdetail")
@@ -30,10 +30,13 @@ public class mytable {
     @ColumnInfo(name = "pcat")
     private String pcat;
 
-    public mytable( String pname , String pbar, String pimg, String pdetail, String pprice, String pcat)
+
+
+    public mytable(String pname , String pbar, Integer pitemn, String pimg, String pdetail, String pprice, String pcat)
     {
         this.pbar=pbar;
         this.pcat=pcat;
+        this.pitemn=pitemn;
         this.pdetail=pdetail;
         this.pimg=pimg;
         this.pprice=pprice;
@@ -60,6 +63,13 @@ public class mytable {
 
     public void setPbar(String pbar) {
         this.pbar = pbar;
+    }
+    public Integer getPitemn() {
+        return pitemn;
+    }
+
+    public void setPitemn(Integer pitemn) {
+        this.pitemn = pitemn;
     }
 
     public String getPimg() {

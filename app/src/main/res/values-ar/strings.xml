@@ -19,4 +19,6 @@
     <string name="ansdeleteitem">نعم احذفه</string>
     <string name="paymentver">التحقق من الدفع</string>
     <string name="defayltproductname">منتج</string>
+    <string name="submit">تأكيد</string>
+    <string name="chooseitemnu">أختر عدد الوحدات </string>
 </resources>

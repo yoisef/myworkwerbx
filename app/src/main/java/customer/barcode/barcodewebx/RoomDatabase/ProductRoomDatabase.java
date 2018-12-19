@@ -58,9 +58,9 @@ public abstract class ProductRoomDatabase extends RoomDatabase {
             // Not needed if you only populate on creation.
             mDao.deleteAll();
 
-            mytable word = new mytable("Hello",null,null,null,null,null);
+            mytable word = new mytable("Hello",null,null,null,null,null,null);
             mDao.insert(word);
-            mytable wordd = new mytable("Hello",null,null,null,null,null);
+            mytable wordd = new mytable("Hello",null,null,null,null,null,null);
             mDao.insert(wordd);
             return null;
         }
