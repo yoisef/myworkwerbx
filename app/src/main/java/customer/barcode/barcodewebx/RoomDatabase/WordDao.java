@@ -14,6 +14,9 @@ public interface WordDao {
     @Insert
     void insert(mytable table);
 
+    @Insert
+    void inserthis(historytable table);
+
     @Query("DELETE FROM product")
     void deleteAll();
 
@@ -25,4 +28,9 @@ public interface WordDao {
 
     @Query("SELECT * from product ")
     LiveData<List<mytable>> getAllWords();
+
+    @Query("SELECT * from history ")
+    LiveData<List<historytable>> getAllHis();
+
+
 }

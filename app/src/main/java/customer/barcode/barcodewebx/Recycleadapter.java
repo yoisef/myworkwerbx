@@ -68,6 +68,8 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
                     .load(current.getPimg())
                     .into(holder.productimage);
 
+            holder.nuofproductitem.setText(String.valueOf(current.getPitemn()));
+
             holder.numberr.setText(current.getPbar());
             holder.pricee.setText(current.getPprice());
             holder.productdetailss.setOnClickListener(new View.OnClickListener() {
@@ -177,7 +179,7 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
     class viewholder extends RecyclerView.ViewHolder {
 
-        TextView namee, numberr, pricee, deleterowww;
+        TextView namee, numberr, pricee, deleterowww,nuofproductitem;
         ImageView productimage, removeimg;
         ImageView  xremove;
         RelativeLayout removerow, productdetailss, backlayout;
@@ -199,6 +201,7 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
             deleterowww=itemView.findViewById(R.id.deleterow);
             backlayout=itemView.findViewById(R.id.background);
             toplayout=itemView.findViewById(R.id.foregoroundd);
+            nuofproductitem=itemView.findViewById(R.id.numberofitems);
 
 
 

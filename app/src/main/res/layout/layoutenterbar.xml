@@ -7,9 +7,9 @@
     <TextView
         android:layout_width="match_parent"
         android:text="@string/enterbar"
-        android:textSize="@dimen/titlealertdialog"
+        android:textSize="@dimen/xlarge"
         android:textColor="@color/blue"
-        android:layout_margin="3dp"
+        android:layout_margin="4dp"
         android:textStyle="bold"
         android:layout_height="wrap_content" />
     <View
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:textStyle="bold"
         android:text="@string/epbarcode"
-        android:textSize="18sp"
+        android:textSize="@dimen/medium"
 
         android:layout_margin="5dp"
         android:textColor="@color/black"
@@ -50,7 +50,7 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:id="@+id/cancell"
-            android:textSize="20sp"
+            android:textSize="@dimen/medium"
             android:layout_height="50dp"
             android:layout_weight="1"/>
         <View
@@ -65,7 +65,7 @@
             android:id="@+id/okk"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="@dimen/medium"
             android:layout_height="50dp"
             android:layout_weight="1"/>
     </LinearLayout>

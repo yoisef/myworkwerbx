@@ -10,16 +10,23 @@ public class ProductRepository {
 
     private WordDao mWordDao;
     private LiveData<List<mytable>> mAllProd;
+    private LiveData<List<historytable>> mAllhis;
 
     ProductRepository(Application application) {
         ProductRoomDatabase db = ProductRoomDatabase.getDatabase(application);
         mWordDao = db.wordDao();
         mAllProd = mWordDao.getAllWords();
+        mAllhis=mWordDao.getAllHis();
     }
 
     LiveData<List<mytable>> getAllWords() {
         return mAllProd;
     }
+
+    LiveData<List<historytable>> getAllHis() {
+        return mAllhis;
+    }
+
 
 
     public void insert (mytable table) {
@@ -27,6 +34,27 @@ public class ProductRepository {
     }
 
     public void deleterow(mytable mtable){new deleteit(mWordDao).execute(mtable);}
+
+    //histrorytable
+    public void insert (historytable hist) {
+        new insertAsyncTaskhis(mWordDao).execute(hist);
+    }
+    private static class insertAsyncTaskhis extends AsyncTask<historytable, Void, Void> {
+
+        private WordDao mAsyncTaskDao;
+
+        insertAsyncTaskhis(WordDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final historytable... params) {
+            mAsyncTaskDao.inserthis(params[0]);
+            return null;
+        }
+    }
+
+
 
 
 

@@ -6,7 +6,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:text="@string/paymentver"
-        android:textSize="@dimen/titlealertdialog"
+        android:textSize="@dimen/xlarge"
+
         android:textColor="@color/blue"
         android:layout_margin="5dp"
         android:layout_height="wrap_content" />
@@ -16,7 +17,7 @@
         android:background="@color/blue"/>
     <TextView
         android:layout_width="match_parent"
-        android:textSize="20sp"
+        android:textSize="@dimen/large"
         android:padding="10dp"
         android:text="@string/alertpay"
         android:textColor="@color/black"
@@ -28,7 +29,7 @@
         android:background="@color/gray"/>
     <TextView
         android:layout_width="match_parent"
-        android:textSize="20sp"
+        android:textSize="@dimen/large"
         android:padding="10dp"
         android:id="@+id/transfer"
         android:text="@string/transfer"

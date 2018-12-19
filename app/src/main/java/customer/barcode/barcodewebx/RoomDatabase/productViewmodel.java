@@ -9,10 +9,12 @@ import java.util.List;
 public class productViewmodel extends AndroidViewModel {
     private ProductRepository mRepository;
     private LiveData<List<mytable>> mAllpro;
+    private LiveData<List<historytable>> mallhis;
     public productViewmodel (Application application) {
         super(application);
         mRepository = new ProductRepository(application);
         mAllpro = mRepository.getAllWords();
+        mallhis=mRepository.getAllHis();
     }
 
    public LiveData<List<mytable>> getAllWords() { return mAllpro; }
@@ -20,5 +22,11 @@ public class productViewmodel extends AndroidViewModel {
     public void insert(mytable word) { mRepository.insert(word); }
 
     public void delterow(mytable num){mRepository.deleterow(num);}
+
+    ///history section
+    public LiveData<List<historytable>> getAllhistory() { return mallhis; }
+
+    public void inserthis(historytable hist) { mRepository.insert(hist); }
+
 
 }

@@ -9,12 +9,15 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 
-@Database(entities = {mytable.class}, version = 1,exportSchema = false)
+@Database(entities = {mytable.class,historytable.class}, version = 2,exportSchema = false)
 public abstract class ProductRoomDatabase extends RoomDatabase {
 
     public abstract WordDao wordDao();
 
+
     private static volatile ProductRoomDatabase INSTANCE;
+
+
 
     static ProductRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -23,6 +26,7 @@ public abstract class ProductRoomDatabase extends RoomDatabase {
                     // Create database here
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             ProductRoomDatabase.class, "product")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
@@ -65,4 +69,6 @@ public abstract class ProductRoomDatabase extends RoomDatabase {
             return null;
         }
     }
+
+
 }

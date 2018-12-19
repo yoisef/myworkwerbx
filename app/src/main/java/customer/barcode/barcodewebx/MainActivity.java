@@ -41,7 +41,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import customer.barcode.barcodewebx.RoomDatabase.historytable;
 import customer.barcode.barcodewebx.RoomDatabase.mytable;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
 import customer.barcode.barcodewebx.productmodels.Rootproductdetail;
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private Recycleadapter mAdapter;
     private TextView pricetotal;
     private LinearLayout paylinear;
-    private productViewmodel mWordViewModel;
+    private productViewmodel mWordViewModel,mHisViewModel;
     private SharedPreferences prefs;
     private SharedPreferences.Editor myeditor;
     private String usertoken;
@@ -105,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         mWordViewModel = ViewModelProviders.of(this).get(productViewmodel.class);
-
         mWordViewModel.getAllWords().observe(this, new Observer<List<mytable>>() {
             @Override
             public void onChanged(@Nullable final List<mytable> words) {
@@ -140,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
                         {
                             //
                         }
-
 
 
                     }
@@ -179,7 +180,8 @@ public class MainActivity extends AppCompatActivity {
         barcodimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Aboutactivity.class));
+
+                startActivity(new Intent(MainActivity.this,sales_history.class));
             }
         });
 
@@ -207,17 +209,20 @@ public class MainActivity extends AppCompatActivity {
                            for (i=0;i<myproducts.size();i++)
                            {
 
-                                    String currentproduct=myproducts.get(0).getPbar();
+                                    String currentproduct=myproducts.get(i).getPbar();
                                     //retrofit connection with barcode 3shan tn2sa
                                     //response lw succful 7t7zfa mn recycle
                                     Toast.makeText(MainActivity.this,currentproduct,Toast.LENGTH_SHORT).show();
                                     logintest(currentproduct);
 
                                 }
+                historytable myhis=new historytable(1, Calendar.getInstance().getTime().toString(),20,"4");
+                mWordViewModel.inserthis(myhis);
 
 
 
-                                //lwmshnag7toastbarcode msh mtsgl
+
+                //lwmshnag7toastbarcode msh mtsgl
                                 //lw failure yb2a connecton fail
 
                             payprpgressbarr.setVisibility(View.GONE);

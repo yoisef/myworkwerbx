@@ -21,4 +21,6 @@
     <string name="defayltproductname">Product</string>
     <string name="submit">Submit</string>
     <string name="chooseitemnu">Choose Items Numbers</string>
+    <string name="empty_email">Fill Email Address or phone Number</string>
+    <string name="empty_pass">Fill With Password</string>
 </resources>

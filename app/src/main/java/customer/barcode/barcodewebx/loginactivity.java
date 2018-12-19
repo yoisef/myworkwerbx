@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,15 +39,41 @@ public class loginactivity extends AppCompatActivity {
         signintext=findViewById(R.id.signinbutton);
         signprogress=findViewById(R.id.loginprogressbar);
 
+
+
         signintext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signprogress.setVisibility(View.VISIBLE);
+                validatePassword();
+                validateemail() ;
                 String currentemail=emailuser.getText().toString();
                 String currpass=userpass.getText().toString();
                 signin(currentemail,currpass);
             }
         });
+    }
+
+
+    private void validatePassword() {
+        if (emailuser.getText().toString().trim().isEmpty()) {
+            emailuser.setError(getString(R.string.empty_email));
+            requestFocus(emailuser);
+        }
+    }
+
+    private void validateemail()
+    {
+        if (userpass.getText().toString().trim().isEmpty())
+        {
+            userpass.setError(getString(R.string.empty_pass));
+            requestFocus(userpass);
+        }
+    }
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 
     public void signin(String email ,String password)
