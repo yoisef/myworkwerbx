@@ -208,10 +208,17 @@ public class MainActivity extends AppCompatActivity {
                            {
 
                                     String currentproduct=myproducts.get(i).getPbar();
+                                    int items=myproducts.get(i).getPitemn();
                                     //retrofit connection with barcode 3shan tn2sa
                                     //response lw succful 7t7zfa mn recycle
-                                    Toast.makeText(MainActivity.this,currentproduct,Toast.LENGTH_SHORT).show();
-                                    logintest(currentproduct);
+
+                                    for (int z=0;z<items;z++)
+                                    {
+                                        Toast.makeText(MainActivity.this,currentproduct,Toast.LENGTH_SHORT).show();
+                                        logintest(currentproduct);
+                                    }
+                               mAdapter.deleterow(0);
+
 
                                 }
                 historytable myhis=new historytable(1, Calendar.getInstance().getTime().toString(),20,"4");
@@ -612,7 +619,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                        mAdapter.deleterow(0);
+
+
+
 
                     }
                     else
