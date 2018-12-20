@@ -132,10 +132,13 @@ public class MainActivity extends AppCompatActivity {
                     for (y = 0; y < words.size(); y++) {
 
                         mytable currenttable = words.get(y);
+
                         if (currenttable.getPprice()!=null)
                         {
                             Double curprice = Double.parseDouble(currenttable.getPprice());
-                            total = total + curprice;
+//                            int num= currenttable.getPitemn();
+                      //      Double totalfotitem=num*curprice;
+                       //     total = total + totalfotitem;
 
                         }
                         else

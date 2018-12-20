@@ -10,11 +10,13 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraDevice;
+import android.location.SettingInjectorService;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -41,7 +43,10 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import customer.barcode.barcodewebx.RoomDatabase.mytable;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
@@ -72,6 +77,7 @@ public class Camera_activity extends AppCompatActivity {
     private ImageView addbtn, removebtn;
     private EditText itemsnum;
     private RelativeLayout layoutitems;
+    private List<mytable> orderproducts;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -84,15 +90,25 @@ public class Camera_activity extends AppCompatActivity {
 
         mWordViewModel = ViewModelProviders.of(this).get(productViewmodel.class);
 
-        mWordViewModel.getAllWords().observe(this, new Observer<List<mytable>>() {
+        mWordViewModel.getAllWords().observe(Camera_activity.this, new Observer<List<mytable>>() {
             @Override
             public void onChanged(@Nullable final List<mytable> words) {
                 // Update the cached copy of the words in the adapter.
 
+                if (words.size() != 0) {
 
+
+                    orderproducts=words;
+
+
+
+
+
+                        }
             }
-
         });
+
+
 
         leaser = findViewById(R.id.leaserline);
         ring = MediaPlayer.create(Camera_activity.this, R.raw.notif);
@@ -180,36 +196,71 @@ public class Camera_activity extends AppCompatActivity {
         suborder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String num = itemsnum.getText().toString();
-                presssubmitaction(Integer.parseInt(num));
-                layoutitems.setVisibility(View.GONE);
-                resumecamera();
-            }
-        });
-        addbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int currentnum = Integer.parseInt(itemsnum.getText().toString());
-                itemsnum.setText(String.valueOf(currentnum + 1));
-
-            }
-        });
-        removebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int currentnum = Integer.parseInt(itemsnum.getText().toString());
-                itemsnum.setText(String.valueOf(currentnum - 1));
-
-            }
-        });
-        cancelorder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                layoutitems.setVisibility(View.GONE);
-            }
-        });
 
 
+                        int i;
+                        String num = itemsnum.getText().toString();
+                        SharedPreferences preferences = getSharedPreferences("productbar", Context.MODE_PRIVATE);
+                        String barcod = preferences.getString("bar", "null");
+                        if (orderproducts.size() != 0) {
+                            for (i = 0; i < orderproducts.size(); i++) {
+                                if (barcod.trim().equals(orderproducts.get(i).getPbar().trim())) {
+
+//                          int z=  orderproducts.get(i).getPitemn();
+                                    Toast.makeText(Camera_activity.this, "exsist in" + i, Toast.LENGTH_SHORT).show();
+
+                                    SharedPreferences rowandnum = getSharedPreferences("we", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor myeditor = rowandnum.edit();
+                                    myeditor.putInt("is", i);
+                                    myeditor.apply();
+
+
+                                    // totitems=z+Integer.parseInt(num);
+
+                                }
+                            }
+
+                        }
+
+                        //  presssubmitaction(Integer.parseInt(num));
+                        layoutitems.setVisibility(View.GONE);
+                        resumecamera();
+                    }
+
+
+                });
+                addbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int currentnum = Integer.parseInt(itemsnum.getText().toString());
+                        itemsnum.setText(String.valueOf(currentnum + 1));
+
+                    }
+                });
+                removebtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int currentnum = Integer.parseInt(itemsnum.getText().toString());
+                        if (currentnum <= 1) {
+                            itemsnum.setText(String.valueOf(1));
+
+                        } else {
+                            itemsnum.setText(String.valueOf(currentnum - 1));
+                        }
+
+
+                    }
+                });
+                cancelorder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        layoutitems.setVisibility(View.GONE);
+                        resumecamera();
+                    }
+                });
+
+
+         
     }
 
 
@@ -430,7 +481,7 @@ public class Camera_activity extends AppCompatActivity {
 
                     if (response.body().getProduct() != null) {
 
-                        String pronam, prodbar, prodimg, broddetail, brodprice, prodcat;
+                        final String pronam, prodbar, prodimg, broddetail, brodprice, prodcat;
                         pronam = response.body().getProduct().getName();
                         prodbar = response.body().getProduct().getBarcode();
                         prodimg = response.body().getProduct().getImage().getUrl();
@@ -439,6 +490,9 @@ public class Camera_activity extends AppCompatActivity {
                         prodcat = response.body().getProduct().getCategory().getName();
                         mytable word = new mytable(pronam, prodbar, itemsnum, prodimg, broddetail, brodprice, prodcat);
                         mWordViewModel.insert(word);
+
+
+
 
 
                     } else {
@@ -495,12 +549,18 @@ public class Camera_activity extends AppCompatActivity {
 
     private void presssubmitaction(int number)
     {
+        boolean condition=true;
+
+
         SharedPreferences preferences=getSharedPreferences("productbar",Context.MODE_PRIVATE);
         String barcod=preferences.getString("bar","null");
         loginwithbarcode(barcod,number);
+
         resumecamera();
         layoutitems.setVisibility(View.GONE);
         itemsnum.setText("1");
+
+
 
     }
 

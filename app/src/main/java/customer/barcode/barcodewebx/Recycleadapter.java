@@ -4,6 +4,7 @@ package customer.barcode.barcodewebx;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -68,10 +69,21 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
                     .load(current.getPimg())
                     .into(holder.productimage);
 
-            holder.nuofproductitem.setText(String.valueOf(current.getPitemn()));
+            SharedPreferences rowandnum=con.getSharedPreferences("we",Context.MODE_PRIVATE);
+           int qua= rowandnum.getInt("is",87);
+           
+
+
 
             holder.numberr.setText(current.getPbar());
-            holder.pricee.setText(current.getPprice());
+            if (current.getPprice()!=null)
+            {
+//                int num= current.getPitemn();
+           //     Double curprice=Double.parseDouble(current.getPprice());
+            //    Double totalforitem=curprice*num;
+            //    holder.pricee.setText(String.valueOf(totalforitem));
+            }
+
             holder.productdetailss.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
