@@ -89,24 +89,18 @@ public class Camera_activity extends AppCompatActivity {
         mWordViewModel = ViewModelProviders.of(this).get(productViewmodel.class);
 
         mWordViewModel = ViewModelProviders.of(this).get(productViewmodel.class);
-
         mWordViewModel.getAllWords().observe(Camera_activity.this, new Observer<List<mytable>>() {
             @Override
             public void onChanged(@Nullable final List<mytable> words) {
-                // Update the cached copy of the words in the adapter.
-
-                if (words.size() != 0) {
 
 
-                    orderproducts=words;
+                orderproducts=words;
 
 
-
-
-
-                        }
             }
         });
+
+
 
 
 
@@ -197,41 +191,44 @@ public class Camera_activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                boolean mycondition=true;
 
+                final String num = itemsnum.getText().toString();
+                SharedPreferences preferences = getSharedPreferences("productbar", Context.MODE_PRIVATE);
+                final String barcod = preferences.getString("bar", "null");
+
+                        // Update the cached copy of the words in the adapter.
                         int i;
-                        String num = itemsnum.getText().toString();
-                        SharedPreferences preferences = getSharedPreferences("productbar", Context.MODE_PRIVATE);
-                        String barcod = preferences.getString("bar", "null");
                         if (orderproducts.size() != 0) {
+
+
                             for (i = 0; i < orderproducts.size(); i++) {
                                 if (barcod.trim().equals(orderproducts.get(i).getPbar().trim())) {
 
-                                    mytable current=orderproducts.get(i);
-                                    int totalitems=current.getPitemn()+Integer.parseInt(num);
 
-                                    mytable table=new mytable(current.getPname(),current.getPbar(),totalitems,current.getPimg(),current.getPdetail(),current.getPprice(),current.getPcat());
+                                    mytable current = orderproducts.get(i);
+                                    int totalitems = current.getPitemn() + Integer.parseInt(num);
 
-
-
-//                          int z=  orderproducts.get(i).getPitemn();
-                                    Toast.makeText(Camera_activity.this, "exsist in" + i, Toast.LENGTH_SHORT).show();
-
-                                    SharedPreferences rowandnum = getSharedPreferences("we", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor myeditor = rowandnum.edit();
-                                    myeditor.putInt("is", i);
-                                    myeditor.apply();
-
-
-                                    // totitems=z+Integer.parseInt(num);
-
+                                    mWordViewModel.updateproduct(totalitems,Integer.parseInt(barcod));
+                                    mycondition=false;
                                 }
+
                             }
+                            if (mycondition)
+                            {
+                                presssubmitaction(Integer.parseInt(num));
+
+
+                            }
+
+
 
                         }
 
-                        //  presssubmitaction(Integer.parseInt(num));
-                        layoutitems.setVisibility(View.GONE);
-                        resumecamera();
+
+
+                layoutitems.setVisibility(View.GONE);
+                resumecamera();
                     }
 
 

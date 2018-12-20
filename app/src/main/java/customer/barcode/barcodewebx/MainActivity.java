@@ -126,19 +126,15 @@ public class MainActivity extends AppCompatActivity {
                 Double total = 0.0;
 
                 if (words != null) {
-
-
                     int y ;
                     for (y = 0; y < words.size(); y++) {
-
                         mytable currenttable = words.get(y);
-
                         if (currenttable.getPprice()!=null)
                         {
                             Double curprice = Double.parseDouble(currenttable.getPprice());
-//                            int num= currenttable.getPitemn();
-                      //      Double totalfotitem=num*curprice;
-                       //     total = total + totalfotitem;
+                            int num= currenttable.getPitemn();
+                           Double totalfotitem=num*curprice;
+                           total = total + totalfotitem;
 
                         }
                         else
@@ -146,17 +142,13 @@ public class MainActivity extends AppCompatActivity {
                             //
                         }
 
-
                     }
                     pricetotal.setText(String.valueOf(total));
-
                 }
                 else
                 {
                     Toast.makeText(MainActivity.this,"null",Toast.LENGTH_LONG).show();
                 }
-
-
 
             }
 

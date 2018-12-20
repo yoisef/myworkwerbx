@@ -35,6 +35,8 @@ public class ProductRepository {
 
     public void deleterow(mytable mtable){new deleteit(mWordDao).execute(mtable);}
 
+    public void updaterow(int newitems ,int barcode){new updateit(mWordDao).execute( newitems , barcode);}
+
     //histrorytable
     public void insert (historytable hist) {
         new insertAsyncTaskhis(mWordDao).execute(hist);
@@ -100,4 +102,19 @@ public class ProductRepository {
             return null;
         }
     }
+    private static class updateit extends AsyncTask<Integer, Void, Void> {
+
+        private WordDao mAsyncTaskDao;
+
+        updateit(WordDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... params) {
+            mAsyncTaskDao.updateproduct(params[0],params[1]);
+            return null;
+        }
+    }
+
 }

@@ -24,8 +24,8 @@ public interface WordDao {
     @Query("DELETE FROM product WHERE ID = :id")
     abstract void deleterow(long id);
 
-   @Update
-   void updateproduct(mytable  mytable);
+    @Query("UPDATE product SET pitemn = :value1 WHERE pbar = :bar")
+    void updateproduct(int value1 ,int bar);
 
     @Delete
     void deleteit(mytable model);
