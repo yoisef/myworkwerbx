@@ -206,6 +206,13 @@ public class Camera_activity extends AppCompatActivity {
                             for (i = 0; i < orderproducts.size(); i++) {
                                 if (barcod.trim().equals(orderproducts.get(i).getPbar().trim())) {
 
+                                    mytable current=orderproducts.get(i);
+                                    int totalitems=current.getPitemn()+Integer.parseInt(num);
+
+                                    mytable table=new mytable(current.getPname(),current.getPbar(),totalitems,current.getPimg(),current.getPdetail(),current.getPprice(),current.getPcat());
+
+
+
 //                          int z=  orderproducts.get(i).getPitemn();
                                     Toast.makeText(Camera_activity.this, "exsist in" + i, Toast.LENGTH_SHORT).show();
 

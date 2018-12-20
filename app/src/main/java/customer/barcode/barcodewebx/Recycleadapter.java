@@ -71,7 +71,7 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
             SharedPreferences rowandnum=con.getSharedPreferences("we",Context.MODE_PRIVATE);
            int qua= rowandnum.getInt("is",87);
-           
+
 
 
 
