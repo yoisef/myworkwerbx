@@ -209,7 +209,7 @@ public class Camera_activity extends AppCompatActivity {
                                     mytable current = orderproducts.get(i);
                                     int totalitems = current.getPitemn() + Integer.parseInt(num);
 
-                                    mWordViewModel.updateproduct(totalitems,Integer.parseInt(barcod));
+                                    mWordViewModel.updateproduct(totalitems,Long.parseLong(barcod));
                                     mycondition=false;
                                 }
 
@@ -224,6 +224,10 @@ public class Camera_activity extends AppCompatActivity {
 
 
                         }
+                     else if (orderproducts.size()==0)
+                    {
+                        presssubmitaction(Integer.parseInt(num));
+                    }
 
 
 

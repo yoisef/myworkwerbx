@@ -132,9 +132,12 @@ public class MainActivity extends AppCompatActivity {
                         if (currenttable.getPprice()!=null)
                         {
                             Double curprice = Double.parseDouble(currenttable.getPprice());
-                            int num= currenttable.getPitemn();
-                           Double totalfotitem=num*curprice;
-                           total = total + totalfotitem;
+                            if (currenttable.getPitemn()!=null)
+                            {
+                                int num= currenttable.getPitemn();
+                                Double totalfotitem=num*curprice;
+                                total = total + totalfotitem;
+                            }
 
                         }
                         else
@@ -257,81 +260,53 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final EditText myedit;
+                final EditText myedit,numedit;
                 TextView ok, cancel;
+                ImageView incre,decre;
+
 
                 builder = new android.app.AlertDialog.Builder(MainActivity.this);
 
                 View myview = LayoutInflater.from(MainActivity.this.getApplicationContext()).inflate(R.layout.layoutenterbar, null);
+                numedit=myview.findViewById(R.id.ItemN);
+                incre=myview.findViewById(R.id.increase);
+                decre=myview.findViewById(R.id.decrease);
                 myedit = myview.findViewById(R.id.barcodedittext);
                 ok = myview.findViewById(R.id.okk);
                 cancel = myview.findViewById(R.id.cancell);
                 builder.setView(myview);
                 alertDialog = builder.create();
                 alertDialog.show();
+                incre.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        int currentnum = Integer.parseInt(numedit.getText().toString());
+                        numedit.setText(String.valueOf(currentnum + 1));
+                    }
+                });
+                decre.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int currentnum = Integer.parseInt(numedit.getText().toString());
+                        if (currentnum <= 1) {
+                            numedit.setText(String.valueOf(1));
+
+                        } else {
+                            numedit.setText(String.valueOf(currentnum - 1));
+                        }
+                    }
+                });
 
 
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        //when user press ok call request to api by barcode number to get info about barcode and display it
-                        OkHttpClient.Builder builderr = new OkHttpClient.Builder();
-                        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-                        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-                        builderr.addInterceptor(loggingInterceptor);
-                        Retrofit retrofitt = new Retrofit.Builder()
-                                .baseUrl("https://www.werpx.net/api/v1/")
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .client(builderr.build())
-                                .build();
 
-                        final Endpoints myendpoints = retrofitt.create(Endpoints.class);
-
-                        mcall = myendpoints.getdetails("Bearer "+usertoken,myedit.getText().toString());
-                        mcall.enqueue(new Callback<Rootproductdetail>() {
-                            @Override
-                            public void onResponse(Call<Rootproductdetail> call, Response<Rootproductdetail> response) {
+                        checkifproductexsist(numedit.getText().toString(),myedit.getText().toString());
 
 
-
-
-                                if (response.isSuccessful()) {
-
-                                    if (response.body().getProduct()!=null) {
-
-                                        String pronam, prodbar, prodimg, broddetail, brodprice, prodcat;
-                                        pronam = response.body().getProduct().getName();
-                                        prodbar = response.body().getProduct().getBarcode();
-                                        prodimg = response.body().getProduct().getImage().getUrl();
-                                        broddetail = response.body().getProduct().getDescription();
-                                        brodprice = response.body().getProduct().getPrice();
-                                        prodcat = response.body().getProduct().getCategory().getName();
-                                        mytable word = new mytable(pronam, prodbar,null, prodimg, broddetail, brodprice, prodcat);
-                                        mWordViewModel.insert(word);
-                                       // myrecycle.scrollToPosition(myrecycle.getAdapter().getItemCount() - 1);
-
-
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(MainActivity.this,"not recorded in database",Toast.LENGTH_LONG).show();
-                                    }
-
-                                } else {
-                                    Toast.makeText(MainActivity.this,"not recorded in database",Toast.LENGTH_LONG).show();
-
-                                }
-
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<Rootproductdetail> call, Throwable t) {
-                                mytable word = new mytable(getResources().getString(R.string.defayltproductname), myedit.getText().toString(), null, null, null, null,null);
-                                mWordViewModel.insert(word);
-                            }
-                        });
 
 
 
@@ -423,7 +398,7 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -445,6 +420,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    */
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -474,7 +451,59 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void loginwirhenternumber() {
+    private void loginwithenternumber(final int itemsnum, final String barcode) {
+
+
+        Retrofitclient myretro=Retrofitclient.getInstance();
+        Retrofit retrofittok=  myretro.getretro();
+        final Endpoints myendpoints = retrofittok.create(Endpoints.class);
+
+        mcall = myendpoints.getdetails("Bearer "+usertoken,barcode);
+        mcall.enqueue(new Callback<Rootproductdetail>() {
+            @Override
+            public void onResponse(Call<Rootproductdetail> call, Response<Rootproductdetail> response) {
+
+
+
+
+                if (response.isSuccessful()) {
+
+                    if (response.body().getProduct()!=null) {
+
+                        String pronam, prodbar, prodimg, broddetail, brodprice, prodcat;
+                        pronam = response.body().getProduct().getName();
+                        prodbar = response.body().getProduct().getBarcode();
+                        prodimg = response.body().getProduct().getImage().getUrl();
+                        broddetail = response.body().getProduct().getDescription();
+                        brodprice = response.body().getProduct().getPrice();
+                        prodcat = response.body().getProduct().getCategory().getName();
+                        mytable word = new mytable(pronam, prodbar,itemsnum, prodimg, broddetail, brodprice, prodcat);
+                        mWordViewModel.insert(word);
+                        // myrecycle.scrollToPosition(myrecycle.getAdapter().getItemCount() - 1);
+
+
+                    }
+                    else
+                    {
+                        Toast.makeText(MainActivity.this,"not recorded in database",Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
+                    Toast.makeText(MainActivity.this,"not recorded in database",Toast.LENGTH_LONG).show();
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Rootproductdetail> call, Throwable t) {
+                mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcode, null, null, null, null,null);
+                mWordViewModel.insert(word);
+            }
+        });
+
+
 
 
 
@@ -612,6 +641,46 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void checkifproductexsist(String numitems,String barcod)
+    {
+        boolean mycondition=true;
+
+
+
+
+        // Update the cached copy of the words in the adapter.
+        int i;
+        if (myproducts.size() != 0) {
+
+
+            for (i = 0; i < myproducts.size(); i++) {
+                if (barcod.trim().equals(myproducts.get(i).getPbar().trim())) {
+
+
+                    mytable current = myproducts.get(i);
+                    int totalitems = current.getPitemn() + Integer.parseInt(numitems);
+
+                    mWordViewModel.updateproduct(totalitems,Long.parseLong(barcod));
+                    mycondition=false;
+                }
+
+            }
+            if (mycondition)
+            {
+               loginwithenternumber(Integer.parseInt(numitems),barcod);
+
+
+            }
+
+
+
+        }
+        else if (myproducts.size()==0)
+        {
+            loginwithenternumber(Integer.parseInt(numitems),barcod);
+        }
     }
 
     }

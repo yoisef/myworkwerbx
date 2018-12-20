@@ -23,4 +23,5 @@
     <string name="chooseitemnu">أختر عدد الوحدات </string>
     <string name="empty_email">أدخل الإيميل او رقم الموبايل </string>
     <string name="empty_pass">أدخل الباسورد</string>
+    <string name="items">عدد الوحدات</string>
 </resources>

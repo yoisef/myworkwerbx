@@ -23,7 +23,7 @@ public class productViewmodel extends AndroidViewModel {
 
     public void delterow(mytable num){mRepository.deleterow(num);}
 
-    public void updateproduct(int newitems ,int barcode){mRepository.updaterow( newitems , barcode);}
+    public void updateproduct(long newitems ,long barcode){mRepository.updaterow( newitems , barcode);}
 
     ///history section
     public LiveData<List<historytable>> getAllhistory() { return mallhis; }

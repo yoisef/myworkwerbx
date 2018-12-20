@@ -8,4 +8,5 @@
     <dimen name="large">9pt</dimen>
     <dimen name="xlarge">10pt</dimen>
     <dimen name="xx_large">12pt</dimen>
+    <dimen name="x_small">4pt</dimen>
 </resources>

@@ -23,4 +23,5 @@
     <string name="chooseitemnu">Choose Items Numbers</string>
     <string name="empty_email">Fill Email Address or phone Number</string>
     <string name="empty_pass">Fill With Password</string>
+    <string name="items">Items</string>
 </resources>
