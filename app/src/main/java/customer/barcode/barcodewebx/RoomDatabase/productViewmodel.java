@@ -29,6 +29,7 @@ public class productViewmodel extends AndroidViewModel {
     public LiveData<List<historytable>> getAllhistory() { return mallhis; }
 
     public void inserthis(historytable hist) { mRepository.insert(hist); }
+    public void deleteallhist(){mRepository.deletallhis();}
 
 
 }

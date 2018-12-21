@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         pricetotal = findViewById(R.id.totalprice);
         paylinear = findViewById(R.id.paylayout);
         enterbarcode = findViewById(R.id.barcodenumber);
-        payprpgressbarr=findViewById(R.id.payprogressbar);
+        payprpgressbarr=findViewById(R.id.pay_progress);
         myrecycle = findViewById(R.id.productrecycle);
         myrecycle.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -197,45 +197,66 @@ public class MainActivity extends AppCompatActivity {
         //initialize pay button
 
         paylinear.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                int totalorderitems=0;
+                Double totalordercoast=0.0;
                 int i;
+                payprpgressbarr.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        payprpgressbarr.setVisibility(View.VISIBLE);
+
+                    }
 
 
-                payprpgressbarr.setVisibility(View.VISIBLE);
+                });
 
-                           for (i=0;i<myproducts.size();i++)
-                           {
+                for (i = 0; i < myproducts.size(); i++) {
 
-                                    String currentproduct=myproducts.get(i).getPbar();
-                                    int items=myproducts.get(i).getPitemn();
-                                    //retrofit connection with barcode 3shan tn2sa
-                                    //response lw succful 7t7zfa mn recycle
+                    String currentproduct = myproducts.get(i).getPbar();
+                    String currentcoast=myproducts.get(i).getPprice();
+                    int items = myproducts.get(i).getPitemn();
+                    totalorderitems=totalorderitems+items;
+                    Double costofproductitems=Double.parseDouble(currentcoast)*items;
+                    totalordercoast=totalordercoast+costofproductitems;
+                    //retrofit connection with barcode 3shan tn2sa
+                    //response lw succful 7t7zfa mn recycle
+                     if (myproducts.size()==0)
+                     {
 
-                                    for (int z=0;z<items;z++)
-                                    {
-                                        Toast.makeText(MainActivity.this,currentproduct,Toast.LENGTH_SHORT).show();
-                                        logintest(currentproduct);
-                                    }
-                               mAdapter.deleterow(0);
+                     }
+                     else {
+                         logintest(currentproduct);
+                     }
 
 
-                                }
-                historytable myhis=new historytable(1, Calendar.getInstance().getTime().toString(),20,"4");
+                        }
+
+                payprpgressbarr.post(new Runnable() {
+                                         @Override
+                                         public void run() {
+
+                                             payprpgressbarr.setVisibility(View.GONE);
+
+                                         }
+                });
+
+
+
+
+
+
+
+
+                historytable myhis = new historytable(1, Calendar.getInstance().getTime().toString(),String.valueOf(totalordercoast) , String.valueOf(totalorderitems));
                 mWordViewModel.inserthis(myhis);
+            }
 
-
-
-
-                //lwmshnag7toastbarcode msh mtsgl
-                                //lw failure yb2a connecton fail
-
-                            payprpgressbarr.setVisibility(View.GONE);
-
-
-
-
-
+                                         //lwmshnag7toastbarcode msh mtsgl
+                                         //lw failure yb2a connecton fail
 
 
                 /*
@@ -257,8 +278,7 @@ public class MainActivity extends AppCompatActivity {
                 });
                 */
 
-            }
-        });
+                                     });
 
 
         //initialize Enterbarcode Button insted scan with camera
@@ -312,11 +332,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                         checkifproductexsist(numedit.getText().toString(),myedit.getText().toString());
-
-
-
-
-
 
 
                         alertDialog.cancel();
@@ -492,11 +507,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        Toast.makeText(MainActivity.this,"not recorded in database",Toast.LENGTH_LONG).show();
+                        mytable word = new mytable(null, barcode,itemsnum, null, null, "10", null);
+                        mWordViewModel.insert(word);
                     }
 
                 } else {
-                    Toast.makeText(MainActivity.this,"not recorded in database",Toast.LENGTH_LONG).show();
+                    mytable word = new mytable(null, barcode,itemsnum, null, null, "10", null);
+                    mWordViewModel.insert(word);
 
                 }
 
@@ -505,7 +522,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Rootproductdetail> call, Throwable t) {
-                mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcode, null, null, null, null,null);
+                mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcode, itemsnum, null, null, "10",null);
                 mWordViewModel.insert(word);
             }
         });
@@ -614,8 +631,56 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Rootproductdetail> call, Response<Rootproductdetail> response) {
 
                 if (response.isSuccessful()) {
+                    mAdapter.deleterow(0);
 
                     if (response.body().getProduct()!=null) {
+
+                        mAdapter.deleterow(0);
+
+                    }
+                    else
+                    {
+                        mAdapter.deleterow(0);
+                        Toast.makeText(MainActivity.this,"not recorded in database",Toast.LENGTH_LONG).show();
+
+                    }
+                } else {
+                    mAdapter.deleterow(0);
+                    Toast.makeText(MainActivity.this,"not recorded in database",Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Rootproductdetail> call, Throwable t) {
+
+                Toast.makeText(MainActivity.this,"Please connect to internet",Toast.LENGTH_LONG).show();
+
+
+            }
+        });
+
+
+
+
+    }
+    private void logintestprogress(final String barcodedata, final ProgressBar mybar)
+    {
+        Retrofitclient myretro=Retrofitclient.getInstance();
+        Retrofit retrofit=  myretro.getretro();
+
+        final Endpoints myendpoints = retrofit.create(Endpoints.class);
+
+        mcall = myendpoints.getdetails("Bearer "+usertoken,barcodedata);
+        mcall.enqueue(new Callback<Rootproductdetail>() {
+            @Override
+            public void onResponse(Call<Rootproductdetail> call, Response<Rootproductdetail> response) {
+
+                if (response.isSuccessful()) {
+
+                    if (response.body().getProduct()!=null) {
+
+                        mybar.setVisibility(View.GONE);
 
 
 
@@ -655,8 +720,6 @@ public class MainActivity extends AppCompatActivity {
     private void checkifproductexsist(String numitems,String barcod)
     {
         boolean mycondition=true;
-
-
 
 
         // Update the cached copy of the words in the adapter.

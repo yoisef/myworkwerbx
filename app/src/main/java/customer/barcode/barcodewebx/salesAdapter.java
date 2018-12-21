@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import customer.barcode.barcodewebx.RoomDatabase.historytable;
@@ -31,6 +32,8 @@ public class salesAdapter extends RecyclerView.Adapter<salesAdapter.viewholder> 
         this.con=context;
         mInflater = LayoutInflater.from(context);
 
+        mHistory=new ArrayList<>();
+
 
         mHistoryViewModel = ViewModelProviders.of((FragmentActivity) context).get(productViewmodel.class);
 
@@ -49,7 +52,12 @@ public class salesAdapter extends RecyclerView.Adapter<salesAdapter.viewholder> 
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
         if (mHistory!=null)
         {
+
             historytable mytable=mHistory.get(position);
+            holder.orderid.setText(String.valueOf(position+1));
+
+            holder.oredramount.setText(mytable.getOramount());
+            holder.orderunits.setText(mytable.getOrunits());
 
 
             holder.orderdata.setText(mytable.getOrdata());
@@ -74,12 +82,13 @@ public class salesAdapter extends RecyclerView.Adapter<salesAdapter.viewholder> 
 
         TextView orderdata,orderid,oredramount,orderunits;
 
+
         public viewholder(View itemView) {
             super(itemView);
 
             orderdata=itemView.findViewById(R.id.txt_orderDateTime);
-            orderid=itemView.findViewById(R.id.txt_orderNo);
-            oredramount=itemView.findViewById(R.id.txt_orderAmount);
+            orderid=itemView.findViewById(R.id.id_order);
+            oredramount=itemView.findViewById(R.id.totalordercoast);
             orderunits=itemView.findViewById(R.id.txt_orderQuantity);
         }
     }

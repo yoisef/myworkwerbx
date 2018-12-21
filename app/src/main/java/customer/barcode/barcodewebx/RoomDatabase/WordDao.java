@@ -36,5 +36,8 @@ public interface WordDao {
     @Query("SELECT * from history ")
     LiveData<List<historytable>> getAllHis();
 
+    @Query("DELETE FROM history")
+    void deleteAllHis();
+
 
 }

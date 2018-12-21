@@ -116,7 +116,7 @@
     <ProgressBar
         android:layout_width="100dp"
         android:visibility="gone"
-        android:id="@+id/payprogressbar"
+        android:id="@+id/pay_progress"
         android:layout_centerInParent="true"
         android:layout_height="100dp" />
 

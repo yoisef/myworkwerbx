@@ -504,11 +504,11 @@ public class Camera_activity extends AppCompatActivity {
 
 
                     } else {
-                        mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, itemsnum, null, null, null, null);
+                        mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, itemsnum, null, null, "10", null);
                         mWordViewModel.insert(word);
                     }
                 } else {
-                    mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, itemsnum, null, null, null, null);
+                    mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, itemsnum, null, null, "10", null);
                     mWordViewModel.insert(word);
 
                 }
@@ -519,7 +519,7 @@ public class Camera_activity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Rootproductdetail> call, Throwable t) {
 
-                mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, itemsnum, null, null, null, null);
+                mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, itemsnum, null, null, "10", null);
                 mWordViewModel.insert(word);
 
 

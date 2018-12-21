@@ -9,7 +9,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 
-@Database(entities = {mytable.class,historytable.class}, version = 2,exportSchema = false)
+@Database(entities = {mytable.class,historytable.class}, version = 3,exportSchema = false)
 public abstract class ProductRoomDatabase extends RoomDatabase {
 
     public abstract WordDao wordDao();

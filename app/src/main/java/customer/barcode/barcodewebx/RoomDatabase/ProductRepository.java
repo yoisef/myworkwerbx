@@ -35,6 +35,8 @@ public class ProductRepository {
 
     public void deleterow(mytable mtable){new deleteit(mWordDao).execute(mtable);}
 
+    public void deletallhis(){new deleteallhis(mWordDao).execute();}
+
     public void updaterow(long newitems ,long barcode){new updateit(mWordDao).execute( newitems , barcode);}
 
     //histrorytable
@@ -116,5 +118,21 @@ public class ProductRepository {
             return null;
         }
     }
+
+    private static class deleteallhis extends AsyncTask<Long, Void, Void> {
+
+        private WordDao mAsyncTaskDao;
+
+        deleteallhis(WordDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Long... params) {
+            mAsyncTaskDao.deleteAllHis();
+            return null;
+        }
+    }
+
 
 }

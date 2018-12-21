@@ -21,11 +21,11 @@ public class historytable {
 
 
     @ColumnInfo(name = "oramount")
-    private Integer oramount;
+    private String oramount;
     @ColumnInfo(name = "orunits")
     private String orunits;
 
-    public historytable(Integer ornum,String ordata,Integer oramount ,String orunits)
+    public historytable(Integer ornum,String ordata,String oramount ,String orunits)
     {
         this.oramount=oramount;
         this.ordata=ordata;
@@ -57,11 +57,11 @@ public class historytable {
         this.ordata = ordata;
     }
 
-    public Integer getOramount() {
+    public String getOramount() {
         return oramount;
     }
 
-    public void setOramount(Integer oramount) {
+    public void setOramount(String oramount) {
         this.oramount = oramount;
     }
 

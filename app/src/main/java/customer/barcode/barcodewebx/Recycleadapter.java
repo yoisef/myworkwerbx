@@ -171,10 +171,13 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
     void deleterow(int i)
     {
-        mWordViewModel.delterow(mWords.get(i));
-        mWords.remove(i);
-        notifyItemRemoved(i);
-        notifyDataSetChanged();
+        if (mWords.size()!=0){
+            mWordViewModel.delterow(mWords.get(i));
+            mWords.remove(i);
+            notifyItemRemoved(i);
+            notifyDataSetChanged();
+        }
+
     }
 
     int getadapterposition()

@@ -24,4 +24,10 @@
     <string name="empty_email">Fill Email Address or phone Number</string>
     <string name="empty_pass">Fill With Password</string>
     <string name="items">Items</string>
+    <string name="ordercustomer">Order Customer</string>
+    <string name="orderamount">Order Amount $</string>
+    <string name="totalsales">Total sales :</string>
+    <string name="removehistory">Remove History</string>
+    <string name="ordermenu">List of Orders</string>
+
 </resources>

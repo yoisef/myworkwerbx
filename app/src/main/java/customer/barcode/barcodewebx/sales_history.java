@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.List;
@@ -21,11 +22,15 @@ public class sales_history extends AppCompatActivity {
     private RecyclerView history_recycle;
     private salesAdapter mAdapter;
     private productViewmodel mWordViewModel;
+    private TextView orders_coast,remove_history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_history);
+
+        orders_coast=findViewById(R.id.totalsalescost);
+        remove_history=findViewById(R.id.removehistory);
 
         history_recycle = findViewById(R.id.saleshistoryrecucle);
         history_recycle.setHasFixedSize(true);
@@ -39,11 +44,27 @@ public class sales_history extends AppCompatActivity {
 
         mWordViewModel.getAllhistory().observe(this, new Observer<List<historytable>>() {
             @Override
-            public void onChanged(@Nullable List<historytable> historytables) {
+            public void onChanged(@Nullable final List<historytable> historytables) {
+
+                Double allordercoast=0.0;
 
                 mAdapter.setHistory(historytables);
 
+                for (int i=0;i<historytables.size();i++)
+                {
+                    historytable myhis=historytables.get(i);
+                   Double currentamount=Double.parseDouble(myhis.getOramount()) ;
+                   allordercoast=allordercoast+currentamount;
+                }
 
+         orders_coast.setText(String.valueOf(allordercoast));
+                remove_history.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        mWordViewModel.deleteallhist();
+                    }
+                });
             }
         });
 

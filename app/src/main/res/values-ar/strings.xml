@@ -24,4 +24,9 @@
     <string name="empty_email">أدخل الإيميل او رقم الموبايل </string>
     <string name="empty_pass">أدخل الباسورد</string>
     <string name="items">عدد الوحدات</string>
+    <string name="ordercustomer">طلب العميل </string>
+    <string name="orderamount">تكلفة الطلب $</string>
+    <string name="totalsales"> إجمالي المبيعات :</string>
+    <string name="removehistory">أحذف الذاكرة</string>
+    <string name="ordermenu">قائمة الطلبات</string>
 </resources>
