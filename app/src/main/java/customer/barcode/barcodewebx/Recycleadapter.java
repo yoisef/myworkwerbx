@@ -81,10 +81,7 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
                 if (current.getPitemn()!=null)
                 {
-                    int num= current.getPitemn();
-                    Double curprice=Double.parseDouble(current.getPprice());
-                    Double totalforitem=curprice*num;
-                    holder.pricee.setText(String.valueOf(totalforitem));
+                    holder.pricee.setText(String.valueOf(current.getPprice()));
                 }
 
             }

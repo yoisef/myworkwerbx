@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.daimajia.swipe.SwipeLayout;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class detailsadapter extends RecyclerView.Adapter<detailsadapter.viewhold
     @NonNull
     @Override
     public viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View myview= LayoutInflater.from(context).inflate(R.layout.rowrecycle,parent,false);
+        View myview= LayoutInflater.from(context).inflate(R.layout.rowrecycledetails,parent,false);
         viewholder viewholder=new viewholder(myview);
         return viewholder;
     }
@@ -42,6 +43,11 @@ public class detailsadapter extends RecyclerView.Adapter<detailsadapter.viewhold
 
         holder.namee.setText(details.get(position).getPname());
         holder.pricee.setText(details.get(position).getPprice());
+        holder.nuofproductitem.setText(String.valueOf(details.get(position).getPitemn()));
+
+        Glide.with(context)
+                .load(details.get(position).getPimg())
+                .into(holder.productimage);
 
     }
 

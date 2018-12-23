@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -55,8 +57,11 @@ public class salesAdapter extends RecyclerView.Adapter<salesAdapter.viewholder> 
 
         if (mHistory!=null)
         {
+
+
             holder.myrecycle.setLayoutManager(new LinearLayoutManager(con));
             holder.myrecycle.setAdapter(new detailsadapter(mHistory.get(position).getOrlist(),con));
+            holder.myrecycle.scheduleLayoutAnimation();
 
             historytable mytable=mHistory.get(position);
             holder.orderid.setText(String.valueOf(position+1));
@@ -89,6 +94,7 @@ public class salesAdapter extends RecyclerView.Adapter<salesAdapter.viewholder> 
             });
 
             holder.oredramount.setText(mytable.getOramount());
+
             holder.orderunits.setText(mytable.getOrunits());
 
 

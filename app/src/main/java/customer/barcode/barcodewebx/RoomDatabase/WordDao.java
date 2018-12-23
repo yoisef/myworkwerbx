@@ -9,6 +9,8 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+import customer.barcode.barcodewebx.productmodels.Product;
+
 @Dao
 public interface WordDao {
 
@@ -32,6 +34,12 @@ public interface WordDao {
 
     @Query("SELECT * from product ")
     LiveData<List<mytable>> getAllWords();
+
+    @Query("SELECT * FROM products")
+    LiveData<List<customer.barcode.barcodewebx.productdatabasemodels.Product>> getallproductinfo();
+
+    @Insert
+    void insertproducts(List<customer.barcode.barcodewebx.productdatabasemodels.Product> all);
 
     @Query("SELECT * from history ")
     LiveData<List<historytable>> getAllHis();

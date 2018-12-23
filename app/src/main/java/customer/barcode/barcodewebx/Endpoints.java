@@ -2,6 +2,7 @@ package customer.barcode.barcodewebx;
 
 
 import customer.barcode.barcodewebx.modelsauth.Roottoken;
+import customer.barcode.barcodewebx.productdatabasemodels.Productroot;
 import customer.barcode.barcodewebx.productmodels.Rootproductdetail;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -23,6 +24,9 @@ public interface Endpoints {
     @FormUrlEncoded
     @POST("login")
     Call<Roottoken> signuser(@Header("Content-Type") String content, @Field("email")String email, @Field("password") String string);
+
+    @GET("product")
+    Call<Productroot> getallproducts(@Header("Authorization")String token );
 
 
 }

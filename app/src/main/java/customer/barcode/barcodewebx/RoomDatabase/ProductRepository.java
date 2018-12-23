@@ -6,17 +6,21 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
+import customer.barcode.barcodewebx.productdatabasemodels.Product;
+
 public class ProductRepository {
 
     private WordDao mWordDao;
     private LiveData<List<mytable>> mAllProd;
     private LiveData<List<historytable>> mAllhis;
+    private LiveData<List<Product>> mallprodetails;
 
     ProductRepository(Application application) {
         ProductRoomDatabase db = ProductRoomDatabase.getDatabase(application);
         mWordDao = db.wordDao();
         mAllProd = mWordDao.getAllWords();
         mAllhis=mWordDao.getAllHis();
+        mallprodetails=mWordDao.getallproductinfo();
     }
 
     LiveData<List<mytable>> getAllWords() {
@@ -26,6 +30,9 @@ public class ProductRepository {
     LiveData<List<historytable>> getAllHis() {
         return mAllhis;
     }
+
+    LiveData<List<Product>> getproductdetails(){return mallprodetails;}
+
 
 
 

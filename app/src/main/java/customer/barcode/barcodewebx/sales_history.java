@@ -9,6 +9,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
 import java.util.List;
@@ -36,9 +38,13 @@ public class sales_history extends AppCompatActivity {
         history_recycle.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         history_recycle.setLayoutManager(linearLayoutManager);
-        history_recycle.setItemAnimator(new DefaultItemAnimator());
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(this, R.anim.layoutanimation);
+        history_recycle.setLayoutAnimation(controller);
         mAdapter = new salesAdapter(this);
         history_recycle.setAdapter(mAdapter);
+        history_recycle.scheduleLayoutAnimation();
+
 
         mWordViewModel = ViewModelProviders.of(this).get(productViewmodel.class);
 

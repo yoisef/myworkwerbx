@@ -134,9 +134,9 @@ public class MainActivity extends AppCompatActivity {
                             Double curprice = Double.parseDouble(currenttable.getPprice());
                             if (currenttable.getPitemn()!=null)
                             {
-                                int num= currenttable.getPitemn();
-                                Double totalfotitem=num*curprice;
-                                total = total + totalfotitem;
+
+
+                                total = total + curprice;
                             }
 
                         }
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                             String currentcoast = myproducts.get(i).getPprice();
                             int items = myproducts.get(i).getPitemn();
                             totalorderitems = totalorderitems + items;
-                            Double costofproductitems = Double.parseDouble(currentcoast) * items;
+                            Double costofproductitems = Double.parseDouble(currentcoast) ;
                             totalordercoast = totalordercoast + costofproductitems;
                             //retrofit connection with barcode 3shan tn2sa
                             //response lw succful 7t7zfa mn recycle
@@ -277,28 +277,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //lwmshnag7toastbarcode msh mtsgl
-                                         //lw failure yb2a connecton fail
 
-
-                /*
-
-                builder1 = new android.app.AlertDialog.Builder(MainActivity.this);
-                View view = LayoutInflater.from(MainActivity.this.getApplicationContext()).inflate(R.layout.payayout, null);
-                TextView transtext = view.findViewById(R.id.transfer);
-                builder1.setView(view);
-                alertDialog1 = builder1.create();
-                alertDialog1.show();
-                transtext.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog1.cancel();
-                        Toast toast = Toast.makeText(MainActivity.this, "Verifiying$Transfering the cart item... ", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.TOP | Gravity.CENTER, 0, 50);
-                        toast.show();
-                    }
-                });
-                */
 
 
 
@@ -520,8 +499,9 @@ public class MainActivity extends AppCompatActivity {
                         prodimg = response.body().getProduct().getImage().getUrl();
                         broddetail = response.body().getProduct().getDescription();
                         brodprice = response.body().getProduct().getPrice();
+                        Double totalproductcost=Double.parseDouble(brodprice)*itemsnum;
                         prodcat = response.body().getProduct().getCategory().getName();
-                        mytable word = new mytable(pronam, prodbar,itemsnum, prodimg, broddetail, brodprice, prodcat);
+                        mytable word = new mytable(pronam, prodbar,itemsnum, prodimg, broddetail, String.valueOf(totalproductcost), prodcat);
                         mWordViewModel.insert(word);
                         // myrecycle.scrollToPosition(myrecycle.getAdapter().getItemCount() - 1);
 
