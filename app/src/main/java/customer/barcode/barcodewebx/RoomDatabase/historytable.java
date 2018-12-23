@@ -3,7 +3,14 @@ package customer.barcode.barcodewebx.RoomDatabase;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
+
+import java.util.List;
+
+
+import customer.barcode.barcodewebx.DataConvertor;
+import customer.barcode.barcodewebx.list;
 
 @Entity(tableName = "history")
 public class historytable {
@@ -20,16 +27,23 @@ public class historytable {
 
 
 
+
+    @TypeConverters(DataConvertor.class)
+    public final List<mytable> orlist;
+
+
+
     @ColumnInfo(name = "oramount")
     private String oramount;
     @ColumnInfo(name = "orunits")
     private String orunits;
 
-    public historytable(Integer ornum,String ordata,String oramount ,String orunits)
+    public historytable(Integer ornum,String ordata,List<mytable> orlist,String oramount ,String orunits)
     {
         this.oramount=oramount;
         this.ordata=ordata;
         this.ornum=ornum;
+        this.orlist=orlist;
         this.orunits=orunits;
 
     }
@@ -72,6 +86,11 @@ public class historytable {
     public void setOrunits(String orunits) {
         this.orunits = orunits;
     }
+    public List<mytable> getOrlist() {
+        return orlist;
+    }
+
+
 
 
 }

@@ -32,6 +32,9 @@ public class mytable {
 
 
 
+
+
+
     public mytable(String pname , String pbar, Integer pitemn, String pimg, String pdetail, String pprice, String pcat)
     {
         this.pbar=pbar;

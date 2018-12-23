@@ -29,5 +29,9 @@
     <string name="totalsales">Total sales :</string>
     <string name="removehistory">Remove History</string>
     <string name="ordermenu">List of Orders</string>
+    <string name="payconfirmation">Do you want to delete them from inventory ?</string>
+    <string name="titlepayconf">Confirm deletion</string>
+    <string name="showdetails">Show Details</string>
+    <string name="hidedetails">Hide Details</string>
 
 </resources>

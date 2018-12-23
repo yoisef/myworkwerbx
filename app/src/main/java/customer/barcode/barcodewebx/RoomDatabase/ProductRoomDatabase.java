@@ -4,12 +4,16 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import customer.barcode.barcodewebx.DataConvertor;
 
-@Database(entities = {mytable.class,historytable.class}, version = 3,exportSchema = false)
+
+@Database(entities = {mytable.class,historytable.class}, version = 4,exportSchema = false)
+@TypeConverters(DataConvertor.class)
 public abstract class ProductRoomDatabase extends RoomDatabase {
 
     public abstract WordDao wordDao();

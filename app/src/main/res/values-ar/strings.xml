@@ -29,4 +29,9 @@
     <string name="totalsales"> إجمالي المبيعات :</string>
     <string name="removehistory">أحذف الذاكرة</string>
     <string name="ordermenu">قائمة الطلبات</string>
+    <string name="payconfirmation">هل تريد حذفهم من المخزون ؟</string>
+    <string name="titlepayconf">تاكيد الحذف</string>
+    <string name="showdetails">عرض التفاصيل</string>
+    <string name="hidedetails">إخفاء التفاصيل </string>
+
 </resources>

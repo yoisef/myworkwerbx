@@ -200,62 +200,84 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                int totalorderitems=0;
-                Double totalordercoast=0.0;
-                int i;
-                payprpgressbarr.post(new Runnable() {
-                    @Override
-                    public void run() {
+                TextView okk, canceel;
 
-                        payprpgressbarr.setVisibility(View.VISIBLE);
+                builder1 = new android.app.AlertDialog.Builder(MainActivity.this);
+
+                View myview = LayoutInflater.from(MainActivity.this.getApplicationContext()).inflate(R.layout.payconfirmation, null);
+                okk = myview.findViewById(R.id.okkpay);
+                canceel = myview.findViewById(R.id.cancellpay);
+                builder1.setView(myview);
+                alertDialog1 = builder1.create();
+                alertDialog1.show();
+                okk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        int totalorderitems = 0;
+                        Double totalordercoast = 0.0;
+                        int i;
+                        payprpgressbarr.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                payprpgressbarr.setVisibility(View.VISIBLE);
+
+                            }
+
+
+                        });
+
+                        for (i = 0; i < myproducts.size(); i++) {
+
+                            String currentproduct = myproducts.get(i).getPbar();
+                            String currentcoast = myproducts.get(i).getPprice();
+                            int items = myproducts.get(i).getPitemn();
+                            totalorderitems = totalorderitems + items;
+                            Double costofproductitems = Double.parseDouble(currentcoast) * items;
+                            totalordercoast = totalordercoast + costofproductitems;
+                            //retrofit connection with barcode 3shan tn2sa
+                            //response lw succful 7t7zfa mn recycle
+                            if (myproducts.size() == 0) {
+
+                            } else {
+                                logintest(currentproduct);
+                            }
+
+
+                        }
+
+                        payprpgressbarr.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                payprpgressbarr.setVisibility(View.GONE);
+
+                            }
+                        });
+
+
+                        historytable myhis = new historytable(1, Calendar.getInstance().getTime().toString(),myproducts, String.valueOf(totalordercoast), String.valueOf(totalorderitems));
+                        mWordViewModel.inserthis(myhis);
+
+                        alertDialog1.cancel();
 
                     }
 
 
                 });
-
-                for (i = 0; i < myproducts.size(); i++) {
-
-                    String currentproduct = myproducts.get(i).getPbar();
-                    String currentcoast=myproducts.get(i).getPprice();
-                    int items = myproducts.get(i).getPitemn();
-                    totalorderitems=totalorderitems+items;
-                    Double costofproductitems=Double.parseDouble(currentcoast)*items;
-                    totalordercoast=totalordercoast+costofproductitems;
-                    //retrofit connection with barcode 3shan tn2sa
-                    //response lw succful 7t7zfa mn recycle
-                     if (myproducts.size()==0)
-                     {
-
-                     }
-                     else {
-                         logintest(currentproduct);
-                     }
-
-
-                        }
-
-                payprpgressbarr.post(new Runnable() {
-                                         @Override
-                                         public void run() {
-
-                                             payprpgressbarr.setVisibility(View.GONE);
-
-                                         }
+                canceel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog1.cancel();
+                    }
                 });
 
-
-
-
-
-
-
-
-                historytable myhis = new historytable(1, Calendar.getInstance().getTime().toString(),String.valueOf(totalordercoast) , String.valueOf(totalorderitems));
-                mWordViewModel.inserthis(myhis);
             }
+        });
 
-                                         //lwmshnag7toastbarcode msh mtsgl
+
+        //lwmshnag7toastbarcode msh mtsgl
                                          //lw failure yb2a connecton fail
 
 
@@ -278,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
                 });
                 */
 
-                                     });
+
 
 
         //initialize Enterbarcode Button insted scan with camera
