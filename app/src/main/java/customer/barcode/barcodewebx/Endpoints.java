@@ -33,6 +33,7 @@ public interface Endpoints {
     @GET("user")
     Call<Userroot> getuserdata(@Header("Authorization") String auth);
 
+    @FormUrlEncoded
     @POST("retailersale")
     Call<Saleroot> getsalecondition(@Field("barcode") String barcode,@Field("quantity")int qua,@Field("retailer_id")String id,@Field("live") Boolean value);
 

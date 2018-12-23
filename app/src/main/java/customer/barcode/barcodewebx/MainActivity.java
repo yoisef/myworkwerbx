@@ -48,6 +48,8 @@ import customer.barcode.barcodewebx.RoomDatabase.historytable;
 import customer.barcode.barcodewebx.RoomDatabase.mytable;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
 import customer.barcode.barcodewebx.productmodels.Rootproductdetail;
+import customer.barcode.barcodewebx.salemodel.Saleroot;
+import customer.barcode.barcodewebx.usermodels.Userroot;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
     private android.app.AlertDialog.Builder builder, builder1;
     private android.app.AlertDialog alertDialog, alertDialog1;
     private Call<Rootproductdetail> mcall;
+    private Call<Saleroot> salecall;
+    private Call<Userroot> usercall;
     private Recycleadapter mAdapter;
     private TextView pricetotal;
     private LinearLayout paylinear;
@@ -83,10 +87,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         myproducts=new ArrayList<>();
 
         prefs = getSharedPreferences("token", Context.MODE_PRIVATE);
      usertoken=prefs.getString("usertoken","def");
+        getretailerid();
 
 
 
@@ -241,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
                             if (myproducts.size() == 0) {
 
                             } else {
-                                logintest(currentproduct);
+                                logintest(currentproduct,items);
                             }
 
 
@@ -620,48 +627,37 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-    private void logintest(final String barcodedata)
+    private void logintest(final String barcodedata,int itemsnumber)
     {
+       String retailerid= getSharedPreferences("retailerid",Context.MODE_PRIVATE).getString("id","n");
         Retrofitclient myretro=Retrofitclient.getInstance();
       Retrofit retrofit=  myretro.getretro();
 
         final Endpoints myendpoints = retrofit.create(Endpoints.class);
 
-        mcall = myendpoints.getdetails("Bearer "+usertoken,barcodedata);
-        mcall.enqueue(new Callback<Rootproductdetail>() {
+        salecall = myendpoints.getsalecondition(barcodedata, itemsnumber,retailerid,true);
+        salecall.enqueue(new Callback<Saleroot>() {
             @Override
-            public void onResponse(Call<Rootproductdetail> call, Response<Rootproductdetail> response) {
+            public void onResponse(Call<Saleroot> call, Response<Saleroot> response) {
 
-                if (response.isSuccessful()) {
-                    mAdapter.deleterow(0);
-
-                    if (response.body().getProduct()!=null) {
-
-                        mAdapter.deleterow(0);
-
-                    }
-                    else
+                if (response.isSuccessful())
+                {
+                    if(response.body()!=null)
                     {
-                        mAdapter.deleterow(0);
-                        Toast.makeText(MainActivity.this,"not recorded in database",Toast.LENGTH_LONG).show();
-
+                       String oper= response.body().getData().getOperation();
+                       if (oper.trim().equals("success"))
+                       {
+                           mAdapter.deleterow(0);
+                       }
                     }
-                } else {
-                    mAdapter.deleterow(0);
-                    Toast.makeText(MainActivity.this,"not recorded in database",Toast.LENGTH_LONG).show();
-
                 }
             }
 
             @Override
-            public void onFailure(Call<Rootproductdetail> call, Throwable t) {
-
-                Toast.makeText(MainActivity.this,"Please connect to internet",Toast.LENGTH_LONG).show();
-
+            public void onFailure(Call<Saleroot> call, Throwable t) {
 
             }
         });
-
 
 
 
@@ -757,6 +753,45 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void getretailerid()
+    {
+        Retrofitclient myretro=Retrofitclient.getInstance();
+        Retrofit retrofittok=  myretro.getretro();
+        final Endpoints myendpoints = retrofittok.create(Endpoints.class);
+        usercall=myendpoints.getuserdata("Bearer "+usertoken);
+        usercall.enqueue(new Callback<Userroot>() {
+            @Override
+            public void onResponse(Call<Userroot> call, Response<Userroot> response) {
+
+                if (response.isSuccessful())
+                {
+                    if (response.body()!=null)
+                    {
+                        String retailerid=response.body().getAuth().getId();
+                        SharedPreferences preferences=getSharedPreferences("retailerid",Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor=preferences.edit();
+                        editor.putString("id",retailerid);
+                        editor.apply();
+                        Toast.makeText(MainActivity.this,"id="+retailerid,Toast.LENGTH_LONG).show();
+
+                    }
+
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this,"problem with authentication",Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Userroot> call, Throwable t) {
+
+
+            }
+        });
+    }
     }
 
 
