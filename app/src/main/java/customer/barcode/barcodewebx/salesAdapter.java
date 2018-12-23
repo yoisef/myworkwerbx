@@ -56,7 +56,7 @@ public class salesAdapter extends RecyclerView.Adapter<salesAdapter.viewholder> 
         if (mHistory!=null)
         {
             holder.myrecycle.setLayoutManager(new LinearLayoutManager(con));
-            holder.myrecycle.setAdapter(new Recycleadapter(con));
+            holder.myrecycle.setAdapter(new detailsadapter(mHistory.get(position).getOrlist(),con));
 
             historytable mytable=mHistory.get(position);
             holder.orderid.setText(String.valueOf(position+1));
