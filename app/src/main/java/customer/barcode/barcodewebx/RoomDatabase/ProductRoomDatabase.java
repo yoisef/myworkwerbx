@@ -10,10 +10,10 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import customer.barcode.barcodewebx.DataConvertor;
+import customer.barcode.barcodewebx.productdatabasemodels.Product;
 
 
-@Database(entities = {mytable.class,historytable.class}, version = 4,exportSchema = false)
-@TypeConverters(DataConvertor.class)
+@Database(entities = {mytable.class,historytable.class,prooducts_table.class, Product.class}, version = 6,exportSchema = false)
 public abstract class ProductRoomDatabase extends RoomDatabase {
 
     public abstract WordDao wordDao();

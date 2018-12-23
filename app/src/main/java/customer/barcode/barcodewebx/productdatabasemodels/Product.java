@@ -1,13 +1,25 @@
 package customer.barcode.barcodewebx.productdatabasemodels;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import customer.barcode.barcodewebx.converors.imageconvertor;
+
+@Entity(tableName = "product_data")
 public class Product {
 
-    @SerializedName("id")
-    @Expose
-    private String id;
+
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+
+
+
     @SerializedName("name")
     @Expose
     private String name;
@@ -35,37 +47,48 @@ public class Product {
     @SerializedName("unit_id")
     @Expose
     private String unitId;
-    @SerializedName("subcateogry_id")
-    @Expose
-    private Object subcateogryId;
+
     @SerializedName("created_at")
     @Expose
     private String createdAt;
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    /*
     @SerializedName("company")
     @Expose
     private Company company;
-    @SerializedName("image")
-    @Expose
-    private Image image;
+
+    @TypeConverters(imageconvertor.class)
+   private Image image;
     @SerializedName("unit")
     @Expose
     private Unit unit;
     @SerializedName("category")
     @Expose
     private Category category;
-    @SerializedName("sub_category")
-    @Expose
-    private Object subCategory;
+    */
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
+    public Product(String name, String price, String barcode, String description, Integer active, String reorder, String companyId, String categoryId, String unitId, String createdAt, String updatedAt) {
+        this.name = name;
+        this.price = price;
+        this.barcode = barcode;
+        this.description = description;
+        this.active = active;
+        this.reorder = reorder;
+        this.companyId = companyId;
+        this.categoryId = categoryId;
+        this.unitId = unitId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        /*
+        this.company = company;
+        this.image = image;
+        this.unit = unit;
+        this.category = category;
+        */
+
     }
 
     public String getName() {
@@ -139,14 +162,15 @@ public class Product {
     public void setUnitId(String unitId) {
         this.unitId = unitId;
     }
-
-    public Object getSubcateogryId() {
-        return subcateogryId;
+    public int getId() {
+        return id;
     }
 
-    public void setSubcateogryId(Object subcateogryId) {
-        this.subcateogryId = subcateogryId;
+    public void setId(int id) {
+        this.id = id;
     }
+
+
 
     public String getCreatedAt() {
         return createdAt;
@@ -163,6 +187,7 @@ public class Product {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
+    /*
 
     public Company getCompany() {
         return company;
@@ -195,13 +220,6 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
-
-    public Object getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(Object subCategory) {
-        this.subCategory = subCategory;
-    }
+*/
 
 }

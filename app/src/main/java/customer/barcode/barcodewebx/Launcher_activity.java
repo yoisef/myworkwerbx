@@ -68,6 +68,7 @@ public class Launcher_activity extends AppCompatActivity {
                     if (response.body().getProducts()!=null)
                     {
                         List<Product> allproducts= response.body().getProducts();
+                       // mWordViewModel.insertallproducts(allproducts);
                     }
 
                 }

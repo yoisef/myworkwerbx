@@ -8,6 +8,7 @@ import android.arch.persistence.room.TypeConverters;
 import java.util.List;
 
 import customer.barcode.barcodewebx.DataConvertor;
+import customer.barcode.barcodewebx.DataConvertordetails;
 import customer.barcode.barcodewebx.productdatabasemodels.Product;
 
 @Entity(tableName = "products")
@@ -17,7 +18,7 @@ public class prooducts_table {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @TypeConverters(DataConvertor.class)
+    @TypeConverters(DataConvertordetails.class)
     public  List<Product> prodet;
 
 
@@ -41,7 +42,7 @@ public class prooducts_table {
 
     public prooducts_table(List<Product> prodet)
     {
-
+         this.prodet=prodet;
     }
 
 }

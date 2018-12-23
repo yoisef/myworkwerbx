@@ -13,14 +13,14 @@ public class ProductRepository {
     private WordDao mWordDao;
     private LiveData<List<mytable>> mAllProd;
     private LiveData<List<historytable>> mAllhis;
-    private LiveData<List<Product>> mallprodetails;
+
 
     ProductRepository(Application application) {
         ProductRoomDatabase db = ProductRoomDatabase.getDatabase(application);
         mWordDao = db.wordDao();
         mAllProd = mWordDao.getAllWords();
         mAllhis=mWordDao.getAllHis();
-        mallprodetails=mWordDao.getallproductinfo();
+
     }
 
     LiveData<List<mytable>> getAllWords() {
@@ -31,7 +31,6 @@ public class ProductRepository {
         return mAllhis;
     }
 
-    LiveData<List<Product>> getproductdetails(){return mallprodetails;}
 
 
 
@@ -50,6 +49,8 @@ public class ProductRepository {
     public void insert (historytable hist) {
         new insertAsyncTaskhis(mWordDao).execute(hist);
     }
+
+    public void insertproducts(List<Product> mylist){new insertproducts(mWordDao).execute(mylist);}
     private static class insertAsyncTaskhis extends AsyncTask<historytable, Void, Void> {
 
         private WordDao mAsyncTaskDao;
@@ -140,6 +141,22 @@ public class ProductRepository {
             return null;
         }
     }
+
+    private static class insertproducts extends AsyncTask< List<Product> , Void, Void> {
+
+        private WordDao mAsyncTaskDao;
+
+        insertproducts(WordDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(List<Product>... params) {
+            mAsyncTaskDao.insertproducts(params[0]);
+            return null;
+        }
+    }
+
 
 
 }
