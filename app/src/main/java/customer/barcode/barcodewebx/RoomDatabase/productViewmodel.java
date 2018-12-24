@@ -13,11 +13,14 @@ public class productViewmodel extends AndroidViewModel {
     private LiveData<List<mytable>> mAllpro;
     private LiveData<List<historytable>> mallhis;
     private LiveData<List<Product>> allproddetails;
+    private LiveData<Product> rowinfo;
+    private Product myrow;
     public productViewmodel (Application application) {
         super(application);
         mRepository = new ProductRepository(application);
         mAllpro = mRepository.getAllWords();
         mallhis=mRepository.getAllHis();
+       // rowinfo=mRepository.getrowdetails(barcode);
 
     }
 
@@ -25,6 +28,10 @@ public class productViewmodel extends AndroidViewModel {
 
 
     public void insert(mytable word) { mRepository.insert(word); }
+
+    public void getrowdetails(long barcod){mRepository.getrowdetails(barcod);}
+
+    public void insertrowinproductlist(Product product){mRepository.insert_rowin_productlist(product);}
 
     public void delterow(mytable num){mRepository.deleterow(num);}
 

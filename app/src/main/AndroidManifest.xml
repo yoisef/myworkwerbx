@@ -42,7 +42,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".sales_history" />
-        <activity android:name=".order_details"></activity>
+        <activity android:name=".order_details" />
+        <activity android:name=".testdatabase"></activity>
     </application>
 
 </manifest>

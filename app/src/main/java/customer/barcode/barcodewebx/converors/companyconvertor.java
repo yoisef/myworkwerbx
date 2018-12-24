@@ -16,20 +16,19 @@ public class companyconvertor {
 
 
     @TypeConverter
-    public static List<Company> stringToSomeObjectList(String data) {
+    public static Company stringToSomeObjectList(String data) {
         Gson gson = new Gson();
         if (data == null) {
-            return Collections.emptyList();
+            return new Company();
         }
 
-        Type listType = new TypeToken<List<Company>>() {
-        }.getType();
+        Type listType = new TypeToken<Company>() {}.getType();
 
         return gson.fromJson(data, listType);
     }
 
     @TypeConverter
-    public static String someObjectListToString(List<Image> someObjects) {
+    public static String someObjectListToString(Company someObjects) {
         Gson gson = new Gson();
         return gson.toJson(someObjects);
     }

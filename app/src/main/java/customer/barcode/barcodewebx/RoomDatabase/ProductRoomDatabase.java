@@ -13,7 +13,7 @@ import customer.barcode.barcodewebx.DataConvertor;
 import customer.barcode.barcodewebx.productdatabasemodels.Product;
 
 
-@Database(entities = {mytable.class,historytable.class,prooducts_table.class, Product.class}, version = 6,exportSchema = false)
+@Database(entities = {mytable.class,historytable.class,prooducts_table.class, Product.class}, version = 7,exportSchema = false)
 public abstract class ProductRoomDatabase extends RoomDatabase {
 
     public abstract WordDao wordDao();

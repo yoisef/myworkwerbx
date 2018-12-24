@@ -50,7 +50,9 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
         mInflater = LayoutInflater.from(context);
 
 
-        mWordViewModel = ViewModelProviders.of((FragmentActivity) context).get(productViewmodel.class);
+
+
+       mWordViewModel = ViewModelProviders.of((FragmentActivity) context).get(productViewmodel.class);
 
     }
 

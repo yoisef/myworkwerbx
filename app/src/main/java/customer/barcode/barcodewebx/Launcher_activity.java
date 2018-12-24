@@ -29,7 +29,9 @@ public class Launcher_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher_activity);
 
+       // mWordViewModel = ViewModelProviders.of(this, new factoryclass(this.getApplication(),62211611)).get(productViewmodel.class);
         mWordViewModel = ViewModelProviders.of(this).get(productViewmodel.class);
+
 
 
 
@@ -40,12 +42,14 @@ public class Launcher_activity extends AppCompatActivity {
                 SharedPreferences prefs = getSharedPreferences("token", Context.MODE_PRIVATE);
                 String condition= prefs.getString("usertoken","def");
 
+                getallproducts();
+
 
                 choosebeginingactivity(condition);
                 finish();
 
             }
-        },3000);
+        },5000);
     }
 
     public void getallproducts()
@@ -68,7 +72,12 @@ public class Launcher_activity extends AppCompatActivity {
                     if (response.body().getProducts()!=null)
                     {
                         List<Product> allproducts= response.body().getProducts();
-                       // mWordViewModel.insertallproducts(allproducts);
+                        for (int i=0;i<allproducts.size();i++)
+                        {
+                            Product myproduct=allproducts.get(i);
+                            mWordViewModel.insertrowinproductlist(myproduct);
+                        }
+                      //  mWordViewModel.insertallproducts(allproducts);
                     }
 
                 }

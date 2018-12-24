@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private Recycleadapter mAdapter;
     private TextView pricetotal;
     private LinearLayout paylinear;
-    private productViewmodel mWordViewModel,mHisViewModel;
+    private productViewmodel mWordViewModel;
     private SharedPreferences prefs;
     private SharedPreferences.Editor myeditor;
     private String usertoken;
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(MainActivity.this,sales_history.class));
+                startActivity(new Intent(MainActivity.this,testdatabase.class));
             }
         });
 

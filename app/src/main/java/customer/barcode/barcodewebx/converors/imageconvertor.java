@@ -17,19 +17,19 @@ public class imageconvertor {
 
 
     @TypeConverter
-    public static List<Image> stringToSomeObjectList(String data) {
+    public static Image stringToSomeObjectList(String data) {
         Gson gson = new Gson();
         if (data == null) {
-            return Collections.emptyList();
+            return new Image();
         }
 
-        Type listType = new TypeToken<List<Image>>() {}.getType();
+        Type listType = new TypeToken<Image>() {}.getType();
 
         return gson.fromJson(data, listType);
     }
 
     @TypeConverter
-    public static String someObjectListToString(List<Image> someObjects) {
+    public static String someObjectListToString(Image someObjects) {
         Gson gson = new Gson();
         return gson.toJson(someObjects);
     }

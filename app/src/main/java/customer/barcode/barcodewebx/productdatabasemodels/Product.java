@@ -7,7 +7,10 @@ import android.arch.persistence.room.TypeConverters;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import customer.barcode.barcodewebx.converors.categoryconvertor;
+import customer.barcode.barcodewebx.converors.companyconvertor;
 import customer.barcode.barcodewebx.converors.imageconvertor;
+import customer.barcode.barcodewebx.converors.unitconvertor;
 
 @Entity(tableName = "product_data")
 public class Product {
@@ -16,10 +19,6 @@ public class Product {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-
-
-
-
     @SerializedName("name")
     @Expose
     private String name;
@@ -54,23 +53,32 @@ public class Product {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-    /*
+
     @SerializedName("company")
     @Expose
+    @TypeConverters(companyconvertor.class)
     private Company company;
 
+    @SerializedName("image")
+    @Expose
     @TypeConverters(imageconvertor.class)
    private Image image;
+
     @SerializedName("unit")
     @Expose
+    @TypeConverters(unitconvertor.class)
     private Unit unit;
+
     @SerializedName("category")
     @Expose
+    @TypeConverters(categoryconvertor.class)
     private Category category;
-    */
 
 
-    public Product(String name, String price, String barcode, String description, Integer active, String reorder, String companyId, String categoryId, String unitId, String createdAt, String updatedAt) {
+
+    public Product(String name, String price, String barcode, String description, Integer active,
+                   String reorder, String companyId, String categoryId, String unitId,
+                   String createdAt, String updatedAt, Company company,Image image,Unit unit,Category category) {
         this.name = name;
         this.price = price;
         this.barcode = barcode;
@@ -82,12 +90,12 @@ public class Product {
         this.unitId = unitId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        /*
+
         this.company = company;
         this.image = image;
         this.unit = unit;
         this.category = category;
-        */
+
 
     }
 
@@ -187,7 +195,7 @@ public class Product {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-    /*
+
 
     public Company getCompany() {
         return company;
@@ -220,6 +228,6 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
-*/
+
 
 }
