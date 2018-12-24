@@ -1,84 +1,69 @@
-package customer.barcode.barcodewebx.productdatabasemodels;
+package customer.barcode.barcodewebx.RoomDatabase;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import customer.barcode.barcodewebx.converors.categoryconvertor;
-import customer.barcode.barcodewebx.converors.companyconvertor;
-import customer.barcode.barcodewebx.converors.imageconvertor;
-import customer.barcode.barcodewebx.converors.unitconvertor;
+import customer.barcode.barcodewebx.productmodels.Category;
+import customer.barcode.barcodewebx.productmodels.Company;
+import customer.barcode.barcodewebx.productmodels.Image;
+import customer.barcode.barcodewebx.productmodels.Unit;
 
-@Entity(tableName = "product_data")
-public class Product {
-
+@Entity(tableName = "products_table")
+public class Productltable {
 
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-    @SerializedName("name")
-    @Expose
+
+
+    @ColumnInfo(name = "name")
     private String name;
-    @SerializedName("price")
-    @Expose
+
+    @ColumnInfo(name = "price")
     private String price;
-    @SerializedName("barcode")
-    @Expose
+
+    @ColumnInfo(name = "barcode")
     private String barcode;
-    @SerializedName("description")
-    @Expose
+
+    @ColumnInfo(name = "description")
     private String description;
-    @SerializedName("active")
-    @Expose
+
+    @ColumnInfo(name = "active")
     private Integer active;
-    @SerializedName("reorder")
-    @Expose
+
+    @ColumnInfo(name = "reorder")
     private String reorder;
-    @SerializedName("company_id")
-    @Expose
+
+    @ColumnInfo
     private String companyId;
-    @SerializedName("category_id")
-    @Expose
+
     private String categoryId;
-    @SerializedName("unit_id")
-    @Expose
+
     private String unitId;
 
-    @SerializedName("created_at")
-    @Expose
+    private Object subcateogryId;
+
     private String createdAt;
-    @SerializedName("updated_at")
-    @Expose
+
     private String updatedAt;
 
-    @SerializedName("company")
-    @Expose
-    @TypeConverters(companyconvertor.class)
     private Company company;
 
-    @SerializedName("image")
-    @Expose
-    @TypeConverters(imageconvertor.class)
-   private Image image;
+    private Image image;
 
-    @SerializedName("unit")
-    @Expose
-    @TypeConverters(unitconvertor.class)
     private Unit unit;
 
-    @SerializedName("category")
-    @Expose
-    @TypeConverters(categoryconvertor.class)
-    private Category category;
-
-
-
-    public Product(String name, String price, String barcode, String description, Integer active,
-                   String reorder, String companyId, String categoryId, String unitId,
-                   String createdAt, String updatedAt, Company company,Image image,Unit unit,Category category) {
+    public Productltable(int id, String name, String price, String barcode,
+                         String description, Integer active, String reorder,
+                         String companyId, String categoryId, String unitId,
+                         Object subcateogryId, String createdAt, String updatedAt,
+                         Company company, Image image, Unit unit, Category category,
+                         Object subCategory) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.barcode = barcode;
@@ -88,15 +73,29 @@ public class Product {
         this.companyId = companyId;
         this.categoryId = categoryId;
         this.unitId = unitId;
+        this.subcateogryId = subcateogryId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-
         this.company = company;
         this.image = image;
         this.unit = unit;
         this.category = category;
+        this.subCategory = subCategory;
+    }
 
+    @SerializedName("category")
+    @Expose
+    private Category category;
+    @SerializedName("sub_category")
+    @Expose
+    private Object subCategory;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -170,15 +169,14 @@ public class Product {
     public void setUnitId(String unitId) {
         this.unitId = unitId;
     }
-    public int getId() {
-        return id;
+
+    public Object getSubcateogryId() {
+        return subcateogryId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSubcateogryId(Object subcateogryId) {
+        this.subcateogryId = subcateogryId;
     }
-
-
 
     public String getCreatedAt() {
         return createdAt;
@@ -195,7 +193,6 @@ public class Product {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 
     public Company getCompany() {
         return company;
@@ -229,5 +226,12 @@ public class Product {
         this.category = category;
     }
 
+    public Object getSubCategory() {
+        return subCategory;
+    }
+
+    public void setSubCategory(Object subCategory) {
+        this.subCategory = subCategory;
+    }
 
 }

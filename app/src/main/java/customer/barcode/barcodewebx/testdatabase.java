@@ -9,7 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
-import customer.barcode.barcodewebx.productdatabasemodels.Product;
+
 
 public class testdatabase extends AppCompatActivity {
 
@@ -22,24 +22,10 @@ public class testdatabase extends AppCompatActivity {
         setContentView(R.layout.activity_testdatabase);
         mytext=findViewById(R.id.testdata);
 
-        mWordViewModel = ViewModelProviders.of(this, new factoryclass(this.getApplication(),62211611)).get(productViewmodel.class);
 
 
 
 
-    mWordViewModel.getrowdetails(62211611).observe(this, new Observer<Product>() {
-        @Override
-        public void onChanged(@Nullable Product product) {
-
-
-            Toast.makeText(testdatabase.this,product.getName(),Toast.LENGTH_SHORT).show();
-        }
-
-
-
-       //   mytext.setText();
-
-    });
 
     }
 }

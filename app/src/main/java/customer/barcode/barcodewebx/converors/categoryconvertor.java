@@ -7,8 +7,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
-import customer.barcode.barcodewebx.productdatabasemodels.Category;
-import customer.barcode.barcodewebx.productdatabasemodels.Image;
+import customer.barcode.barcodewebx.productmodels.Category;
+
 
 public class categoryconvertor {
 

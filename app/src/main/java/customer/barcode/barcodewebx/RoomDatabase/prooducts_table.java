@@ -9,7 +9,8 @@ import java.util.List;
 
 import customer.barcode.barcodewebx.DataConvertor;
 import customer.barcode.barcodewebx.DataConvertordetails;
-import customer.barcode.barcodewebx.productdatabasemodels.Product;
+
+import customer.barcode.barcodewebx.productmodels.Product;
 
 @Entity(tableName = "products")
 public class prooducts_table {

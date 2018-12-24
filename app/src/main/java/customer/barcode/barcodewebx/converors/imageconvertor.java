@@ -9,8 +9,8 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
-import customer.barcode.barcodewebx.productdatabasemodels.Image;
-import customer.barcode.barcodewebx.productdatabasemodels.Product;
+import customer.barcode.barcodewebx.productmodels.Image;
+
 
 public class imageconvertor {
 

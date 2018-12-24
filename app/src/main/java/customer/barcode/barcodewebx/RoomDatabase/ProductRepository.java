@@ -7,15 +7,12 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import customer.barcode.barcodewebx.asyncresponse;
-import customer.barcode.barcodewebx.productdatabasemodels.Product;
 
-public class ProductRepository implements asyncresponse{
+public class ProductRepository {
 
     private WordDao mWordDao;
     private LiveData<List<mytable>> mAllProd;
     private LiveData<List<historytable>> mAllhis;
-    private LiveData<Product> mytable;
-    private Product getrowdetails;
 
 
 
@@ -41,14 +38,7 @@ public class ProductRepository implements asyncresponse{
 
 
 
-    @Override
-    public void processFinish(Product output) {
 
-        getrowdetails=output;
-
-    }
-    Product getrowdetails(long barcode){new getrowdata(mWordDao).execute(barcode);
-        return getrowdetails;}
 
 
 
@@ -56,7 +46,6 @@ public class ProductRepository implements asyncresponse{
         new insertAsyncTask(mWordDao).execute(table);
     }
 
-    public void insert_rowin_productlist(Product product){new insertrowinproductlist(mWordDao).execute(product);}
 
 
 
@@ -71,7 +60,6 @@ public class ProductRepository implements asyncresponse{
         new insertAsyncTaskhis(mWordDao).execute(hist);
     }
 
-    public void insertproducts(List<Product> mylist){new insertproducts(mWordDao).execute(mylist);}
 
 
 
@@ -109,43 +97,9 @@ public class ProductRepository implements asyncresponse{
         }
     }
 
-    private static class getrowdata extends AsyncTask<Long, Void, Product> {
-
-        private WordDao mAsyncTaskDao;
-        public ProductRepository response=null;
-
-        getrowdata(WordDao dao) {
-            mAsyncTaskDao = dao;
-        }
-
-        @Override
-        protected Product doInBackground(final Long... params) {
-
-            return mAsyncTaskDao.getrowinfo(params[0]);
-        }
-
-        @Override
-        protected void onPostExecute(Product product) {
-            response.processFinish(product);
-        }
-    }
 
 
 
-    private static class insertrowinproductlist extends AsyncTask<Product, Void, Void> {
-
-        private WordDao mAsyncTaskDao;
-
-        insertrowinproductlist(WordDao dao) {
-            mAsyncTaskDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground( final Product... params) {
-            mAsyncTaskDao.insertrowinproductlist(params[0]);
-            return null;
-        }
-    }
 
     private static class deleterowAsyntask extends AsyncTask<Integer, Void, Void> {
 
@@ -205,20 +159,6 @@ public class ProductRepository implements asyncresponse{
         }
     }
 
-    private static class insertproducts extends AsyncTask< List<Product> , Void, Void> {
-
-        private WordDao mAsyncTaskDao;
-
-        insertproducts(WordDao dao) {
-            mAsyncTaskDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(List<Product>... params) {
-            mAsyncTaskDao.insertproducts(params[0]);
-            return null;
-        }
-    }
 
 
 

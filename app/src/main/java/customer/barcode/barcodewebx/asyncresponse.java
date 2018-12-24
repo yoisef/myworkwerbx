@@ -1,6 +1,7 @@
 package customer.barcode.barcodewebx;
 
-import customer.barcode.barcodewebx.productdatabasemodels.Product;
+
+import customer.barcode.barcodewebx.productmodels.Product;
 
 public interface asyncresponse {
 

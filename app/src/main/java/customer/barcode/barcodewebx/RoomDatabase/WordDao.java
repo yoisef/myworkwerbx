@@ -21,8 +21,7 @@ public interface WordDao {
     @Insert
     void inserthis(historytable table);
 
-    @Insert
-    void insertrowinproductlist(customer.barcode.barcodewebx.productdatabasemodels.Product product);
+
 
     @Query("DELETE FROM product")
     void deleteAll();
@@ -33,8 +32,7 @@ public interface WordDao {
     @Query("UPDATE product SET pitemn = :value1 WHERE pbar = :bar")
     void updateproduct(long value1 ,long bar);
 
-    @Query("SELECT * FROM product_data WHERE barcode = :barcod")
-   customer.barcode.barcodewebx.productdatabasemodels.Product getrowinfo(long barcod);
+
 
     @Delete
     void deleteit(mytable model);
@@ -44,8 +42,6 @@ public interface WordDao {
 
 
 
-    @Insert
-    void insertproducts( List<customer.barcode.barcodewebx.productdatabasemodels.Product> all);
 
     @Query("SELECT * from history ")
     LiveData<List<historytable>> getAllHis();

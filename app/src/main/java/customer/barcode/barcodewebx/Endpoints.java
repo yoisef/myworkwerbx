@@ -2,7 +2,7 @@ package customer.barcode.barcodewebx;
 
 
 import customer.barcode.barcodewebx.modelsauth.Roottoken;
-import customer.barcode.barcodewebx.productdatabasemodels.Productroot;
+
 import customer.barcode.barcodewebx.productmodels.Rootproductdetail;
 import customer.barcode.barcodewebx.salemodel.Saleroot;
 import customer.barcode.barcodewebx.usermodels.Userroot;
@@ -27,8 +27,7 @@ public interface Endpoints {
     @POST("login")
     Call<Roottoken> signuser(@Header("Content-Type") String content, @Field("email")String email, @Field("password") String string);
 
-    @GET("product")
-    Call<Productroot> getallproducts(@Header("Authorization")String token );
+
 
     @GET("user")
     Call<Userroot> getuserdata(@Header("Authorization") String auth);

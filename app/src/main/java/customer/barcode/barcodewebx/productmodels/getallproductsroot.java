@@ -1,10 +1,13 @@
-package customer.barcode.barcodewebx.productdatabasemodels;
+package customer.barcode.barcodewebx.productmodels;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Productroot {
+import java.util.List;
+
+
+
+public class getallproductsroot {
 
     @SerializedName("products")
     @Expose

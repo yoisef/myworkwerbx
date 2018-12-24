@@ -10,7 +10,8 @@ import java.util.Collections;
 import java.util.List;
 
 import customer.barcode.barcodewebx.RoomDatabase.mytable;
-import customer.barcode.barcodewebx.productdatabasemodels.Product;
+import customer.barcode.barcodewebx.productmodels.Product;
+
 
 public class DataConvertordetails {
 

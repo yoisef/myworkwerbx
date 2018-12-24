@@ -47,6 +47,7 @@ import java.util.List;
 import customer.barcode.barcodewebx.RoomDatabase.historytable;
 import customer.barcode.barcodewebx.RoomDatabase.mytable;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
+
 import customer.barcode.barcodewebx.productmodels.Rootproductdetail;
 import customer.barcode.barcodewebx.salemodel.Saleroot;
 import customer.barcode.barcodewebx.usermodels.Userroot;
@@ -792,6 +793,48 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    /*
+    public void getallproducts()
+    {
+
+        String usertoken = getSharedPreferences("token", Context.MODE_PRIVATE).getString("usertoken","def");
+
+
+        Retrofitclient myretro=Retrofitclient.getInstance();
+        Retrofit retrofittok=  myretro.getretro();
+        final Endpoints myendpoints = retrofittok.create(Endpoints.class);
+
+        mcall = myendpoints.getallproducts("Bearer "+usertoken);
+        mcall.enqueue(new Callback<Productroot>() {
+            @Override
+            public void onResponse(Call<Productroot> call, Response<Productroot> response) {
+
+                if (response.isSuccessful())
+                {
+                    if (response.body().getProducts()!=null)
+                    {
+                        List<Product> allproducts= response.body().getProducts();
+                        for (int i=0;i<allproducts.size();i++)
+                        {
+                            Product myproduct=allproducts.get(i);
+                            mWordViewModel.insertrowinproductlist(myproduct);
+                        }
+                        //  mWordViewModel.insertallproducts(allproducts);
+                    }
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Productroot> call, Throwable t) {
+
+            }
+        });
+    }
+    */
     }
 
 

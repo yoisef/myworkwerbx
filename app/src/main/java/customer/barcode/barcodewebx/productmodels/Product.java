@@ -1,13 +1,17 @@
 package customer.barcode.barcodewebx.productmodels;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 public class Product {
 
     @SerializedName("id")
     @Expose
     private String id;
+
     @SerializedName("name")
     @Expose
     private String name;
@@ -53,6 +57,9 @@ public class Product {
     @SerializedName("unit")
     @Expose
     private Unit unit;
+
+
+
     @SerializedName("category")
     @Expose
     private Category category;
