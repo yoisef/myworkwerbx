@@ -32,6 +32,12 @@ public interface WordDao {
     @Query("UPDATE product SET pitemn = :value1 WHERE pbar = :bar")
     void updateproduct(long value1 ,long bar);
 
+    @Insert
+    void insertProductforlist(Productltable product);
+
+    @Query("SELECT * FROM products_table WHERE barcode = :bar")
+    List<Productltable> findProduct(String bar);
+
 
 
     @Delete

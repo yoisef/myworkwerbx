@@ -4,6 +4,7 @@ package customer.barcode.barcodewebx;
 import customer.barcode.barcodewebx.modelsauth.Roottoken;
 
 import customer.barcode.barcodewebx.productmodels.Rootproductdetail;
+import customer.barcode.barcodewebx.productmodels.getallproductsroot;
 import customer.barcode.barcodewebx.salemodel.Saleroot;
 import customer.barcode.barcodewebx.usermodels.Userroot;
 import okhttp3.ResponseBody;
@@ -31,6 +32,9 @@ public interface Endpoints {
 
     @GET("user")
     Call<Userroot> getuserdata(@Header("Authorization") String auth);
+
+    @GET("product")
+    Call<getallproductsroot> getproductdetails(@Header("Authorization") String auth);
 
     @FormUrlEncoded
     @POST("retailersale")

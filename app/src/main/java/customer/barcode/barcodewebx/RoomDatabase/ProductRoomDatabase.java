@@ -12,7 +12,7 @@ import android.support.annotation.NonNull;
 import customer.barcode.barcodewebx.DataConvertor;
 
 
-@Database(entities = {mytable.class,historytable.class,prooducts_table.class}, version = 11,exportSchema = false)
+@Database(entities = {mytable.class,historytable.class,Productltable.class}, version = 13,exportSchema = false)
 public abstract class ProductRoomDatabase extends RoomDatabase {
 
     public abstract WordDao wordDao();

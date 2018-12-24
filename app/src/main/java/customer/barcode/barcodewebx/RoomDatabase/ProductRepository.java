@@ -2,17 +2,20 @@ package customer.barcode.barcodewebx.RoomDatabase;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 
 import java.util.List;
 
-import customer.barcode.barcodewebx.asyncresponse;
+import customer.barcode.barcodewebx.AsyncResult;
 
-public class ProductRepository {
+public class ProductRepository implements AsyncResult {
 
     private WordDao mWordDao;
     private LiveData<List<mytable>> mAllProd;
     private LiveData<List<historytable>> mAllhis;
+    private MutableLiveData<List<Productltable>> searchResults =
+            new MutableLiveData<>();
 
 
 
@@ -33,6 +36,59 @@ public class ProductRepository {
         return mAllhis;
     }
 
+    @Override
+    public void asyncFinished(List<Productltable> results) {
+        searchResults.setValue(results);
+
+    }
+    public MutableLiveData<List<Productltable>> getSearchResults() {
+        return searchResults;
+    }
+    public void insertProduct(Productltable newproduct) {
+        new queryAsyncTask.insertAsyncTask(mWordDao).execute(newproduct);
+    }
+    public void findProduct(String name) {
+        queryAsyncTask task = new queryAsyncTask(mWordDao);
+        task.delegate = this;
+        task.execute(name);
+    }
+
+
+    private static class queryAsyncTask extends
+            AsyncTask<String, Void, List<Productltable>> {
+
+        private WordDao asyncTaskDao;
+        private ProductRepository delegate = null;
+
+        queryAsyncTask(WordDao dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected List<Productltable> doInBackground(final String... params) {
+            return asyncTaskDao.findProduct(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<Productltable> result) {
+            delegate.asyncFinished(result);
+        }
+
+        private static class insertAsyncTask extends AsyncTask<Productltable, Void, Void> {
+
+            private WordDao asyncTaskDao;
+
+            insertAsyncTask(WordDao dao) {
+                asyncTaskDao = dao;
+            }
+
+            @Override
+            protected Void doInBackground(final Productltable... params) {
+                asyncTaskDao.insertProductforlist(params[0]);
+                return null;
+            }
+        }
+    }
 
 
 
@@ -42,7 +98,10 @@ public class ProductRepository {
 
 
 
-    public void insert (mytable table) {
+
+
+
+        public void insert (mytable table) {
         new insertAsyncTask(mWordDao).execute(table);
     }
 

@@ -3,6 +3,7 @@ package customer.barcode.barcodewebx.RoomDatabase;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class productViewmodel extends AndroidViewModel {
     private ProductRepository mRepository;
     private LiveData<List<mytable>> mAllpro;
     private LiveData<List<historytable>> mallhis;
+    private MutableLiveData<List<Productltable>> searchResults;
 
 
 
@@ -19,10 +21,25 @@ public class productViewmodel extends AndroidViewModel {
         mRepository = new ProductRepository(application);
         mAllpro = mRepository.getAllWords();
         mallhis=mRepository.getAllHis();
+        searchResults = mRepository.getSearchResults();
 
     }
 
    public LiveData<List<mytable>> getAllWords() { return mAllpro; }
+
+    public MutableLiveData<List<Productltable>> getSearchResults() {
+        return searchResults;
+    }
+
+    public void insertProductforlist(Productltable product) {
+       mRepository.insertProduct(product);
+    }
+
+    public void findProduct(String barcode) {
+        mRepository.findProduct(barcode);
+    }
+
+
 
 
     public void insert(mytable word) { mRepository.insert(word); }

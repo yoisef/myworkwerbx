@@ -44,11 +44,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import customer.barcode.barcodewebx.RoomDatabase.Productltable;
 import customer.barcode.barcodewebx.RoomDatabase.historytable;
 import customer.barcode.barcodewebx.RoomDatabase.mytable;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
 
 import customer.barcode.barcodewebx.productmodels.Rootproductdetail;
+import customer.barcode.barcodewebx.productmodels.getallproductsroot;
 import customer.barcode.barcodewebx.salemodel.Saleroot;
 import customer.barcode.barcodewebx.usermodels.Userroot;
 import okhttp3.OkHttpClient;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private Call<Rootproductdetail> mcall;
     private Call<Saleroot> salecall;
     private Call<Userroot> usercall;
+    private Call<getallproductsroot> callproducts;
     private Recycleadapter mAdapter;
     private TextView pricetotal;
     private LinearLayout paylinear;
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences("token", Context.MODE_PRIVATE);
      usertoken=prefs.getString("usertoken","def");
         getretailerid();
+        getallproducts();
 
 
 
@@ -793,7 +797,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    /*
+
     public void getallproducts()
     {
 
@@ -804,37 +808,48 @@ public class MainActivity extends AppCompatActivity {
         Retrofit retrofittok=  myretro.getretro();
         final Endpoints myendpoints = retrofittok.create(Endpoints.class);
 
-        mcall = myendpoints.getallproducts("Bearer "+usertoken);
-        mcall.enqueue(new Callback<Productroot>() {
+        callproducts=myendpoints.getproductdetails("Bearer "+usertoken);
+        callproducts.enqueue(new Callback<getallproductsroot>() {
             @Override
-            public void onResponse(Call<Productroot> call, Response<Productroot> response) {
+            public void onResponse(Call<getallproductsroot> call, Response<getallproductsroot> response) {
 
                 if (response.isSuccessful())
+
                 {
-                    if (response.body().getProducts()!=null)
+                    int sizee=response.body().getProducts().size();
+                    for (int i=0;i<sizee;i++)
                     {
-                        List<Product> allproducts= response.body().getProducts();
-                        for (int i=0;i<allproducts.size();i++)
-                        {
-                            Product myproduct=allproducts.get(i);
-                            mWordViewModel.insertrowinproductlist(myproduct);
-                        }
-                        //  mWordViewModel.insertallproducts(allproducts);
+                        Toast.makeText(MainActivity.this,"insert"+i+"",Toast.LENGTH_LONG).show();
+
+                        String barcode= response.body().getProducts().get(i).getBarcode();
+                       String img=response.body().getProducts().get(i).getImage().getUrl();
+                       String price=response.body().getProducts().get(i).getPrice();
+                       String name=response.body().getProducts().get(i).getName();
+                       String desc=response.body().getProducts().get(i).getDescription();
+                       mWordViewModel.insertProductforlist(new Productltable(name,price,barcode,desc,img));
+
+
                     }
 
                 }
+                else
+                {
+                    Toast.makeText(MainActivity.this,"null",Toast.LENGTH_LONG).show();
 
-
-
+                }
             }
 
             @Override
-            public void onFailure(Call<Productroot> call, Throwable t) {
+            public void onFailure(Call<getallproductsroot> call, Throwable t) {
+
+                Toast.makeText(MainActivity.this,"failed",Toast.LENGTH_LONG).show();
+
 
             }
         });
+
     }
-    */
+
     }
 
 

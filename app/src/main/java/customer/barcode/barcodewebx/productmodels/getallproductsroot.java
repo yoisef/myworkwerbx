@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import customer.barcode.barcodewebx.RoomDatabase.Productltable;
 
 
 public class getallproductsroot {
