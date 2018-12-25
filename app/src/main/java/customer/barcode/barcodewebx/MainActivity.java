@@ -45,6 +45,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import customer.barcode.barcodewebx.RoomDatabase.Productltable;
+import customer.barcode.barcodewebx.RoomDatabase.Sqlitetable;
 import customer.barcode.barcodewebx.RoomDatabase.historytable;
 import customer.barcode.barcodewebx.RoomDatabase.mytable;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
@@ -83,8 +84,7 @@ public class MainActivity extends AppCompatActivity {
     private String usertoken;
     private ProgressBar payprpgressbarr;
     private List<mytable> myproducts;
-    String nam,img,detail,price;
-
+    private productdatabase mydatabase;
 
 
 
@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mydatabase=new productdatabase(this);
 
       tablepref=getSharedPreferences("tablep",Context.MODE_PRIVATE);
         tableeditor=tablepref.edit();
@@ -355,30 +357,6 @@ public class MainActivity extends AppCompatActivity {
 
                         checkifproductexsist(itemsnumber,barcodee);
 
-                        mWordViewModel.getSearchResults().observe(MainActivity.this, new Observer<Productltable>() {
-                            @Override
-                            public void onChanged(@Nullable Productltable productltables) {
-
-
-
-                                String nam= productltables.getName();
-                                String img=productltables.getImge();
-                                String detail=productltables.getDescription();
-                                String   price=productltables.getPrice();
-
-                                mytable pro=new mytable(nam,barcodee, Integer.parseInt(itemsnumber), img, detail, price,null);
-                                mWordViewModel.insert(pro);
-
-
-
-
-
-
-
-
-
-                            }
-                        });
 
 
 
@@ -575,7 +553,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                mWordViewModel.findProduct(barcode);
+            Sqlitetable mytable= mydatabase.getdataforrowinproduct(barcode);
+
+
+             mWordViewModel.insert(new mytable(mytable.getName(),mytable.getBarcode(),itemsnum,mytable.getImge(),mytable.getDescription(),mytable.getPrice(),null));
+
 
 
 
@@ -735,7 +717,7 @@ public class MainActivity extends AppCompatActivity {
                        String price=response.body().getProducts().get(i).getPrice();
                        String name=response.body().getProducts().get(i).getName();
                        String desc=response.body().getProducts().get(i).getDescription();
-                       mWordViewModel.insertProductforlist(new Productltable(name,price,barcode,desc,img));
+                       mydatabase.insertdatalistproducts(name,barcode,price,img,desc);
 
 
                     }
