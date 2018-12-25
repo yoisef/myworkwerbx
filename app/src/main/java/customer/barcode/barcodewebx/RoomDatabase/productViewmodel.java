@@ -12,7 +12,7 @@ public class productViewmodel extends AndroidViewModel {
     private ProductRepository mRepository;
     private LiveData<List<mytable>> mAllpro;
     private LiveData<List<historytable>> mallhis;
-    private MutableLiveData<List<Productltable>> searchResults;
+    private MutableLiveData<Productltable> searchResults;
 
 
 
@@ -27,7 +27,7 @@ public class productViewmodel extends AndroidViewModel {
 
    public LiveData<List<mytable>> getAllWords() { return mAllpro; }
 
-    public MutableLiveData<List<Productltable>> getSearchResults() {
+    public MutableLiveData <Productltable> getSearchResults() {
         return searchResults;
     }
 

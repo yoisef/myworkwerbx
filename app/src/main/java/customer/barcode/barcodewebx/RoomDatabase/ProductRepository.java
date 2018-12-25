@@ -14,7 +14,7 @@ public class ProductRepository implements AsyncResult {
     private WordDao mWordDao;
     private LiveData<List<mytable>> mAllProd;
     private LiveData<List<historytable>> mAllhis;
-    private MutableLiveData<List<Productltable>> searchResults =
+    private MutableLiveData<Productltable> searchResults =
             new MutableLiveData<>();
 
 
@@ -37,11 +37,11 @@ public class ProductRepository implements AsyncResult {
     }
 
     @Override
-    public void asyncFinished(List<Productltable> results) {
+    public void asyncFinished(Productltable results) {
         searchResults.setValue(results);
 
     }
-    public MutableLiveData<List<Productltable>> getSearchResults() {
+    public MutableLiveData<Productltable> getSearchResults() {
         return searchResults;
     }
     public void insertProduct(Productltable newproduct) {
@@ -55,7 +55,7 @@ public class ProductRepository implements AsyncResult {
 
 
     private static class queryAsyncTask extends
-            AsyncTask<String, Void, List<Productltable>> {
+            AsyncTask<String, Void, Productltable> {
 
         private WordDao asyncTaskDao;
         private ProductRepository delegate = null;
@@ -65,12 +65,12 @@ public class ProductRepository implements AsyncResult {
         }
 
         @Override
-        protected List<Productltable> doInBackground(final String... params) {
+        protected Productltable doInBackground(final String... params) {
             return asyncTaskDao.findProduct(params[0]);
         }
 
         @Override
-        protected void onPostExecute(List<Productltable> result) {
+        protected void onPostExecute(Productltable result) {
             delegate.asyncFinished(result);
         }
 

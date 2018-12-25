@@ -36,7 +36,7 @@ public interface WordDao {
     void insertProductforlist(Productltable product);
 
     @Query("SELECT * FROM products_table WHERE barcode = :bar")
-    List<Productltable> findProduct(String bar);
+    Productltable findProduct(String bar);
 
 
 

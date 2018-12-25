@@ -5,5 +5,5 @@ import java.util.List;
 import customer.barcode.barcodewebx.RoomDatabase.Productltable;
 
 public interface AsyncResult {
-    void asyncFinished(List<Productltable> results);
+    void asyncFinished(Productltable results);
 }

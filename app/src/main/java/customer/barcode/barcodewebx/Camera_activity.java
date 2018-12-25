@@ -48,6 +48,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import customer.barcode.barcodewebx.RoomDatabase.Productltable;
 import customer.barcode.barcodewebx.RoomDatabase.mytable;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
 import customer.barcode.barcodewebx.productmodels.Rootproductdetail;
@@ -519,15 +520,34 @@ public class Camera_activity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Rootproductdetail> call, Throwable t) {
 
-                mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, itemsnum, null, null, "10", null);
-                mWordViewModel.insert(word);
+                mWordViewModel.findProduct(barcodedata);
+                mWordViewModel.getSearchResults().observe(Camera_activity.this, new Observer<Productltable>() {
+                    @Override
+                    public void onChanged(@Nullable Productltable productltables) {
 
+                            String nam = productltables.getName();
+                            String img = productltables.getImge();
+                            String detail = productltables.getDescription();
+                            String price = productltables.getPrice();
 
+                            mytable pro = new mytable(nam, barcodedata, itemsnum, img, detail, price, null);
+                            mWordViewModel.insert(pro);
+
+                        }
+
+                });
             }
-        });
 
 
-    }
+
+
+
+
+
+
+
+    });
+            }
 
     private void resumecamera() {
 

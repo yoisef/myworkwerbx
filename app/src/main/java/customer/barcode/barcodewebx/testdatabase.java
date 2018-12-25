@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ public class testdatabase extends AppCompatActivity {
 
     private productViewmodel mWordViewModel;
     TextView insertdata,getdata;
+    EditText entersearchnumber;
 
 
     @Override
@@ -27,6 +29,7 @@ public class testdatabase extends AppCompatActivity {
         setContentView(R.layout.activity_testdatabase);
         insertdata=findViewById(R.id.insert);
         getdata=findViewById(R.id.show);
+        entersearchnumber=findViewById(R.id.searchnumber);
 
         mWordViewModel = ViewModelProviders.of(this).get(productViewmodel.class);
 
@@ -35,7 +38,9 @@ public class testdatabase extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                mWordViewModel.findProduct("62211611");
+                String serch=entersearchnumber.getText().toString();
+
+                mWordViewModel.findProduct(serch);
 
 
             }
@@ -43,11 +48,11 @@ public class testdatabase extends AppCompatActivity {
 
 
 
-        mWordViewModel.getSearchResults().observe(testdatabase.this, new Observer<List<Productltable>>() {
+        mWordViewModel.getSearchResults().observe(testdatabase.this, new Observer<Productltable>() {
             @Override
-            public void onChanged(@Nullable List<Productltable> productltables) {
+            public void onChanged(@Nullable Productltable productltables) {
 
-                getdata.setText(productltables.get(0).getName());
+                getdata.setText(productltables.getName());
             }
         });
 
