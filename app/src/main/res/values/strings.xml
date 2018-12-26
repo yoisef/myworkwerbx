@@ -39,5 +39,6 @@
     <string name="aboutus">About Us </string>
     <string name="mycashier">Casher</string>
     <string name="unitprice">Unit Price</string>
+    <string name="notrecorded">Not recorded in data base</string>
 
 </resources>

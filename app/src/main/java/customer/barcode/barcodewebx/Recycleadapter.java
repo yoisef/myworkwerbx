@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.daimajia.swipe.SwipeLayout;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -70,8 +72,12 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
         if (mWords != null) {
             final mytable current = mWords.get(position);
             holder.namee.setText(current.getPname());
-            Glide.with(con)
+
+
+          GlideApp
+                    .with(con)
                     .load(current.getPimg())
+                  .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.productimage);
 
             SharedPreferences rowandnum=con.getSharedPreferences("we",Context.MODE_PRIVATE);

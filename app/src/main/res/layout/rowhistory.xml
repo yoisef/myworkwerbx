@@ -16,19 +16,19 @@
         android:padding="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="5dp"
-        android:background="#FFFF">
+        android:background="@drawable/rowshape">
 
         <TextView
             android:id="@+id/id_order"
             android:layout_width="65dp"
             android:src="@drawable/logolaun"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:text="1"
 
             android:gravity="center"
             android:textSize="@dimen/xx_large"
-            android:background="@drawable/gradientblue2"
+            android:background="@color/appcolor"
             android:layout_height="65dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp">
@@ -73,7 +73,7 @@
                     android:includeFontPadding="false"
                     android:lines="1"
                     android:text="1"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/x_small"
                     tools:ignore="SpUsage" />
                 <TextView
@@ -85,7 +85,7 @@
                     android:includeFontPadding="false"
                     android:lines="1"
                     android:text="@string/items"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/x_small"
                     tools:ignore="SpUsage" />
 
@@ -107,7 +107,7 @@
                 android:lines="1"
                 android:gravity="center_vertical"
                 android:text="@string/orderamount"
-                android:textColor="@color/gray"
+                android:textColor="@color/black"
                 android:textSize="@dimen/x_small"
                 tools:ignore="SpUsage" />
     <TextView
@@ -118,7 +118,7 @@
         android:gravity="center_vertical"
         android:text="20"
         android:layout_margin="2dp"
-        android:textColor="@color/blue"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="@dimen/medium"
         tools:ignore="SpUsage" />
@@ -129,8 +129,8 @@
                 android:padding="5dp"
                 android:textStyle="bold"
                 android:id="@+id/orderdetails"
-                android:background="@color/blue"
-                android:textColor="@color/white"
+                android:background="@color/appcolor"
+                android:textColor="@color/black"
                 android:gravity="center"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"

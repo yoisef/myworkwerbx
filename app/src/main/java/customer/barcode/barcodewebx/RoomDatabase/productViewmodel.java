@@ -42,6 +42,7 @@ public class productViewmodel extends AndroidViewModel {
 
 
 
+
     public void insert(mytable word) { mRepository.insert(word); }
 
 
@@ -55,6 +56,8 @@ public class productViewmodel extends AndroidViewModel {
 
     public void inserthis(historytable hist) { mRepository.insert(hist); }
     public void deleteallhist(){mRepository.deletallhis();}
+    public void deleteallproduct(){mRepository.deletallpro();}
+
     //insert in productdetails list
 
 

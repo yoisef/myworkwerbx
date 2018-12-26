@@ -497,12 +497,12 @@ public class Camera_activity extends AppCompatActivity {
 
 
                     } else {
-                        mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, itemsnum, null, null, "10", null);
-                        mWordViewModel.insert(word);
+                        Toast.makeText(Camera_activity.this,""+getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
+
                     }
                 } else {
-                    mytable word = new mytable(getResources().getString(R.string.defayltproductname), barcodedata, itemsnum, null, null, "10", null);
-                    mWordViewModel.insert(word);
+                    Toast.makeText(Camera_activity.this,""+getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
+
 
                 }
 
@@ -512,34 +512,24 @@ public class Camera_activity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Rootproductdetail> call, Throwable t) {
 
-                mWordViewModel.findProduct(barcodedata);
-                mWordViewModel.getSearchResults().observe(Camera_activity.this, new Observer<Productltable>() {
-                    @Override
-                    public void onChanged(@Nullable Productltable productltables) {
+                Sqlitetable mytable= mydatabase.getdataforrowinproduct(barcodedata);
 
-                            String nam = productltables.getName();
-                            String img = productltables.getImge();
-                            String detail = productltables.getDescription();
-                            String price = productltables.getPrice();
+                if (mytable.getName()!=null)
+                {
+                    mWordViewModel.insert(new mytable(mytable.getName(),mytable.getBarcode(),1,mytable.getImge(),mytable.getDescription(),mytable.getPrice(),null));
 
-                            mytable pro = new mytable(nam, barcodedata, itemsnum, img, detail, price, null);
-                            mWordViewModel.insert(pro);
+                }
+                else
+                {
+                    Toast.makeText(Camera_activity.this,getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
+                }
 
                         }
 
                 });
             }
 
-
-
-
-
-
-
-
-
-    });
-            }
+            
 
      private void getproductdetails(final String barcodedata)
      {
@@ -554,28 +544,42 @@ public class Camera_activity extends AppCompatActivity {
            @Override
            public void onResponse(Call<Rootproductdetail> call, Response<Rootproductdetail> response) {
 
-              // add_items,remove_item;
-              // TextView namee,unitpricee,barcodeee,total_itemscoast;
-             //  EditText showitems_number;
-             // LinearLayout detailproduct;
+
 
                if(response.isSuccessful())
                {
-                   final String pronam, prodbar, prodimg, broddetail, brodprice, prodcat;
-                   pronam = response.body().getProduct().getName();
-                   prodbar = response.body().getProduct().getBarcode();
-                   prodimg = response.body().getProduct().getImage().getUrl();
-                   broddetail = response.body().getProduct().getDescription();
-                   brodprice = response.body().getProduct().getPrice();
-                   prodcat = response.body().getProduct().getCategory().getName();
 
-                   Glide.with(Camera_activity.this)
-                           .load(prodimg)
-                           .into(productimage);
-                   namee.setText(pronam);
-                   barcodeee.setText(prodbar);
-                   unitpricee.setText(brodprice);
-                   detailproduct.setVisibility(View.VISIBLE);
+                   if (response.body().getProduct()!=null)
+                   {
+                       final String pronam, prodbar, prodimg, broddetail, brodprice, prodcat;
+                       pronam = response.body().getProduct().getName();
+                       prodbar = response.body().getProduct().getBarcode();
+                       prodimg = response.body().getProduct().getImage().getUrl();
+                       broddetail = response.body().getProduct().getDescription();
+                       brodprice = response.body().getProduct().getPrice();
+                       prodcat = response.body().getProduct().getCategory().getName();
+
+                       Glide.with(Camera_activity.this)
+                               .load(prodimg)
+                               .into(productimage);
+                       namee.setText(pronam);
+                       barcodeee.setText(prodbar);
+                       unitpricee.setText(brodprice);
+                       int curnumunit=Integer.parseInt(showitems_number.getText().toString());
+                       Double priceunit=Double.parseDouble(brodprice);
+                       total_itemscoast.setText(String .valueOf(priceunit*curnumunit));
+                       detailproduct.setVisibility(View.VISIBLE);
+                   }
+                   else
+                   {
+                       Toast.makeText(Camera_activity.this,""+getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
+                   }
+
+               }
+               else
+               {
+                   Toast.makeText(Camera_activity.this,""+getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
+
                }
            }
 
@@ -583,7 +587,23 @@ public class Camera_activity extends AppCompatActivity {
            public void onFailure(Call<Rootproductdetail> call, Throwable t) {
 
                Sqlitetable mytable= mydatabase.getdataforrowinproduct(barcodedata);
-               
+               String name,pricee,imagee;
+             imagee=  mytable.getImge();
+              pricee= mytable.getPrice();
+            name=   mytable.getName();
+
+               Glide.with(Camera_activity.this)
+                       .load(imagee)
+                       .into(productimage);
+               namee.setText(name);
+               barcodeee.setText(barcodedata);
+               unitpricee.setText(pricee);
+               int curnumunit=Integer.parseInt(showitems_number.getText().toString());
+               Double priceunit=Double.parseDouble(pricee);
+               total_itemscoast.setText(String .valueOf(priceunit*curnumunit));
+               detailproduct.setVisibility(View.VISIBLE);
+
+
 
            }
        });
@@ -618,6 +638,7 @@ public class Camera_activity extends AppCompatActivity {
         if (orderproducts.size() != 0) {
 
 
+
             for (i = 0; i < orderproducts.size(); i++) {
                 if (barcod.trim().equals(orderproducts.get(i).getPbar().trim())) {
 
@@ -640,8 +661,8 @@ public class Camera_activity extends AppCompatActivity {
 
 
         }
-        else{
-            loginwithbarcode(barcod,1);
+        else {
+            loginwithbarcode(barcod,Integer.parseInt(showitems_number.getText().toString()));
         }
 
     }

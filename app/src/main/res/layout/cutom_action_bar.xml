@@ -24,7 +24,6 @@
             android:textColor="@color/black"
             android:gravity="center"
             android:textSize="@dimen/xx_large"
-            android:layout_alignParentEnd="true"
             android:layout_centerHorizontal="true"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold"

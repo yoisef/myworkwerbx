@@ -23,7 +23,7 @@
     <string name="chooseitemnu">أختر عدد الوحدات </string>
     <string name="empty_email">أدخل الإيميل او رقم الموبايل </string>
     <string name="empty_pass">أدخل الباسورد</string>
-    <string name="items">عدد الوحدات</string>
+    <string name="items"> الوحدات </string>
     <string name="ordercustomer">طلب العميل </string>
     <string name="orderamount">تكلفة الطلب $</string>
     <string name="totalsales"> إجمالي المبيعات :</string>
@@ -39,6 +39,7 @@
     <string name="aboutus">معلومات عنا </string>
     <string name="mycashier">كاشيري</string>
     <string name="unitprice">سعر الوحدة</string>
+    <string name="notrecorded">غير مسجل في قاعدة البيانات</string>
 
 
 </resources>

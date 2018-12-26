@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.daimajia.swipe.SwipeLayout;
 
 import java.util.List;
@@ -50,8 +51,9 @@ public class detailsadapter extends RecyclerView.Adapter<detailsadapter.viewhold
         Double total=Double.parseDouble(details.get(position).getPprice())*details.get(position).getPitemn();
         holder.total_itemscoast.setText(String.valueOf(total));
 
-        Glide.with(context)
+        GlideApp.with(context)
                 .load(details.get(position).getPimg())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.productimage);
 
     }

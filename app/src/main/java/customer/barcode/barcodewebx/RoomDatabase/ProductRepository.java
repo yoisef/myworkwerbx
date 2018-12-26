@@ -111,6 +111,8 @@ public class ProductRepository implements AsyncResult {
     public void deleterow(mytable mtable){new deleteit(mWordDao).execute(mtable);}
 
     public void deletallhis(){new deleteallhis(mWordDao).execute();}
+    public void deletallpro(){new deleteallhis(mWordDao).execute();}
+
 
     public void updaterow(long newitems ,long barcode){new updateit(mWordDao).execute( newitems , barcode);}
 

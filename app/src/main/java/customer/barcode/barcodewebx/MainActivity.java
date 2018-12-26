@@ -248,6 +248,10 @@ public class MainActivity extends AppCompatActivity {
 
                         }
 
+
+
+
+
                         payprpgressbarr.post(new Runnable() {
                             @Override
                             public void run() {
@@ -471,13 +475,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        mytable word = new mytable(null, barcode,1, null, null, "10", null);
-                        mWordViewModel.insert(word);
+                       Toast.makeText(MainActivity.this,getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
                     }
 
                 } else {
-                    mytable word = new mytable(null, barcode,1, null, null, "10", null);
-                    mWordViewModel.insert(word);
+
 
                 }
 
@@ -491,8 +493,17 @@ public class MainActivity extends AppCompatActivity {
 
             Sqlitetable mytable= mydatabase.getdataforrowinproduct(barcode);
 
+            if (mytable.getName()!=null)
+            {
+                mWordViewModel.insert(new mytable(mytable.getName(),mytable.getBarcode(),1,mytable.getImge(),mytable.getDescription(),mytable.getPrice(),null));
 
-             mWordViewModel.insert(new mytable(mytable.getName(),mytable.getBarcode(),1,mytable.getImge(),mytable.getDescription(),mytable.getPrice(),null));
+            }
+            else
+            {
+              Toast.makeText(MainActivity.this,getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
+            }
+
+
 
 
 
@@ -528,17 +539,18 @@ public class MainActivity extends AppCompatActivity {
                 {
                     if(response.body()!=null)
                     {
-                       String oper= response.body().getData().getOperation();
-                       if (oper.trim().equals("success"))
-                       {
-                           mAdapter.deleterow(0);
-                       }
+                        mAdapter.deleterow(0);
+
+
+
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<Saleroot> call, Throwable t) {
+
+                Toast.makeText(MainActivity.this,"Connection Failed",Toast.LENGTH_LONG).show();
 
             }
         });
