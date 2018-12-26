@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -42,8 +43,12 @@ public class detailsadapter extends RecyclerView.Adapter<detailsadapter.viewhold
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
 
         holder.namee.setText(details.get(position).getPname());
-        holder.pricee.setText(details.get(position).getPprice());
-        holder.nuofproductitem.setText(String.valueOf(details.get(position).getPitemn()));
+        holder.unitprice.setText(details.get(position).getPprice());
+        holder.itemsnumber.setText(String.valueOf(details.get(position).getPitemn()));
+        holder.barcodeee.setText(details.get(position).getPbar());
+
+        Double total=Double.parseDouble(details.get(position).getPprice())*details.get(position).getPitemn();
+        holder.total_itemscoast.setText(String.valueOf(total));
 
         Glide.with(context)
                 .load(details.get(position).getPimg())
@@ -58,28 +63,23 @@ public class detailsadapter extends RecyclerView.Adapter<detailsadapter.viewhold
 
     class viewholder extends RecyclerView.ViewHolder{
 
-        TextView namee, numberr, pricee, deleterowww,nuofproductitem;
-        ImageView productimage, removeimg;
-        ImageView  xremove;
-        RelativeLayout removerow, productdetailss, backlayout;
-        LinearLayout toplayout;
-        SwipeLayout rowrecycle;
+        ImageView productimage;
+
+        TextView namee,unitprice,barcodeee,total_itemscoast,itemsnumber;
+
 
         public viewholder(View itemView) {
             super(itemView);
 
-            namee = itemView.findViewById(R.id.nameproduct);
-            xremove=itemView.findViewById(R.id.xsign);
-            rowrecycle=itemView.findViewById(R.id.myrow);
-            numberr=itemView.findViewById(R.id.numberproduct);
-            pricee=itemView.findViewById(R.id.itempricee);
-            productimage=itemView.findViewById(R.id.productimg);
+            productimage=itemView.findViewById(R.id.productimgd);
+            namee=itemView.findViewById(R.id.nameproductd);
+            unitprice=itemView.findViewById(R.id.unitpricecd);
+            barcodeee=itemView.findViewById(R.id.numberproductd);
+            total_itemscoast=itemView.findViewById(R.id.totalitemscd);
+            itemsnumber=itemView.findViewById(R.id.numitemsd);
 
-            productdetailss=itemView.findViewById(R.id.productdetails);
-            deleterowww=itemView.findViewById(R.id.deleterow);
-            backlayout=itemView.findViewById(R.id.background);
-            toplayout=itemView.findViewById(R.id.foregoroundd);
-            nuofproductitem=itemView.findViewById(R.id.numberofitems);
+
+
         }
     }
 }

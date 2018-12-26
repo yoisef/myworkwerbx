@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.v7.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layoutDirection="ltr"
-    android:layout_width="match_parent"
-    android:layout_margin="5dp"
-    android:layout_height="100dp">
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginBottom="3dp"
+    android:layout_marginTop="3dp"
+    android:background="@drawable/rowshape" android:layout_width="match_parent"
+    android:layout_height="125dp">
 
     <com.daimajia.swipe.SwipeLayout
         android:layout_width="match_parent"
-        android:id="@+id/myrow"
-        android:layoutDirection="ltr"
+        android:id="@+id/rowswipe"
+        android:background="@drawable/rowshape"
         android:layout_height="match_parent">
-
-
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:id="@+id/background"
             android:paddingStart="4dp"
             android:layoutDirection="ltr"
-            android:background="@drawable/gradientblue2"
+            android:background="@drawable/rowshape"
             android:layout_height="110dp">
 
 
@@ -40,7 +39,7 @@
                 android:textSize="20sp"
                 android:layout_centerHorizontal="true"
                 android:fontFamily="serif"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 android:text="@string/quedeleteitem"
                 android:layout_centerVertical="true"
@@ -55,7 +54,7 @@
                 android:id="@+id/deleterow"
                 android:gravity="center"
                 android:layout_alignParentEnd="true"
-                android:textColor="@color/blue3"
+                android:textColor="@color/black"
                 android:fontFamily="serif"
                 android:background="@color/appcolor"
                 android:text="@string/ansdeleteitem"
@@ -66,124 +65,112 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layoutDirection="ltr"
-            android:id="@+id/foregoroundd"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:layout_height="match_parent"
-
-            >
+            android:orientation="horizontal"
+            android:background="@drawable/rowshape"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="0dp"
+                android:src="@drawable/lipton"
+                android:background="@drawable/dashedline"
+                android:padding="5dp"
+                android:id="@+id/productimgd"
+                android:layout_marginEnd="3dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent" />
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="@dimen/small"
-                android:text="1"
-                android:id="@+id/numberofitems"
-                android:layout_margin="2dp"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content" />
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:text="items"
-                    android:layout_margin="2dp"
-                    android:textSize="@dimen/small"
-                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/large"
+                    android:id="@+id/nameproductd"
+                    android:textColor="@color/black"
+                    android:layout_gravity="top"
+                    android:text="لحمد لله رب العالمين"
+                    android:layout_margin="3dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:text="@string/unitprice"
+                        android:textSize="@dimen/medium"
+                        android:textColor="@color/black"
+                        android:layout_margin="3dp"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/medium"
+                        android:id="@+id/unitpricecd"
+                        android:text="50"
+
+                        android:textColor="@color/black"
+                        android:layout_margin="3dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_gravity="bottom"
+                    android:textSize="@dimen/medium"
+                    android:id="@+id/numberproductd"
+                    android:text="لحمد لله رب العالمين"
+                    android:textColor="@color/black"
+                    android:layout_margin="3dp"
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-                <RelativeLayout
-                    android:id="@+id/productdetails"
-                    android:padding="7dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:background="@color/white"
-                    android:orientation="horizontal" android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/lipton"
-                        android:id="@+id/productimg"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center"
-                        android:layout_height="40dp" />
-
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:id="@+id/layoutt"
-                        android:layout_centerInParent="true"
-                        android:orientation="vertical"
-                        android:layout_gravity="center_vertical"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:id="@+id/nameproduct"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="lipton"
-                            android:textSize="22sp"
-                            android:layout_height="wrap_content" />
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:id="@+id/layoutlin"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:textSize="22sp"
-                                android:textColor="@color/gray"
-                                android:text="#"
-                                android:layout_height="wrap_content" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:textSize="22sp"
-                                android:id="@+id/numberproduct"
-                                android:textColor="@color/gray"
-                                android:text="776875765"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
-                    </LinearLayout>
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="2.2"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1.2"
+                    android:layout_margin="5dp"
+                    android:padding="2dp"
+                    android:layout_height="0dp">
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:text="@string/items"
+                         android:textSize="@dimen/medium"
+                         android:textColor="@color/black"
+                         android:layout_height="wrap_content" />
                     <TextView
                         android:layout_width="wrap_content"
-                        android:id="@+id/itempricee"
-                        android:layout_centerVertical="true"
+                        android:id="@+id/numitemsd"
+                        android:textSize="@dimen/medium"
                         android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:text="2"
-                        android:layout_alignParentRight="true"
                         android:layout_height="wrap_content" />
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_toLeftOf="@id/itempricee"
-                        android:background="@drawable/dollar"
-                        android:layout_centerVertical="true"
-                        android:layout_height="20dp" />
-                </RelativeLayout>
-
-
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:text="0.0"
+                    android:id="@+id/totalitemscd"
+                    android:textSize="@dimen/large"
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/dashedline"
+                    android:layout_weight="1.6"/>
             </LinearLayout>
         </LinearLayout>
 
-
-
-
-
-
-
-
-
-
     </com.daimajia.swipe.SwipeLayout>
-</android.support.v7.widget.CardView>
+
+</LinearLayout>

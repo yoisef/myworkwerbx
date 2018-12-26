@@ -128,7 +128,7 @@ public class Camera_activity extends AppCompatActivity {
         ring = MediaPlayer.create(Camera_activity.this, R.raw.notif);
         cameraView = (SurfaceView) findViewById(R.id.camera_view);
 
-        layoutitems = findViewById(R.id.itemslayout);
+
 
         changelay = findViewById(R.id.mydetect);
 

@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         int totalorderitems = 0;
-                        Double totalordercoast = 0.0;
+                        Double totalordercoast= 0.0;
                         int i;
                         payprpgressbarr.post(new Runnable() {
                             @Override
@@ -233,13 +233,12 @@ public class MainActivity extends AppCompatActivity {
                         for (i = 0; i < myproducts.size(); i++) {
 
                             String currentproduct = myproducts.get(i).getPbar();
-                            String currentcoast = myproducts.get(i).getPprice();
+                            Double currentcoast = Double.parseDouble(myproducts.get(i).getPprice());
                             int items = myproducts.get(i).getPitemn();
                             totalorderitems = totalorderitems + items;
-                            Double costofproductitems = Double.parseDouble(currentcoast) ;
-                            totalordercoast = totalordercoast + costofproductitems;
-                            //retrofit connection with barcode 3shan tn2sa
-                            //response lw succful 7t7zfa mn recycle
+                            Double totalproduct=currentcoast*items;
+                         totalordercoast = totalordercoast + totalproduct;
+
                             if (myproducts.size() == 0) {
 
                             } else {
@@ -440,7 +439,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void loginwithenternumber(final int itemsnum, final String barcode) {
+    private void loginwithenternumber( final String barcode) {
 
 
         Retrofitclient myretro=Retrofitclient.getInstance();
@@ -462,9 +461,9 @@ public class MainActivity extends AppCompatActivity {
                         prodimg = response.body().getProduct().getImage().getUrl();
                         broddetail = response.body().getProduct().getDescription();
                         brodprice = response.body().getProduct().getPrice();
-                        Double totalproductcost=Double.parseDouble(brodprice)*itemsnum;
+
                         prodcat = response.body().getProduct().getCategory().getName();
-                        mytable word = new mytable(pronam, prodbar,itemsnum, prodimg, broddetail, String.valueOf(totalproductcost), prodcat);
+                        mytable word = new mytable(pronam, prodbar,1, prodimg, broddetail, brodprice, prodcat);
                         mWordViewModel.insert(word);
                         // myrecycle.scrollToPosition(myrecycle.getAdapter().getItemCount() - 1);
 
@@ -472,12 +471,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        mytable word = new mytable(null, barcode,itemsnum, null, null, "10", null);
+                        mytable word = new mytable(null, barcode,1, null, null, "10", null);
                         mWordViewModel.insert(word);
                     }
 
                 } else {
-                    mytable word = new mytable(null, barcode,itemsnum, null, null, "10", null);
+                    mytable word = new mytable(null, barcode,1, null, null, "10", null);
                     mWordViewModel.insert(word);
 
                 }
@@ -493,7 +492,7 @@ public class MainActivity extends AppCompatActivity {
             Sqlitetable mytable= mydatabase.getdataforrowinproduct(barcode);
 
 
-             mWordViewModel.insert(new mytable(mytable.getName(),mytable.getBarcode(),itemsnum,mytable.getImge(),mytable.getDescription(),mytable.getPrice(),null));
+             mWordViewModel.insert(new mytable(mytable.getName(),mytable.getBarcode(),1,mytable.getImge(),mytable.getDescription(),mytable.getPrice(),null));
 
 
 
@@ -549,7 +548,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void checkifproductexsist(String numitems,String barcod)
+    private void checkifproductexsist(String barcod)
     {
         boolean mycondition=true;
 
@@ -573,7 +572,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (mycondition)
             {
-               loginwithenternumber(Integer.parseInt(numitems),barcod);
+               loginwithenternumber(barcod);
 
 
             }
@@ -582,7 +581,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         else{
-            loginwithenternumber(Integer.parseInt(numitems),barcod);
+            loginwithenternumber(barcod);
         }
 
     }
@@ -701,9 +700,7 @@ public class MainActivity extends AppCompatActivity {
         builder = new android.app.AlertDialog.Builder(MainActivity.this);
 
         View myview = LayoutInflater.from(MainActivity.this.getApplicationContext()).inflate(R.layout.layoutenterbar, null);
-        numedit=myview.findViewById(R.id.ItemN);
-        incre=myview.findViewById(R.id.increase);
-        decre=myview.findViewById(R.id.decrease);
+
         myedit = myview.findViewById(R.id.barcodedittext);
         ok = myview.findViewById(R.id.okk);
         cancel = myview.findViewById(R.id.cancell);
@@ -718,10 +715,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 final String barcodee=myedit.getText().toString();
-                final String itemsnumber=numedit.getText().toString();
 
 
-                checkifproductexsist(itemsnumber,barcodee);
+
+               checkifproductexsist(barcodee);
 
 
 
