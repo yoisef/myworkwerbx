@@ -72,7 +72,7 @@
                 android:layout_width="0dp"
                 android:src="@drawable/lipton"
                 android:background="@drawable/dashedline"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:id="@+id/productimg"
                 android:layout_marginEnd="3dp"
                 android:layout_marginStart="10dp"
@@ -140,7 +140,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_weight="1.2"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:padding="2dp"
                     android:layout_height="0dp">
                     <ImageView
@@ -151,7 +151,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/button"
                         android:layout_height="match_parent" />
-                    <TextView
+                    <EditText
                         android:layout_width="0dp"
                         android:background="@drawable/rowshape"
                         android:inputType="number"
@@ -178,7 +178,7 @@
                     android:layout_height="0dp"
                     android:textColor="@color/black"
                     android:gravity="center"
-                    android:text="230"
+                    android:text="0.0"
                     android:id="@+id/totalitemsc"
                     android:textSize="@dimen/large"
                     android:textStyle="bold"

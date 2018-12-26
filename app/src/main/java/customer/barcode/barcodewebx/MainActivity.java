@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         requestPermission();
 
         // intilize Ui objects
-        pricetotal = findViewById(R.id.totalprice);
+        pricetotal = findViewById(R.id.totalpricec);
         paylinear = findViewById(R.id.paylayout);
      //   enterbarcode = findViewById(R.id.barcodenumber);
         payprpgressbarr=findViewById(R.id.pay_progress);
@@ -143,50 +143,27 @@ public class MainActivity extends AppCompatActivity {
         mWordViewModel.getAllWords().observe(this, new Observer<List<mytable>>() {
             @Override
             public void onChanged(@Nullable final List<mytable> words) {
-                // Update the cached copy of the words in the adapter.
-/*
-                SharedPreferences prefessynce=getSharedPreferences("size",Context.MODE_PRIVATE);
-                SharedPreferences.Editor myeditor=prefessynce.edit();
-                if (prefessynce.getInt("num",0)==0)
-                {
-                    myeditor.putInt("num",words.size());
-                    myeditor.apply();
-                }
-                */
 
-                myproducts=words;
                 mAdapter.setWords(words);
-                Double total = 0.0;
+                myproducts=words;
+                Double allcoast=0.0;
 
-                if (words != null) {
-                    int y ;
-                    for (y = 0; y < words.size(); y++) {
-                        mytable currenttable = words.get(y);
-                        if (currenttable.getPprice()!=null)
-                        {
-//                            Double curprice = Double.parseDouble(currenttable.getPprice());
-                            if (currenttable.getPitemn()!=null)
-                            {
+                // Update the cached copy of the words in the adapter.
 
-
-                           //     total = total + curprice;
-                            }
-
-                        }
-                        else
-                        {
-                            //
-                        }
-
-                    }
-                    pricetotal.setText(String.valueOf(total));
-                }
-                else
+                for(int i=0;i<words.size();i++)
                 {
-                    Toast.makeText(MainActivity.this,"null",Toast.LENGTH_LONG).show();
+
+                   Double unitprice=Double.parseDouble(words.get(i).getPprice());
+                   int quantity=words.get(i).getPitemn();
+                   Double productcoast=unitprice*quantity;
+                   allcoast=allcoast+productcoast;
+
                 }
+                pricetotal.setText(String.valueOf(allcoast));
 
             }
+
+
 
         });
 
@@ -212,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(MainActivity.this,testdatabase.class));
+                startActivity(new Intent(MainActivity.this,Camera_activity.class));
             }
         });
 
@@ -307,83 +284,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //initialize Enterbarcode Button insted scan with camera
-/*
-        enterbarcode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                final EditText myedit,numedit;
-                TextView ok, cancel;
-                ImageView incre,decre;
 
 
-                builder = new android.app.AlertDialog.Builder(MainActivity.this);
-
-                View myview = LayoutInflater.from(MainActivity.this.getApplicationContext()).inflate(R.layout.layoutenterbar, null);
-                numedit=myview.findViewById(R.id.ItemN);
-                incre=myview.findViewById(R.id.increase);
-                decre=myview.findViewById(R.id.decrease);
-                myedit = myview.findViewById(R.id.barcodedittext);
-                ok = myview.findViewById(R.id.okk);
-                cancel = myview.findViewById(R.id.cancell);
-                builder.setView(myview);
-                alertDialog = builder.create();
-                alertDialog.show();
-                incre.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        int currentnum = Integer.parseInt(numedit.getText().toString());
-                        numedit.setText(String.valueOf(currentnum + 1));
-                    }
-                });
-                decre.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int currentnum = Integer.parseInt(numedit.getText().toString());
-                        if (currentnum <= 1) {
-                            numedit.setText(String.valueOf(1));
-
-                        } else {
-                            numedit.setText(String.valueOf(currentnum - 1));
-                        }
-                    }
-                });
-
-
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        final String barcodee=myedit.getText().toString();
-                        final String itemsnumber=numedit.getText().toString();
-
-
-                        checkifproductexsist(itemsnumber,barcodee);
-
-
-
-
-
-
-
-
-                        alertDialog.cancel();
-                    }
-
-                });
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.cancel();
-
-                    }
-                });
-
-            }
-        });
-        */
 
     }
 
@@ -662,9 +564,9 @@ public class MainActivity extends AppCompatActivity {
 
 
                     mytable current = myproducts.get(i);
-                    int totalitems = current.getPitemn() + Integer.parseInt(numitems);
+                  // int totalitems = current.getPitemn() + Integer.parseInt(numitems);
 
-                    mWordViewModel.updateproduct(totalitems,Long.parseLong(barcod));
+                    mWordViewModel.updateproduct(current.getPitemn()+1,Long.parseLong(barcod));
                     mycondition=false;
                 }
 
@@ -679,10 +581,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-        else if (myproducts.size()==0)
-        {
+        else{
             loginwithenternumber(Integer.parseInt(numitems),barcod);
         }
+
     }
 
     private void getretailerid()
@@ -808,26 +710,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setView(myview);
         alertDialog = builder.create();
         alertDialog.show();
-        incre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                int currentnum = Integer.parseInt(numedit.getText().toString());
-                numedit.setText(String.valueOf(currentnum + 1));
-            }
-        });
-        decre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int currentnum = Integer.parseInt(numedit.getText().toString());
-                if (currentnum <= 1) {
-                    numedit.setText(String.valueOf(1));
-
-                } else {
-                    numedit.setText(String.valueOf(currentnum - 1));
-                }
-            }
-        });
 
 
         ok.setOnClickListener(new View.OnClickListener() {

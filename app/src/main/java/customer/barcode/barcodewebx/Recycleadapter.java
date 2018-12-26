@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -76,8 +77,14 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
             SharedPreferences rowandnum=con.getSharedPreferences("we",Context.MODE_PRIVATE);
            int qua= rowandnum.getInt("is",87);
 
+           holder.showitems_number.setText(String.valueOf(current.getPitemn()));
+
+           Double coast=current.getPitemn()*Double.parseDouble(current.getPprice());
+
+           holder.total_itemscoast.setText(String.valueOf(coast));
 
            holder.unitprice.setText(current.getPprice());
+
            holder.barcodeee.setText(current.getPbar());
            holder.add_items.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -90,6 +97,7 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
                    Double totalpriceP=currentnum*Uprice;
                    holder.total_itemscoast.setText(String.valueOf(totalpriceP));
+                   mWordViewModel.updateproduct(Long.parseLong(holder.showitems_number.getText().toString()),Long.parseLong(current.getPbar()));
                }
            });
 
@@ -106,16 +114,11 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
                        Double Uprice=Double.parseDouble(current.getPprice());
                       Double totalp=Uprice*cunum;
                        holder.total_itemscoast.setText(String.valueOf(totalp));
+                       mWordViewModel.updateproduct(Long.parseLong(holder.showitems_number.getText().toString()),Long.parseLong(current.getPbar()));
+
                    }
                }
            });
-
-           for(int i=0;i<mWords.size();i++)
-           {
-               mytable row=mWords.get(i);
-               holder.total_itemscoast.getText().toString()
-
-           }
 
 
 
@@ -219,8 +222,8 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
        ImageView productimage,add_items,remove_item,xremove;
         SwipeLayout rowrecycle;
-        TextView namee,unitprice,barcodeee,total_itemscoast,showitems_number,delete_product;
-
+        TextView namee,unitprice,barcodeee,total_itemscoast,delete_product;
+     EditText showitems_number;
 
         public viewholder(View itemView) {
             super(itemView);

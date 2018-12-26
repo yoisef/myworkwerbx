@@ -36,6 +36,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.daimajia.swipe.SwipeLayout;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -79,11 +81,28 @@ public class Camera_activity extends AppCompatActivity {
     private EditText itemsnum;
     private RelativeLayout layoutitems;
     private List<mytable> orderproducts;
+    ImageView productimage,add_items,remove_item;
+    TextView namee,unitpricee,barcodeee,total_itemscoast,donecamera,cancelcameraa;
+    EditText showitems_number;
+    private LinearLayout detailproduct;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_activity);
+
+        productimage=findViewById(R.id.imgcam);
+        add_items=findViewById(R.id.addcam);
+        remove_item=findViewById(R.id.removecam);
+        namee=findViewById(R.id.nampcam);
+        unitpricee=findViewById(R.id.pricecam);
+        barcodeee=findViewById(R.id.barcam);
+        total_itemscoast=findViewById(R.id.totalcam);
+        showitems_number=findViewById(R.id.itemnumbercam);
+        detailproduct=findViewById(R.id.showprodetail);
+        donecamera=findViewById(R.id.donecam);
+        cancelcameraa=findViewById(R.id.cancelcam);
+
 
         prefs = getSharedPreferences("token", Context.MODE_PRIVATE);
         usertoken = prefs.getString("usertoken", "def");
@@ -108,13 +127,13 @@ public class Camera_activity extends AppCompatActivity {
         leaser = findViewById(R.id.leaserline);
         ring = MediaPlayer.create(Camera_activity.this, R.raw.notif);
         cameraView = (SurfaceView) findViewById(R.id.camera_view);
-        suborder = findViewById(R.id.submitorder);
-        cancelorder=findViewById(R.id.cancelitems);
-        addbtn = findViewById(R.id.additem);
-        removebtn = findViewById(R.id.removeitem);
+
         layoutitems = findViewById(R.id.itemslayout);
-        cancel = (Button) findViewById(R.id.backtomain);
+
         changelay = findViewById(R.id.mydetect);
+
+
+
         myswitch = findViewById(R.id.switchtorch);
         if (this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
 
@@ -160,6 +179,64 @@ public class Camera_activity extends AppCompatActivity {
         }
 
 
+        SharedPreferences sharedPreferences = getSharedPreferences("productbar", Context.MODE_PRIVATE);
+        final String barcode=sharedPreferences.getString("bar","11");
+
+        donecamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                checkifproductexsist(showitems_number.getText().toString(),barcode);
+
+                detailproduct.setVisibility(View.GONE);
+                resumecamera();
+            }
+        });
+
+        add_items.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int num=Integer.parseInt(showitems_number.getText().toString());
+                int currentnum=num+1;
+                showitems_number.setText(String.valueOf(currentnum));
+                Double Uprice=Double.parseDouble(unitpricee.getText().toString());
+
+                Double totalpriceP=currentnum*Uprice;
+                total_itemscoast.setText(String.valueOf(totalpriceP));
+                //mWordViewModel.updateproduct(Long.parseLong(showitems_number.getText().toString()),Long.parseLong(current.getPbar()));
+            }
+        });
+
+        remove_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int num=Integer.parseInt(showitems_number.getText().toString());
+                if (num <= 1) {
+                    showitems_number.setText(String.valueOf(1));
+
+                } else {
+                    int cunum=num-1;
+                    showitems_number.setText(String.valueOf(cunum));
+                    Double Uprice=Double.parseDouble(unitpricee.getText().toString());
+                    Double totalp=Uprice*cunum;
+                    total_itemscoast.setText(String.valueOf(totalp));
+                  //  mWordViewModel.updateproduct(Long.parseLong(showitems_number.getText().toString()),Long.parseLong(current.getPbar()));
+
+                }
+            }
+        });
+
+        cancelcameraa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                detailproduct.setVisibility(View.GONE);
+                resumecamera();
+
+            }
+        });
+
+
+
     }
 
     @Override
@@ -177,94 +254,8 @@ public class Camera_activity extends AppCompatActivity {
         }
 
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
 
-                finish();
-            }
-        });
-
-        suborder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                boolean mycondition=true;
-
-                final String num = itemsnum.getText().toString();
-                SharedPreferences preferences = getSharedPreferences("productbar", Context.MODE_PRIVATE);
-                final String barcod = preferences.getString("bar", "null");
-
-                        // Update the cached copy of the words in the adapter.
-                        int i;
-                        if (orderproducts.size() != 0) {
-
-
-                            for (i = 0; i < orderproducts.size(); i++) {
-                                if (barcod.trim().equals(orderproducts.get(i).getPbar().trim())) {
-
-
-                                    mytable current = orderproducts.get(i);
-                                    int totalitems = current.getPitemn() + Integer.parseInt(num);
-
-                                    mWordViewModel.updateproduct(totalitems,Long.parseLong(barcod));
-                                    mycondition=false;
-                                }
-
-                            }
-                            if (mycondition)
-                            {
-                                presssubmitaction(Integer.parseInt(num));
-
-
-                            }
-
-
-
-                        }
-                     else if (orderproducts.size()==0)
-                    {
-                        presssubmitaction(Integer.parseInt(num));
-                    }
-
-
-
-                layoutitems.setVisibility(View.GONE);
-                resumecamera();
-                    }
-
-
-                });
-                addbtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int currentnum = Integer.parseInt(itemsnum.getText().toString());
-                        itemsnum.setText(String.valueOf(currentnum + 1));
-
-                    }
-                });
-                removebtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int currentnum = Integer.parseInt(itemsnum.getText().toString());
-                        if (currentnum <= 1) {
-                            itemsnum.setText(String.valueOf(1));
-
-                        } else {
-                            itemsnum.setText(String.valueOf(currentnum - 1));
-                        }
-
-
-                    }
-                });
-                cancelorder.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        layoutitems.setVisibility(View.GONE);
-                        resumecamera();
-                    }
-                });
 
 
          
@@ -351,7 +342,7 @@ public class Camera_activity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("bar", barcodes.valueAt(0).displayValue);
                                 editor.apply();
-                                layoutitems.setVisibility(View.VISIBLE);
+                                getproductdetails(barcodes.valueAt(0).displayValue);
                                 ring.start();
                                 cameraSource.stop();
                             }
@@ -449,7 +440,7 @@ public class Camera_activity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("bar", barcodes.valueAt(0).displayValue);
                                 editor.apply();
-                                layoutitems.setVisibility(View.VISIBLE);
+                                getproductdetails(barcodes.valueAt(0).displayValue);
                                 ring.start();
                                 cameraSource.stop();
                             }
@@ -547,6 +538,51 @@ public class Camera_activity extends AppCompatActivity {
     });
             }
 
+     private void getproductdetails(String barcodedata)
+     {
+         Retrofitclient myretro = Retrofitclient.getInstance();
+         Retrofit retrofitt = myretro.getretro();
+
+
+         final Endpoints myendpoints = retrofitt.create(Endpoints.class);
+
+         mcall = myendpoints.getdetails("Bearer " + usertoken, barcodedata);
+       mcall.enqueue(new Callback<Rootproductdetail>() {
+           @Override
+           public void onResponse(Call<Rootproductdetail> call, Response<Rootproductdetail> response) {
+
+              // add_items,remove_item;
+              // TextView namee,unitpricee,barcodeee,total_itemscoast;
+             //  EditText showitems_number;
+             // LinearLayout detailproduct;
+
+               if(response.isSuccessful())
+               {
+                   final String pronam, prodbar, prodimg, broddetail, brodprice, prodcat;
+                   pronam = response.body().getProduct().getName();
+                   prodbar = response.body().getProduct().getBarcode();
+                   prodimg = response.body().getProduct().getImage().getUrl();
+                   broddetail = response.body().getProduct().getDescription();
+                   brodprice = response.body().getProduct().getPrice();
+                   prodcat = response.body().getProduct().getCategory().getName();
+
+                   Glide.with(Camera_activity.this)
+                           .load(prodimg)
+                           .into(productimage);
+                   namee.setText(pronam);
+                   barcodeee.setText(prodbar);
+                   unitpricee.setText(brodprice);
+                   detailproduct.setVisibility(View.VISIBLE);
+               }
+           }
+
+           @Override
+           public void onFailure(Call<Rootproductdetail> call, Throwable t) {
+
+           }
+       });
+     }
+
     private void resumecamera() {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -566,6 +602,43 @@ public class Camera_activity extends AppCompatActivity {
         }
 
     }
+    private void checkifproductexsist(String numitems,String barcod)
+    {
+        boolean mycondition=true;
+
+
+        // Update the cached copy of the words in the adapter.
+        int i;
+        if (orderproducts.size() != 0) {
+
+
+            for (i = 0; i < orderproducts.size(); i++) {
+                if (barcod.trim().equals(orderproducts.get(i).getPbar().trim())) {
+
+
+                    mytable current = orderproducts.get(i);
+                    // int totalitems = current.getPitemn() + Integer.parseInt(numitems);
+
+                    mWordViewModel.updateproduct(current.getPitemn()+Integer.parseInt(numitems),Long.parseLong(barcod));
+                    mycondition=false;
+                }
+
+            }
+            if (mycondition)
+            {
+                loginwithbarcode(barcod,Integer.parseInt(numitems));
+
+
+            }
+
+
+
+        }
+        else{
+            loginwithbarcode(barcod,1);
+        }
+
+    }
 
 
     public void restart ()
@@ -573,22 +646,7 @@ public class Camera_activity extends AppCompatActivity {
         this.recreate();
     }
 
-    private void presssubmitaction(int number)
-    {
-        boolean condition=true;
 
-
-        SharedPreferences preferences=getSharedPreferences("productbar",Context.MODE_PRIVATE);
-        String barcod=preferences.getString("bar","null");
-        loginwithbarcode(barcod,number);
-
-        resumecamera();
-        layoutitems.setVisibility(View.GONE);
-        itemsnum.setText("1");
-
-
-
-    }
 
     @Override
     protected void onDestroy () {
