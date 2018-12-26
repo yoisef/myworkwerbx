@@ -134,7 +134,7 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:background="@drawable/gradientblue"
+                android:background="@drawable/gradientgray"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content" />

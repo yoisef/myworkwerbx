@@ -5,14 +5,22 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import customer.barcode.barcodewebx.RoomDatabase.Sqlitetable;
+import customer.barcode.barcodewebx.productmodels.getallproductsroot;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class productdatabase extends SQLiteOpenHelper {
+
 
     public static final String Databasename = "products.db";
     public static final String Tablename1 = "products_list";
@@ -52,6 +60,8 @@ public class productdatabase extends SQLiteOpenHelper {
 
     public Boolean insertdatalistproducts(String name, String bar, String price, String img, String detail) {
 
+
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(columna, name);
@@ -71,6 +81,8 @@ public class productdatabase extends SQLiteOpenHelper {
     }
 
 
+
+
     public Sqlitetable getdataforrowinproduct(String barsearch) {
         SQLiteDatabase db = this.getReadableDatabase();
         Sqlitetable mytable =null;
@@ -81,24 +93,104 @@ public class productdatabase extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(myquery, null);
 
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            int index = cursor.getColumnIndexOrThrow(columna);
-            String nam = cursor.getString(index);
-            int indexx = cursor.getColumnIndexOrThrow(columnb);
-            String bar = cursor.getString(indexx);
-            int indexxx = cursor.getColumnIndexOrThrow(columnc);
-            String price = cursor.getString(indexxx);
-            int indexxxx = cursor.getColumnIndexOrThrow(columnd);
-            String img = cursor.getString(indexxxx);
-            int indexxxxx = cursor.getColumnIndexOrThrow(columne);
-            String detail = cursor.getString(indexxxxx);
+     try {
+         db.beginTransaction();
+         if (cursor.getCount() > 0) {
+             cursor.moveToFirst();
+             int index = cursor.getColumnIndexOrThrow(columna);
+             String nam = cursor.getString(index);
+             int indexx = cursor.getColumnIndexOrThrow(columnb);
+             String bar = cursor.getString(indexx);
+             int indexxx = cursor.getColumnIndexOrThrow(columnc);
+             String price = cursor.getString(indexxx);
+             int indexxxx = cursor.getColumnIndexOrThrow(columnd);
+             String img = cursor.getString(indexxxx);
+             int indexxxxx = cursor.getColumnIndexOrThrow(columne);
+             String detail = cursor.getString(indexxxxx);
 
-            mytable = new Sqlitetable(nam, bar, price, img, detail);
+             mytable = new Sqlitetable(nam, bar, price, img, detail);
+     }
+     db.setTransactionSuccessful();
+
+
             //add to list here
-        }
-        cursor.close();
+     } catch (Exception e) {
+         Log.w("Exception:", e);
+     } finally {
+         db.endTransaction();
+     }
         return mytable;
+    }
+
+    public void getallproducts(final Context con)
+    {
+
+        final SQLiteDatabase db = this.getReadableDatabase();
+        Call<getallproductsroot> callproducts;
+
+         String usertoken = con.getSharedPreferences("token", Context.MODE_PRIVATE).getString("usertoken","def");
+
+
+        Retrofitclient myretro=Retrofitclient.getInstance();
+        Retrofit retrofittok=  myretro.getretro();
+        final Endpoints myendpoints = retrofittok.create(Endpoints.class);
+
+        callproducts=myendpoints.getproductdetails("Bearer "+usertoken);
+        callproducts.enqueue(new Callback<getallproductsroot>() {
+            @Override
+            public void onResponse(Call<getallproductsroot> call, Response<getallproductsroot> response) {
+
+                if (response.isSuccessful())
+
+                {
+
+
+                    int sizee=response.body().getProducts().size();
+
+                    try {
+                        db.beginTransaction();
+                        for (int i=0;i<sizee;i++)
+                        {
+
+                            String barcode= response.body().getProducts().get(i).getBarcode();
+                            String img=response.body().getProducts().get(i).getImage().getUrl();
+                            String price=response.body().getProducts().get(i).getPrice();
+                            String name=response.body().getProducts().get(i).getName();
+                            String desc=response.body().getProducts().get(i).getDescription();
+                            insertdatalistproducts(name,barcode,price,img,desc);
+
+
+                        }
+                        db.setTransactionSuccessful();
+
+                    } catch (Exception e) {
+                        Log.w("Exception:", e);
+                    } finally {
+                        db.endTransaction();
+                    }
+
+
+
+
+
+                }
+                else
+                {
+                    Toast.makeText(con,"null",Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<getallproductsroot> call, Throwable t) {
+
+                Toast.makeText(con
+                        ,"failed",Toast.LENGTH_LONG).show();
+
+
+            }
+        });
+
     }
 }
 

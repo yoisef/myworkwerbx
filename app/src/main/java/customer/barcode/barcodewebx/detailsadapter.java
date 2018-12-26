@@ -74,7 +74,7 @@ public class detailsadapter extends RecyclerView.Adapter<detailsadapter.viewhold
             numberr=itemView.findViewById(R.id.numberproduct);
             pricee=itemView.findViewById(R.id.itempricee);
             productimage=itemView.findViewById(R.id.productimg);
-            removeimg=itemView.findViewById(R.id.remove);
+
             productdetailss=itemView.findViewById(R.id.productdetails);
             deleterowww=itemView.findViewById(R.id.deleterow);
             backlayout=itemView.findViewById(R.id.background);

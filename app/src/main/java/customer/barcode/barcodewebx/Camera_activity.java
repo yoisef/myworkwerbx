@@ -112,10 +112,8 @@ public class Camera_activity extends AppCompatActivity {
         cancelorder=findViewById(R.id.cancelitems);
         addbtn = findViewById(R.id.additem);
         removebtn = findViewById(R.id.removeitem);
-        itemsnum = findViewById(R.id.numberofitems);
         layoutitems = findViewById(R.id.itemslayout);
         cancel = (Button) findViewById(R.id.backtomain);
-        myframe = (FrameLayout) findViewById(R.id.myframecamera);
         changelay = findViewById(R.id.mydetect);
         myswitch = findViewById(R.id.switchtorch);
         if (this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {

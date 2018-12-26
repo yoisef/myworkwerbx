@@ -43,7 +43,8 @@
         </activity>
         <activity android:name=".sales_history" />
         <activity android:name=".order_details" />
-        <activity android:name=".testdatabase"></activity>
+        <activity android:name=".testdatabase" />
+        <activity android:name=".About_Activity"></activity>
     </application>
 
 </manifest>

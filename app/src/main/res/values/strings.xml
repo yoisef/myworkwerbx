@@ -33,5 +33,11 @@
     <string name="titlepayconf">Confirm deletion</string>
     <string name="showdetails">Show Details</string>
     <string name="hidedetails">Hide Details</string>
+    <string name="menusales">Sales List</string>
+    <string name="barcodreader">Barcode Reader</string>
+    <string name="knowapp">About App</string>
+    <string name="aboutus">About Us </string>
+    <string name="mycashier">Casher</string>
+    <string name="unitprice">Unit Price</string>
 
 </resources>

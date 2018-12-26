@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +23,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,6 +65,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static customer.barcode.barcodewebx.productdatabase.*;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -77,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private Call<getallproductsroot> callproducts;
     private Recycleadapter mAdapter;
     private TextView pricetotal;
-    private LinearLayout paylinear;
+    private TextView paylinear;
     private productViewmodel mWordViewModel;
     private SharedPreferences prefs,tablepref;
     private SharedPreferences.Editor myeditor,tableeditor;
@@ -88,12 +93,20 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(),R.drawable.menumain);
+
+
+
+
+
         mydatabase=new productdatabase(this);
+      //  mydatabase.getallproducts(this);
 
       tablepref=getSharedPreferences("tablep",Context.MODE_PRIVATE);
         tableeditor=tablepref.edit();
@@ -105,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences("token", Context.MODE_PRIVATE);
      usertoken=prefs.getString("usertoken","def");
         getretailerid();
-        getallproducts();
+       getallproducts();
 
 
 
@@ -115,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         // intilize Ui objects
         pricetotal = findViewById(R.id.totalprice);
         paylinear = findViewById(R.id.paylayout);
-        enterbarcode = findViewById(R.id.barcodenumber);
+     //   enterbarcode = findViewById(R.id.barcodenumber);
         payprpgressbarr=findViewById(R.id.pay_progress);
         myrecycle = findViewById(R.id.productrecycle);
         myrecycle.setHasFixedSize(true);
@@ -178,10 +191,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //set Toolbar with 2 button scancamera and about us
 
         mytoolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mytoolbar);
+   mytoolbar.setOverflowIcon(drawable);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
@@ -192,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         View view = getSupportActionBar().getCustomView();
 
 
-        scan = view.findViewById(R.id.camerascan);
+
         barcodimg = view.findViewById(R.id.aboutus);
 
         barcodimg.setOnClickListener(new View.OnClickListener() {
@@ -204,17 +217,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(MainActivity.this, Camera_activity.class);
-                startActivityForResult(intent1, 0);
-
-            }
-        });
 
 
-        //initialize pay button
+
 
         paylinear.setOnClickListener(new View.OnClickListener() {
 
@@ -303,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //initialize Enterbarcode Button insted scan with camera
-
+/*
         enterbarcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -378,6 +383,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        */
 
     }
 
@@ -493,6 +499,35 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, loginactivity.class));
                 finish();
                 break;
+            }
+
+            case R.id.sales:{
+
+                startActivity(new Intent(MainActivity.this,sales_history.class));
+
+                break;
+            }
+
+            case R.id.readbar:{
+
+                startActivity(new Intent(MainActivity.this,Camera_activity.class));
+
+                break;
+            }
+            case R.id.appknow:{
+
+                break;
+            }
+
+            case R.id.about:{
+
+                break;
+            }
+
+            case R.id.enter_bar:{
+
+                enterbar_operation();
+
             }
 
 
@@ -708,19 +743,32 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful())
 
                 {
+
+
                     int sizee=response.body().getProducts().size();
-                    for (int i=0;i<sizee;i++)
-                    {
 
-                        String barcode= response.body().getProducts().get(i).getBarcode();
-                       String img=response.body().getProducts().get(i).getImage().getUrl();
-                       String price=response.body().getProducts().get(i).getPrice();
-                       String name=response.body().getProducts().get(i).getName();
-                       String desc=response.body().getProducts().get(i).getDescription();
-                       mydatabase.insertdatalistproducts(name,barcode,price,img,desc);
+                    try {
+                        for (int i=0;i<sizee;i++)
+                        {
+
+                            String barcode= response.body().getProducts().get(i).getBarcode();
+                            String img=response.body().getProducts().get(i).getImage().getUrl();
+                            String price=response.body().getProducts().get(i).getPrice();
+                            String name=response.body().getProducts().get(i).getName();
+                            String desc=response.body().getProducts().get(i).getDescription();
+                            mydatabase.insertdatalistproducts(name,barcode,price,img,desc);
 
 
-                    }
+                        }
+
+                } catch (Exception e) {
+                    Log.w("Exception:", e);
+                } finally {
+                }
+
+
+
+
 
                 }
                 else
@@ -741,7 +789,82 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void enterbar_operation()
+    {
+        final EditText myedit,numedit;
+        TextView ok, cancel;
+        ImageView incre,decre;
+
+
+        builder = new android.app.AlertDialog.Builder(MainActivity.this);
+
+        View myview = LayoutInflater.from(MainActivity.this.getApplicationContext()).inflate(R.layout.layoutenterbar, null);
+        numedit=myview.findViewById(R.id.ItemN);
+        incre=myview.findViewById(R.id.increase);
+        decre=myview.findViewById(R.id.decrease);
+        myedit = myview.findViewById(R.id.barcodedittext);
+        ok = myview.findViewById(R.id.okk);
+        cancel = myview.findViewById(R.id.cancell);
+        builder.setView(myview);
+        alertDialog = builder.create();
+        alertDialog.show();
+        incre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int currentnum = Integer.parseInt(numedit.getText().toString());
+                numedit.setText(String.valueOf(currentnum + 1));
+            }
+        });
+        decre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int currentnum = Integer.parseInt(numedit.getText().toString());
+                if (currentnum <= 1) {
+                    numedit.setText(String.valueOf(1));
+
+                } else {
+                    numedit.setText(String.valueOf(currentnum - 1));
+                }
+            }
+        });
+
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final String barcodee=myedit.getText().toString();
+                final String itemsnumber=numedit.getText().toString();
+
+
+                checkifproductexsist(itemsnumber,barcodee);
+
+
+
+
+
+
+
+
+                alertDialog.cancel();
+            }
+
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.cancel();
+
+            }
+        });
+
     }
+
+        }
+
+
+
 
 
 

@@ -33,5 +33,12 @@
     <string name="titlepayconf">تاكيد الحذف</string>
     <string name="showdetails">عرض التفاصيل</string>
     <string name="hidedetails">إخفاء التفاصيل </string>
+    <string name="menusales">قائمة المبيعات</string>
+    <string name="barcodreader">قارئ الباركود</string>
+    <string name="knowapp">تعرف التطبيق</string>
+    <string name="aboutus">معلومات عنا </string>
+    <string name="mycashier">كاشيري</string>
+    <string name="unitprice">سعر الوحدة</string>
+
 
 </resources>

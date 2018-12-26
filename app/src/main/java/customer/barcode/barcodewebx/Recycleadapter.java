@@ -58,12 +58,14 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
     @Override
     public viewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.rowrecycle, parent, false);
+        View itemView = mInflater.inflate(R.layout.rowcashier, parent, false);
         return new viewholder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final viewholder holder, final int position) {
+
+
         if (mWords != null) {
             final mytable current = mWords.get(position);
             holder.namee.setText(current.getPname());
@@ -75,36 +77,52 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
            int qua= rowandnum.getInt("is",87);
 
 
+           holder.unitprice.setText(current.getPprice());
+           holder.barcodeee.setText(current.getPbar());
+           holder.add_items.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
 
-           holder.nuofproductitem.setText(String.valueOf(current.getPitemn()));
-            holder.numberr.setText(current.getPbar());
-            if (current.getPprice()!=null)
-            {
+                   int num=Integer.parseInt(holder.showitems_number.getText().toString());
+                   int currentnum=num+1;
+                   holder.showitems_number.setText(String.valueOf(currentnum));
+                   Double Uprice=Double.parseDouble(current.getPprice());
 
-                if (current.getPitemn()!=null)
-                {
-                    holder.pricee.setText(String.valueOf(current.getPprice()));
-                }
+                   Double totalpriceP=currentnum*Uprice;
+                   holder.total_itemscoast.setText(String.valueOf(totalpriceP));
+               }
+           });
 
-            }
+           holder.remove_item.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   int num=Integer.parseInt(holder.showitems_number.getText().toString());
+                   if (num <= 1) {
+                       holder.showitems_number.setText(String.valueOf(1));
 
-            holder.productdetailss.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent myintent=new Intent(con , Productdetails.class);
-                    myintent.putExtra("barnum",current.getPbar());
-                    con.startActivity(myintent);
+                   } else {
+                       int cunum=num-1;
+                       holder.showitems_number.setText(String.valueOf(cunum));
+                       Double Uprice=Double.parseDouble(current.getPprice());
+                      Double totalp=Uprice*cunum;
+                       holder.total_itemscoast.setText(String.valueOf(totalp));
+                   }
+               }
+           });
 
-                }
-            });
+           for(int i=0;i<mWords.size();i++)
+           {
+               mytable row=mWords.get(i);
+               holder.total_itemscoast.getText().toString()
+
+           }
 
 
-            holder.removeimg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    holder.rowrecycle.open();
-                }
-            });
+
+
+
+
+
             holder.rowrecycle.setShowMode(SwipeLayout.ShowMode.PullOut);
            holder.rowrecycle.addSwipeListener(new SwipeLayout.SwipeListener() {
                @Override
@@ -117,7 +135,7 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
                    Animation animation=AnimationUtils.loadAnimation(con,R.anim.notify);
                    holder.xremove.startAnimation(animation);
-                   holder.deleterowww.setOnClickListener(new View.OnClickListener() {
+                   holder.delete_product.setOnClickListener(new View.OnClickListener() {
                        @Override
                        public void onClick(View v) {
 
@@ -161,6 +179,7 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
             // Covers the case of data not being ready yet.
             holder.namee.setText("No Word");
         }
+
     }
 
     void setWords(List<mytable> words) {
@@ -198,29 +217,27 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
     class viewholder extends RecyclerView.ViewHolder {
 
-        TextView namee, numberr, pricee, deleterowww,nuofproductitem;
-        ImageView productimage, removeimg;
-        ImageView  xremove;
-        RelativeLayout removerow, productdetailss, backlayout;
-        LinearLayout toplayout;
+       ImageView productimage,add_items,remove_item,xremove;
         SwipeLayout rowrecycle;
+        TextView namee,unitprice,barcodeee,total_itemscoast,showitems_number,delete_product;
 
 
         public viewholder(View itemView) {
             super(itemView);
 
+
             namee = itemView.findViewById(R.id.nameproduct);
-            xremove=itemView.findViewById(R.id.xsign);
-            rowrecycle=itemView.findViewById(R.id.myrow);
-            numberr=itemView.findViewById(R.id.numberproduct);
-            pricee=itemView.findViewById(R.id.itempricee);
+            rowrecycle=itemView.findViewById(R.id.rowswipe);
+            barcodeee=itemView.findViewById(R.id.numberproduct);
+            total_itemscoast=itemView.findViewById(R.id.totalitemsc);
             productimage=itemView.findViewById(R.id.productimg);
-            removeimg=itemView.findViewById(R.id.remove);
-            productdetailss=itemView.findViewById(R.id.productdetails);
-            deleterowww=itemView.findViewById(R.id.deleterow);
-            backlayout=itemView.findViewById(R.id.background);
-            toplayout=itemView.findViewById(R.id.foregoroundd);
-            nuofproductitem=itemView.findViewById(R.id.numberofitems);
+            add_items=itemView.findViewById(R.id.additemsc);
+            remove_item=itemView.findViewById(R.id.removeitemsc);
+            showitems_number=itemView.findViewById(R.id.itemsnumberc);
+            unitprice=itemView.findViewById(R.id.unitpricec);
+            delete_product=itemView.findViewById(R.id.deleterow);
+            xremove=itemView.findViewById(R.id.xsign);
+
 
 
 
