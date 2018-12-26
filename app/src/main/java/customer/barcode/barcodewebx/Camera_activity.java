@@ -51,6 +51,7 @@ import java.util.List;
 import java.util.Set;
 
 import customer.barcode.barcodewebx.RoomDatabase.Productltable;
+import customer.barcode.barcodewebx.RoomDatabase.Sqlitetable;
 import customer.barcode.barcodewebx.RoomDatabase.mytable;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
 import customer.barcode.barcodewebx.productmodels.Rootproductdetail;
@@ -85,6 +86,7 @@ public class Camera_activity extends AppCompatActivity {
     TextView namee,unitpricee,barcodeee,total_itemscoast,donecamera,cancelcameraa;
     EditText showitems_number;
     private LinearLayout detailproduct;
+    private productdatabase mydatabase;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -119,6 +121,7 @@ public class Camera_activity extends AppCompatActivity {
 
             }
         });
+        mydatabase=new productdatabase(this);
 
 
 
@@ -538,7 +541,7 @@ public class Camera_activity extends AppCompatActivity {
     });
             }
 
-     private void getproductdetails(String barcodedata)
+     private void getproductdetails(final String barcodedata)
      {
          Retrofitclient myretro = Retrofitclient.getInstance();
          Retrofit retrofitt = myretro.getretro();
@@ -578,6 +581,9 @@ public class Camera_activity extends AppCompatActivity {
 
            @Override
            public void onFailure(Call<Rootproductdetail> call, Throwable t) {
+
+               Sqlitetable mytable= mydatabase.getdataforrowinproduct(barcodedata);
+               
 
            }
        });
