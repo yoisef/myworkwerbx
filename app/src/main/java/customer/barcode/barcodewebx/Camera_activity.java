@@ -514,14 +514,15 @@ public class Camera_activity extends AppCompatActivity {
 
                 Sqlitetable mytable= mydatabase.getdataforrowinproduct(barcodedata);
 
-                if (mytable.getName()!=null)
+                if (mytable!=null)
                 {
-                    mWordViewModel.insert(new mytable(mytable.getName(),mytable.getBarcode(),1,mytable.getImge(),mytable.getDescription(),mytable.getPrice(),null));
+                    mWordViewModel.insert(new mytable(mytable.getName(),mytable.getBarcode(),Integer.parseInt(showitems_number.getText().toString()),mytable.getImge(),mytable.getDescription(),mytable.getPrice(),null));
 
                 }
                 else
                 {
                     Toast.makeText(Camera_activity.this,getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
+                    resumecamera();
                 }
 
                         }
@@ -588,20 +589,29 @@ public class Camera_activity extends AppCompatActivity {
 
                Sqlitetable mytable= mydatabase.getdataforrowinproduct(barcodedata);
                String name,pricee,imagee;
-             imagee=  mytable.getImge();
-              pricee= mytable.getPrice();
-            name=   mytable.getName();
+               if(mytable!=null)
+               {
+                   imagee=  mytable.getImge();
+                   pricee= mytable.getPrice();
+                   name=   mytable.getName();
 
-               Glide.with(Camera_activity.this)
-                       .load(imagee)
-                       .into(productimage);
-               namee.setText(name);
-               barcodeee.setText(barcodedata);
-               unitpricee.setText(pricee);
-               int curnumunit=Integer.parseInt(showitems_number.getText().toString());
-               Double priceunit=Double.parseDouble(pricee);
-               total_itemscoast.setText(String .valueOf(priceunit*curnumunit));
-               detailproduct.setVisibility(View.VISIBLE);
+                   Glide.with(Camera_activity.this)
+                           .load(imagee)
+                           .into(productimage);
+                   namee.setText(name);
+                   barcodeee.setText(barcodedata);
+                   unitpricee.setText(pricee);
+                   int curnumunit=Integer.parseInt(showitems_number.getText().toString());
+                   Double priceunit=Double.parseDouble(pricee);
+                   total_itemscoast.setText(String .valueOf(priceunit*curnumunit));
+                   detailproduct.setVisibility(View.VISIBLE);
+               }
+               else
+               {
+                   Toast.makeText(Camera_activity.this,getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
+                   resumecamera();
+               }
+
 
 
 

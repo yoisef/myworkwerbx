@@ -493,7 +493,7 @@ public class MainActivity extends AppCompatActivity {
 
             Sqlitetable mytable= mydatabase.getdataforrowinproduct(barcode);
 
-            if (mytable.getName()!=null)
+            if (mytable!=null)
             {
                 mWordViewModel.insert(new mytable(mytable.getName(),mytable.getBarcode(),1,mytable.getImge(),mytable.getDescription(),mytable.getPrice(),null));
 
