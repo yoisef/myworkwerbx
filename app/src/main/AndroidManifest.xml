@@ -43,8 +43,8 @@
         <activity android:name=".order_details" />
         <activity android:name=".About_Activity" />
         <activity android:name=".Sign_Up" />
-        <activity android:name=".retailerinfo" />
-        <activity android:name=".Storeinfo"></activity>
+        <activity android:name=".Storeinfo" />
+        <activity android:name=".FragmentsActivity"></activity>
     </application>
 
 </manifest>

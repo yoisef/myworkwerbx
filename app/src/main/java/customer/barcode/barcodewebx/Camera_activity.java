@@ -498,10 +498,12 @@ public class Camera_activity extends AppCompatActivity {
 
                     } else {
                         Toast.makeText(Camera_activity.this,""+getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
+                        resumecamera();
 
                     }
                 } else {
                     Toast.makeText(Camera_activity.this,""+getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
+                    resumecamera();
 
 
                 }

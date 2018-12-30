@@ -40,5 +40,46 @@
     <string name="mycashier">Casher</string>
     <string name="unitprice">Unit Price</string>
     <string name="notrecorded">Not recorded in data base</string>
+    <string name="newwretailer">New Retailer</string>
+    <string name="forgetpass">Forgot Password ?</string>
+    <string name="havestore">Have A Store ?</string>
+    <string name="newstore">Create New Store</string>
+    <string name="enterstorenum">Enter Store ID</string>
+    <string name="entername">Enter Name</string>
+    <string name="enteremail">Enter Email</string>
+    <string name="retypepass">Retype Password</string>
+    <string name="entermoile">Enter Mobile Number</string>
+    <string name="level">Choose Level</string>
+    <string name="signup">Sign Up</string>
+    <string name="phonenumber">Phone Number</string>
+
+
+    //store
+
+
+    <string-array name="levels">
+        <item>Choose Level</item>
+        <item>Retailer Admin </item>
+        <item>Retailer Super User</item>
+        <item>Retailer User </item>
+
+    </string-array>
+
+    <string-array name="distrbuter">
+        <item>choose distributor </item>
+        <item>distributor 1 </item>
+        <item>distributor 2</item>
+        <item>distributor 3 </item>
+
+    </string-array>
+
+    <string-array name="subdist">
+        <item>Choose Sub Distributor </item>
+        <item>Supplier 1 </item>
+        <item>Supplier 2</item>
+        <item>Supplier 3 </item>
+
+    </string-array>
+
 
 </resources>

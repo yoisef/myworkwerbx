@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class loginactivity extends AppCompatActivity {
 
-    private TextView signintext;
+    private TextView signintext,sign_up;
     private Call<Roottoken> mcall;
     private EditText emailuser,userpass;
     private ProgressBar signprogress;
@@ -38,6 +38,14 @@ public class loginactivity extends AppCompatActivity {
         userpass=findViewById(R.id.userpasss);
         signintext=findViewById(R.id.signinbutton);
         signprogress=findViewById(R.id.loginprogressbar);
+        sign_up=findViewById(R.id.retailer_new);
+
+        sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(loginactivity.this,Sign_Up.class));
+            }
+        });
 
 
 

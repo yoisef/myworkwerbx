@@ -21,8 +21,8 @@
     <string name="defayltproductname">منتج</string>
     <string name="submit">تأكيد</string>
     <string name="chooseitemnu">أختر عدد الوحدات </string>
-    <string name="empty_email">أدخل الإيميل او رقم الموبايل </string>
-    <string name="empty_pass">أدخل الباسورد</string>
+    <string name="empty_email">أدخل البريد الإلكتروني او رقم الموبايل </string>
+    <string name="empty_pass">أدخل كلمة السر</string>
     <string name="items"> الوحدات </string>
     <string name="ordercustomer">طلب العميل </string>
     <string name="orderamount">تكلفة الطلب $</string>
@@ -40,6 +40,47 @@
     <string name="mycashier">كاشيري</string>
     <string name="unitprice">سعر الوحدة</string>
     <string name="notrecorded">غير مسجل في قاعدة البيانات</string>
+    <string name="newwretailer"> تاجر جديد</string>
+    <string name="forgetpass">نسيت كلمة السر</string>
+    <string name="havestore">لديك مخزن ؟</string>
+    <string name="newstore">إنشاء مخزن جديد</string>
+    <string name="enterstorenum">أدخل رقم المخزن</string>
+    <string name="entername">أدخل الإسم</string>
+    <string name="enteremail">أدخل البريد الإلكتروني</string>
+
+    <string name="retypepass">تأكيد كلمة السر</string>
+    <string name="entermoile">أدخل رقم الموبايل</string>
+    <string name="level">حدد المستوي</string>
+    <string name="signup">تسجيل </string>
+
+    <string name="phonenumber">رقم التليفون</string>
+
+
+
+    <string-array name="levels">
+        <item>حدد المستوي </item>
+        <item>تاجر تجزئة مشرف </item>
+        <item>تاجر تجزئة مستخدم مميز</item>
+        <item>تاجر تجزئة مستخدم </item>
+
+    </string-array>
+
+    <string-array name="distrbuter">
+        <item>حدد الموزع </item>
+        <item>موزع 1 </item>
+        <item>موزع 2</item>
+        <item>مورع 3 </item>
+
+    </string-array>
+
+    <string-array name="subdist">
+        <item>حدد الموزع الفرعي </item>
+        <item>مورد 1 </item>
+        <item>مورد 2</item>
+        <item>مورد 3 </item>
+
+    </string-array>
+
 
 
 </resources>
