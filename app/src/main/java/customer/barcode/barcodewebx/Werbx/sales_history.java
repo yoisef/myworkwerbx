@@ -1,11 +1,10 @@
-package customer.barcode.barcodewebx;
+package customer.barcode.barcodewebx.Werbx;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,8 +14,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import customer.barcode.barcodewebx.R;
 import customer.barcode.barcodewebx.RoomDatabase.historytable;
-import customer.barcode.barcodewebx.RoomDatabase.mytable;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
 
 public class sales_history extends AppCompatActivity {

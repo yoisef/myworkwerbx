@@ -1,4 +1,4 @@
-package customer.barcode.barcodewebx;
+package customer.barcode.barcodewebx.Werbx;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -8,14 +8,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import java.util.List;
-
+import customer.barcode.barcodewebx.R;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class Launcher_activity extends AppCompatActivity {
 

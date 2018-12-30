@@ -1,22 +1,14 @@
-package customer.barcode.barcodewebx;
+package customer.barcode.barcodewebx.Werbx;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
-import android.hardware.camera2.CameraDevice;
-import android.location.SettingInjectorService;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -37,23 +29,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.daimajia.swipe.SwipeLayout;
-import com.google.android.gms.common.api.CommonStatusCodes;
-import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
-import customer.barcode.barcodewebx.RoomDatabase.Productltable;
+import customer.barcode.barcodewebx.Endpoints;
+import customer.barcode.barcodewebx.R;
+import customer.barcode.barcodewebx.Retrofitclient;
 import customer.barcode.barcodewebx.RoomDatabase.Sqlitetable;
 import customer.barcode.barcodewebx.RoomDatabase.mytable;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
+import customer.barcode.barcodewebx.productdatabase;
 import customer.barcode.barcodewebx.productmodels.Rootproductdetail;
 import retrofit2.Call;
 import retrofit2.Callback;

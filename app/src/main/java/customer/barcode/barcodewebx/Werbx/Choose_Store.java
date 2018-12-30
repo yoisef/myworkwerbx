@@ -1,14 +1,16 @@
-package customer.barcode.barcodewebx;
+package customer.barcode.barcodewebx.Werbx;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class Sign_Up extends AppCompatActivity {
+import customer.barcode.barcodewebx.FragmentsActivity;
+import customer.barcode.barcodewebx.R;
+
+public class Choose_Store extends AppCompatActivity {
 
 
     TextView addstore,havesto;
@@ -37,7 +39,7 @@ public class Sign_Up extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(Sign_Up.this,FragmentsActivity.class));
+                startActivity(new Intent(Choose_Store.this,FragmentsActivity.class));
             }
         });
     }

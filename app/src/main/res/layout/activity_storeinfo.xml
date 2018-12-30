@@ -1,27 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@drawable/gradientblue2"
     android:layout_height="match_parent"
-    tools:context=".retailerinfo">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="20dp"
-        android:layout_height="match_parent">
+    >
 
 
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_centerInParent="true"
         android:background="@color/appcolor"
-        android:layout_margin="20dp"
         android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+
+            android:elevation="16dp"
+            android:orientation="vertical"
+            android:layout_above="@+id/addphoto"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="21dp"
+            android:id="@+id/relativeLayout">
+
+            <ImageView
+                android:id="@+id/photoshow"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/dollar"
+                android:layout_above="@+id/addphoto"
+                android:layout_centerHorizontal="true" />
+
+            <ProgressBar
+                android:id="@+id/proimage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:indeterminateTint="@color/blue"
+                android:indeterminateTintMode="src_in"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/addphoto"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:elevation="16dp"
+
+                android:gravity="center"
+                android:text="Add photo"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
 
         <EditText
             android:layout_width="match_parent"
@@ -36,7 +76,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"
-            android:id="@+id/retaileremail"
+            android:id="@+id/storeemail"
             android:textColor="@color/black"
             android:hint="@string/enteremail"
             android:gravity="center"
@@ -46,7 +86,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"
-            android:id="@+id/retailerpass"
+            android:id="@+id/storepass"
             android:hint="@string/empty_pass"
             android:gravity="center"
             android:textColor="@color/black"
@@ -56,7 +96,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"
-            android:id="@+id/retailerrepass"
+            android:id="@+id/storpassretype"
             android:hint="@string/retypepass"
             android:gravity="center"
             android:textColor="@color/black"
@@ -66,10 +106,31 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"
-            android:hint="@string/entermoile"
+            android:hint="@string/phonenumber"
+            android:id="@+id/phonenum"
             android:gravity="center"
-            android:id="@+id/retailermonile"
-            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:hint="@string/delcharge"
+            android:id="@+id/delcharge"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:id="@+id/choosecurrency"
+            android:hint="@string/currency"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="@dimen/medium"
             android:textColor="@color/black"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
@@ -79,22 +140,143 @@
             android:layout_marginTop="15dp"
             android:textColor="@color/black"
             android:padding="5dp"
-            android:id="@+id/retailerspinner"
+            android:id="@+id/storedistrbter"
 
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
             android:layout_height="wrap_content"></Spinner>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/black"
+            android:padding="5dp"
+            android:id="@+id/storesubdis"
+
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"></Spinner>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:background="@color/appcolor"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:hint="@string/opentime"
+                    android:id="@+id/Optime"
+                    android:inputType="none"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/opdeliv"
+                    android:inputType="none"
+                    android:hint="@string/opendelivery"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/clostim"
+                    android:textColor="@color/black"
+                    android:hint="@string/CloseTime"
+                    android:inputType="none"
+                    android:gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/clodeliv"
+                    android:inputType="none"
+                    android:hint="@string/closedelivery"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:hint="@string/deliverytime"
+            android:id="@+id/delverytime"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:hint="@string/storedescription"
+            android:id="@+id/description"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:hint="@string/delcharge"
+            android:id="@+id/delchargee"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:hint="@string/address"
+            android:id="@+id/addresss"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content" />
+
+
         <Button
             android:layout_width="match_parent"
             android:background="@color/blue"
             android:textColor="@color/white"
-            android:id="@+id/register"
+            android:id="@+id/nextstep"
             android:textSize="@dimen/large"
-            android:text="@string/signup"
+            android:text="@string/next"
             android:textStyle="bold"
             android:layout_height="wrap_content" />
 
 
     </LinearLayout>
-</RelativeLayout>
+</ScrollView>

@@ -1,7 +1,6 @@
-package customer.barcode.barcodewebx;
+package customer.barcode.barcodewebx.Werbx;
 
 import android.Manifest;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -9,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,7 +22,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,39 +30,31 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.common.api.CommonStatusCodes;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import customer.barcode.barcodewebx.RoomDatabase.Productltable;
+import customer.barcode.barcodewebx.Endpoints;
+import customer.barcode.barcodewebx.R;
+import customer.barcode.barcodewebx.Retrofitclient;
 import customer.barcode.barcodewebx.RoomDatabase.Sqlitetable;
 import customer.barcode.barcodewebx.RoomDatabase.historytable;
 import customer.barcode.barcodewebx.RoomDatabase.mytable;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
 
+import customer.barcode.barcodewebx.productdatabase;
 import customer.barcode.barcodewebx.productmodels.Rootproductdetail;
 import customer.barcode.barcodewebx.productmodels.getallproductsroot;
 import customer.barcode.barcodewebx.salemodel.Saleroot;
 import customer.barcode.barcodewebx.usermodels.Userroot;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static customer.barcode.barcodewebx.productdatabase.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -537,14 +526,34 @@ public class MainActivity extends AppCompatActivity {
 
                 if (response.isSuccessful())
                 {
+
+
                     if(response.body()!=null)
                     {
-                        mAdapter.deleterow(0);
+
+                        if (response.body().getData().getReason()!=null)
+                        {
+                            Toast.makeText(MainActivity.this,response.body().getData().getReason(),Toast.LENGTH_LONG).show();
+
+
+                        }
+                        else {
+                            mAdapter.deleterow(0);
+                            Toast.makeText(MainActivity.this,"Successful Payment ",Toast.LENGTH_LONG).show();
+
+                        }
+
+
+
 
 
 
                     }
                 }
+                else {
+
+                }
+
             }
 
             @Override

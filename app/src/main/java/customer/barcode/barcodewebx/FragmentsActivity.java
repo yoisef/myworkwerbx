@@ -14,8 +14,8 @@ import customer.barcode.barcodewebx.signupfragments.storeinfo2;
 
 public class FragmentsActivity extends AppCompatActivity implements connection {
 
-  android.app.FragmentManager manager;
-    android.app.FragmentTransaction transaction;
+  FragmentManager manager;
+    FragmentTransaction transaction;
     retailerinfo1 firstfrag;
     storeinfo1 secondfrag;
     storeinfo2 thirdfrag;
@@ -37,7 +37,7 @@ public class FragmentsActivity extends AppCompatActivity implements connection {
         step1.setTextColor(Color.WHITE);
         step1.setBackgroundColor(Color.GRAY);
 
-        manager=getFragmentManager();
+        manager=getSupportFragmentManager();
         transaction=manager.beginTransaction();
 
         if(firstfrag.isAdded()&&secondfrag.isAdded()&&thirdfrag.isAdded())

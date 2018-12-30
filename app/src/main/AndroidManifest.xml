@@ -17,21 +17,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Werbx.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme" />
         <activity
-            android:name=".Camera_activity"
+            android:name=".Werbx.Camera_activity"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme" />
         <activity
             android:name=".Productdetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".loginactivity"
+            android:name=".Werbx.loginactivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Launcher_activity"
+            android:name=".Werbx.Launcher_activity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,12 +39,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".sales_history" />
-        <activity android:name=".order_details" />
+        <activity android:name=".Werbx.sales_history" />
         <activity android:name=".About_Activity" />
-        <activity android:name=".Sign_Up" />
+        <activity android:name=".Werbx.Choose_Store" />
         <activity android:name=".Storeinfo" />
-        <activity android:name=".FragmentsActivity"></activity>
+        <activity android:name=".FragmentsActivity" />
+        <activity android:name=".Retailer_details"></activity>
     </application>
 
 </manifest>

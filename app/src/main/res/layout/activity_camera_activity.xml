@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:id="@+id/myframecamera"
     android:layout_height="match_parent"
-    tools:context=".Camera_activity">
+    tools:context=".Werbx.Camera_activity">
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_weight="1"

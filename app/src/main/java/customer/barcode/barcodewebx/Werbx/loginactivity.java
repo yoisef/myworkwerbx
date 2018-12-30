@@ -1,4 +1,4 @@
-package customer.barcode.barcodewebx;
+package customer.barcode.barcodewebx.Werbx;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import customer.barcode.barcodewebx.Endpoints;
+import customer.barcode.barcodewebx.R;
 import customer.barcode.barcodewebx.modelsauth.Roottoken;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -43,7 +45,7 @@ public class loginactivity extends AppCompatActivity {
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(loginactivity.this,Sign_Up.class));
+                startActivity(new Intent(loginactivity.this,Choose_Store.class));
             }
         });
 

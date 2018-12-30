@@ -52,6 +52,19 @@
     <string name="level">Choose Level</string>
     <string name="signup">Sign Up</string>
     <string name="phonenumber">Phone Number</string>
+    <string name="next">Next</string>
+    <string name="currency">Choose Currency</string>
+    <string name="opentime">Open Time</string>
+    <string name="CloseTime">Close Time</string>
+    <string name="opendelivery">Open Delivery</string>
+    <string name="closedelivery">Close Delivery</string>
+    <string name="deliverytime">Delivery Time</string>
+    <string name="storedescription">Description</string>
+    <string name="address">Address</string>
+    <string name="Active">Active</string>
+    <string name="location">Location</string>
+    <string name="delcharge">Del Charge</string>
+    <string name="image">Image</string>
 
 
     //store

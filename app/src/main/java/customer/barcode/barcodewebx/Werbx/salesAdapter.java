@@ -1,4 +1,4 @@
-package customer.barcode.barcodewebx;
+package customer.barcode.barcodewebx.Werbx;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -9,16 +9,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import customer.barcode.barcodewebx.R;
 import customer.barcode.barcodewebx.RoomDatabase.historytable;
-import customer.barcode.barcodewebx.RoomDatabase.mytable;
 import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
+import customer.barcode.barcodewebx.detailsadapter;
 
 public class salesAdapter extends RecyclerView.Adapter<salesAdapter.viewholder> {
 
