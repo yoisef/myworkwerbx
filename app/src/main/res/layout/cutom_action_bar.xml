@@ -30,7 +30,6 @@
             android:fontFamily="serif"
             android:padding="10dp"
             android:layout_alignParentTop="true"
-            android:layout_weight="1"
             />
 
 

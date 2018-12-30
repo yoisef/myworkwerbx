@@ -43,7 +43,6 @@
         <activity android:name=".About_Activity" />
         <activity android:name=".Werbx.Choose_Store" />
         <activity android:name=".Storeinfo" />
-        <activity android:name=".FragmentsActivity" />
         <activity android:name=".Retailer_details"></activity>
     </application>
 

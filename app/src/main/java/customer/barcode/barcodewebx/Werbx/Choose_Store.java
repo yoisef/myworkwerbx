@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import customer.barcode.barcodewebx.FragmentsActivity;
 import customer.barcode.barcodewebx.R;
+import customer.barcode.barcodewebx.Storeinfo;
 
 public class Choose_Store extends AppCompatActivity {
 
@@ -39,7 +39,7 @@ public class Choose_Store extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(Choose_Store.this,FragmentsActivity.class));
+                startActivity(new Intent(Choose_Store.this,Storeinfo.class));
             }
         });
     }
