@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import customer.barcode.barcodewebx.R;
+import customer.barcode.barcodewebx.Retailer_details;
 import customer.barcode.barcodewebx.Storeinfo;
 
 public class Choose_Store extends AppCompatActivity {
@@ -24,13 +25,16 @@ public class Choose_Store extends AppCompatActivity {
 
         havesto=findViewById(R.id.havestore);
         addstore=findViewById(R.id.newstoree);
-        enterstoreid=findViewById(R.id.storenum);
+
 
         havesto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                enterstoreid.setVisibility(View.VISIBLE);
+                Intent myintent=new Intent(Choose_Store.this, Retailer_details.class);
+                myintent.putExtra("havestore",1);
+
+                startActivity(myintent);
 
             }
         });

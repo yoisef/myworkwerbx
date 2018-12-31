@@ -158,9 +158,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         mytoolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mytoolbar);
    mytoolbar.setOverflowIcon(drawable);
+
+
+
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
@@ -432,7 +437,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void loginwithenternumber( final String barcode) {
+
+
+    private void loginwithenternumber(final String barcode) {
 
 
         Retrofitclient myretro=Retrofitclient.getInstance();
@@ -456,7 +463,7 @@ public class MainActivity extends AppCompatActivity {
                         brodprice = response.body().getProduct().getPrice();
 
                         prodcat = response.body().getProduct().getCategory().getName();
-                        mytable word = new mytable(pronam, prodbar,1, prodimg, broddetail, brodprice, prodcat);
+                        mytable word = new mytable(pronam, prodbar,Integer.parseInt("1"), prodimg, broddetail, brodprice, prodcat);
                         mWordViewModel.insert(word);
                         // myrecycle.scrollToPosition(myrecycle.getAdapter().getItemCount() - 1);
 
@@ -484,7 +491,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (mytable!=null)
             {
-                mWordViewModel.insert(new mytable(mytable.getName(),mytable.getBarcode(),1,mytable.getImge(),mytable.getDescription(),mytable.getPrice(),null));
+                mWordViewModel.insert(new mytable(mytable.getName(),mytable.getBarcode(),Integer.parseInt("1"),mytable.getImge(),mytable.getDescription(),mytable.getPrice(),null));
 
             }
             else
@@ -530,28 +537,15 @@ public class MainActivity extends AppCompatActivity {
 
                     if(response.body()!=null)
                     {
-
-                        if (response.body().getData().getReason()!=null)
-                        {
-                            Toast.makeText(MainActivity.this,response.body().getData().getReason(),Toast.LENGTH_LONG).show();
-
-
-                        }
-                        else {
-                            mAdapter.deleterow(0);
-                            Toast.makeText(MainActivity.this,"Successful Payment ",Toast.LENGTH_LONG).show();
-
-                        }
-
-
-
+                        mAdapter.deleterow(0);
+                        Toast.makeText(MainActivity.this,"Successful Payment ",Toast.LENGTH_LONG).show();
 
 
 
                     }
                 }
                 else {
-
+                    Toast.makeText(MainActivity.this,"Something Wrong",Toast.LENGTH_LONG).show();
                 }
 
             }

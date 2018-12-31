@@ -56,6 +56,17 @@
     <string name="phonenumber">رقم التليفون</string>
     <string name="next">التالي </string>
     <string name="currency">اختر العملة</string>
+    <string name="opentime">وقت الغتح</string>
+    <string name="CloseTime">وقت الغلق</string>
+    <string name="opendelivery">بداية وقت التوصيل</string>
+    <string name="closedelivery">انتهاء وقت التوصيل</string>
+    <string name="deliverytime">وقت التوصيل</string>
+    <string name="storedescription">الوصف</string>
+    <string name="address">العنوان</string>
+    <string name="Active">نشط</string>
+    <string name="location">الموقع</string>
+    <string name="delcharge">قيمة الغاء الطلب</string>
+    <string name="image">صورة</string>
 
 
 

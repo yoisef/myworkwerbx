@@ -4,25 +4,30 @@ import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -51,36 +56,35 @@ import retrofit2.Retrofit;
 
 public class Camera_activity extends AppCompatActivity {
     private BarcodeDetector detector;
-    private TextView suborder,cancelorder;
     private SurfaceView cameraView;
     private customer.barcode.barcodewebx.CameraSource cameraSource;
-    private Button cancel;
-    private FrameLayout myframe;
+
     private MediaPlayer ring;
-    private View leaser;
     LinearLayout changelay;
-    String detect = null;
+
     private productViewmodel mWordViewModel;
     private Switch myswitch;
-    String conditionn, finalcon;
+    String conditionn;
     private String usertoken;
-    private SharedPreferences prefs, perfscamera;
+    private SharedPreferences prefs;
     private Call<Rootproductdetail> mcall;
     private boolean add;
-    private ImageView addbtn, removebtn;
     private EditText itemsnum;
     private RelativeLayout layoutitems;
     private List<mytable> orderproducts;
     ImageView productimage,add_items,remove_item;
     TextView namee,unitpricee,barcodeee,total_itemscoast,donecamera,cancelcameraa;
     EditText showitems_number;
-    private LinearLayout detailproduct;
+    private RelativeLayout detailproduct;
     private productdatabase mydatabase;
+    private ProgressBar progresswaitadd;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_activity);
+
+
 
         productimage=findViewById(R.id.imgcam);
         add_items=findViewById(R.id.addcam);
@@ -90,9 +94,12 @@ public class Camera_activity extends AppCompatActivity {
         barcodeee=findViewById(R.id.barcam);
         total_itemscoast=findViewById(R.id.totalcam);
         showitems_number=findViewById(R.id.itemnumbercam);
-        detailproduct=findViewById(R.id.showprodetail);
+
         donecamera=findViewById(R.id.donecam);
         cancelcameraa=findViewById(R.id.cancelcam);
+
+       detailproduct=findViewById(R.id.showprodetail);
+        progresswaitadd=findViewById(R.id.waitwhileadd);
 
 
         prefs = getSharedPreferences("token", Context.MODE_PRIVATE);
@@ -116,7 +123,7 @@ public class Camera_activity extends AppCompatActivity {
 
 
 
-        leaser = findViewById(R.id.leaserline);
+
         ring = MediaPlayer.create(Camera_activity.this, R.raw.notif);
         cameraView = (SurfaceView) findViewById(R.id.camera_view);
 
@@ -171,17 +178,41 @@ public class Camera_activity extends AppCompatActivity {
         }
 
 
-        SharedPreferences sharedPreferences = getSharedPreferences("productbar", Context.MODE_PRIVATE);
-        final String barcode=sharedPreferences.getString("bar","11");
+
+
+
 
         donecamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                checkifproductexsist(showitems_number.getText().toString(),barcode);
+                SharedPreferences sharedPreferences = getSharedPreferences("productbar", Context.MODE_PRIVATE);
+                String barcode=sharedPreferences.getString("bar","11");
 
-                detailproduct.setVisibility(View.GONE);
-                resumecamera();
+
+
+
+
+             //   progresswaitadd.setVisibility(View.VISIBLE);
+               checkifproductexsist(showitems_number.getText().toString(),barcode);
+
+
+                Handler mhandl=new Handler();
+                mhandl.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        detailproduct.setVisibility(View.GONE);
+                        progresswaitadd.setVisibility(View.GONE);
+                        resumecamera();
+
+                    }
+                },2000);
+
+
+
+
+
             }
         });
 
@@ -455,6 +486,8 @@ public class Camera_activity extends AppCompatActivity {
 
 
     private void loginwithbarcode(final String barcodedata, final int itemsnum) {
+
+
         Retrofitclient myretro = Retrofitclient.getInstance();
         Retrofit retrofitt = myretro.getretro();
 
@@ -467,6 +500,9 @@ public class Camera_activity extends AppCompatActivity {
             public void onResponse(Call<Rootproductdetail> call, Response<Rootproductdetail> response) {
 
                 if (response.isSuccessful()) {
+                    mytable MainTable;
+
+
 
 
                     if (response.body().getProduct() != null) {
@@ -478,19 +514,20 @@ public class Camera_activity extends AppCompatActivity {
                         broddetail = response.body().getProduct().getDescription();
                         brodprice = response.body().getProduct().getPrice();
                         prodcat = response.body().getProduct().getCategory().getName();
-                        mytable word = new mytable(pronam, prodbar, itemsnum, prodimg, broddetail, brodprice, prodcat);
-                        mWordViewModel.insert(word);
+                        MainTable = new mytable(pronam, prodbar, itemsnum, prodimg, broddetail, brodprice, prodcat);
+                        mWordViewModel.insert(MainTable);
 
 
 
 
 
                     } else {
-                        Toast.makeText(Camera_activity.this,""+getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
+                        Toast.makeText(Camera_activity.this, "" + getResources().getString(R.string.notrecorded), Toast.LENGTH_LONG).show();
                         resumecamera();
 
                     }
-                } else {
+                }
+                else {
                     Toast.makeText(Camera_activity.this,""+getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
                     resumecamera();
 
@@ -519,7 +556,9 @@ public class Camera_activity extends AppCompatActivity {
                         }
 
                 });
-            }
+
+
+    }
 
             
 
@@ -558,19 +597,34 @@ public class Camera_activity extends AppCompatActivity {
                        barcodeee.setText(prodbar);
                        unitpricee.setText(brodprice);
                        int curnumunit=Integer.parseInt(showitems_number.getText().toString());
-                       Double priceunit=Double.parseDouble(brodprice);
+                       final Double priceunit=Double.parseDouble(brodprice);
                        total_itemscoast.setText(String .valueOf(priceunit*curnumunit));
                        detailproduct.setVisibility(View.VISIBLE);
+                      showitems_number.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                           @Override
+                           public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                               if (actionId== EditorInfo.IME_ACTION_DONE)
+                               {
+                                 Double val=  Integer.parseInt(showitems_number.getText().toString())*priceunit;
+                                   total_itemscoast.setText(String.valueOf(val));
+                                   return true;
+                               }
+                               return false;
+                           }
+                       });
                    }
                    else
                    {
                        Toast.makeText(Camera_activity.this,""+getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
+                       resumecamera();
                    }
 
                }
                else
                {
                    Toast.makeText(Camera_activity.this,""+getResources().getString(R.string.notrecorded),Toast.LENGTH_LONG).show();
+                   resumecamera();
 
                }
            }
@@ -639,7 +693,6 @@ public class Camera_activity extends AppCompatActivity {
         if (orderproducts.size() != 0) {
 
 
-
             for (i = 0; i < orderproducts.size(); i++) {
                 if (barcod.trim().equals(orderproducts.get(i).getPbar().trim())) {
 
@@ -657,6 +710,7 @@ public class Camera_activity extends AppCompatActivity {
                 loginwithbarcode(barcod,Integer.parseInt(numitems));
 
 
+
             }
 
 
@@ -664,6 +718,7 @@ public class Camera_activity extends AppCompatActivity {
         }
         else {
             loginwithbarcode(barcod,Integer.parseInt(showitems_number.getText().toString()));
+
         }
 
     }

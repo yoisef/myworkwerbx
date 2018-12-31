@@ -13,8 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import com.mynameismidori.currencypicker.CurrencyPicker;
+import com.mynameismidori.currencypicker.CurrencyPickerListener;
 
 import java.io.IOException;
 import java.sql.Time;
@@ -27,12 +32,15 @@ import customer.barcode.barcodewebx.Werbx.MainActivity;
 public class Storeinfo extends AppCompatActivity {
 
 
-    EditText openT, closT, openD, closD, Dleiverytime;
-    TextView addimg;
+    TextView openT, closT, openD, closD, Dleiverytime;
+    TextView currencychoose;
     private static final int image = 101;
     private android.app.AlertDialog.Builder builder;
     private android.app.AlertDialog chossewaydialog;
     private Button next;
+    CurrencyPicker picker;
+    private Spinner distruborspinnerr,  subdistributer;
+    private RelativeLayout addimg;
 
 
     @Override
@@ -40,16 +48,38 @@ public class Storeinfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storeinfo);
 
-        addimg = findViewById(R.id.addphoto);
+        addimg = findViewById(R.id.relativeLayout);
+
+     //   distruborspinnerr=findViewById(R.id.storedistrbter);
+    //    subdistributer=findViewById(R.id.storesubdis);
+        intializespinners();
 
         openT = findViewById(R.id.Optime);
         openD = findViewById(R.id.opdeliv);
         closT = findViewById(R.id.clostim);
         closD = findViewById(R.id.clodeliv);
+        currencychoose=findViewById(R.id.choosecurrency);
         next=findViewById(R.id.nextstep);
         Dleiverytime = findViewById(R.id.delverytime);
 
         intialzedatapicker();
+
+        picker = CurrencyPicker.newInstance("Select Currency");  // dialog title
+        picker.setListener(new CurrencyPickerListener() {
+            @Override
+            public void onSelectCurrency(String name, String code, String symbol, int flagDrawableResID) {
+                currencychoose.setText(name);
+                picker.dismiss();
+          }
+        });
+
+        currencychoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                picker.show(getSupportFragmentManager(), "CURRENCY_PICKER");
+            }
+        });
+
 
        addimg.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -57,6 +87,14 @@ public class Storeinfo extends AppCompatActivity {
 
                chooseimg();
 
+           }
+       });
+
+       next.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
+               startActivity(new Intent(Storeinfo.this,Retailer_details.class));
            }
        });
 
@@ -84,17 +122,20 @@ public class Storeinfo extends AppCompatActivity {
 
         }
     }
-/*
-    public void intializespinners(View view)
+*/
+        }
+    }
+    public void intializespinners()
     {
-        distruborspinner=view.findViewById(R.id.storedistrbter);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+        distruborspinnerr=findViewById(R.id.storedistrbter);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.distrbuter, android.R.layout.simple_spinner_item);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        distruborspinner.setAdapter(adapter);
+        distruborspinnerr.setAdapter(adapter);
 
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getActivity(),
+        subdistributer=findViewById(R.id.storesubdis);
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
                 R.array.subdist, android.R.layout.simple_spinner_item);
 
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -102,9 +143,9 @@ public class Storeinfo extends AppCompatActivity {
 
 
     }
-    */
-        }
-    }
+
+
+
 
     private void chooseimg()
     {
@@ -146,7 +187,7 @@ public class Storeinfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                datapicker();
+                datapicker(openT);
 
             }
         });
@@ -154,7 +195,7 @@ public class Storeinfo extends AppCompatActivity {
         openD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                datapicker();
+                datapicker(openD);
             }
         });
 
@@ -162,7 +203,7 @@ public class Storeinfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                datapicker();
+                datapicker(closD);
             }
         });
 
@@ -170,32 +211,33 @@ public class Storeinfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                datapicker();
+                datapicker(closT);
             }
         });
         Dleiverytime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                datapicker();
+                datapicker(Dleiverytime);
             }
         });
     }
 
-    public void datapicker()
+    public void datapicker(final TextView Mtext)
     {
-        Calendar mcurrentTime = Calendar.getInstance();
+        final Calendar mcurrentTime = Calendar.getInstance();
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
         int minute = mcurrentTime.get(Calendar.MINUTE);
 
-        TimePickerDialog mTimePicker;
+     TimePickerDialog mTimePicker;
 
         mTimePicker = new TimePickerDialog(Storeinfo.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
 
                String time= getTime(selectedHour,selectedMinute);
-                openT.setText( time);
+                Mtext.setText( time);
+
             }
         }, hour, minute, true);
         mTimePicker.setTitle("Select Time");

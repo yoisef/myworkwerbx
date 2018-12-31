@@ -31,7 +31,7 @@
                 android:id="@+id/photoshow"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/dollar"
+                android:src="@drawable/ic_shop"
                 android:layout_above="@+id/addphoto"
                 android:layout_centerHorizontal="true" />
 
@@ -47,10 +47,10 @@
                 android:layout_centerHorizontal="true" />
 
             <TextView
-                android:id="@+id/addphoto"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
                 android:elevation="16dp"
+                android:id="@+id/addphoto"
 
                 android:gravity="center"
                 android:text="Add photo"
@@ -168,24 +168,26 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:layout_height="match_parent">
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_marginTop="15dp"
                     android:hint="@string/opentime"
                     android:id="@+id/Optime"
                     android:inputType="none"
                     android:gravity="center"
+                    android:textSize="@dimen/medium"
                     android:textColor="@color/black"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_height="wrap_content" />
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_marginTop="15dp"
                     android:id="@+id/opdeliv"
                     android:inputType="none"
                     android:hint="@string/opendelivery"
+                    android:textSize="@dimen/medium"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_marginStart="20dp"
@@ -199,23 +201,25 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:layout_height="match_parent">
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_marginTop="15dp"
                     android:id="@+id/clostim"
                     android:textColor="@color/black"
                     android:hint="@string/CloseTime"
+                    android:textSize="@dimen/medium"
                     android:inputType="none"
                     android:gravity="center"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_height="wrap_content" />
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_marginTop="15dp"
                     android:id="@+id/clodeliv"
                     android:inputType="none"
                     android:hint="@string/closedelivery"
+                    android:textSize="@dimen/medium"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_marginStart="20dp"
@@ -225,12 +229,13 @@
 
 
         </LinearLayout>
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"
             android:hint="@string/deliverytime"
             android:id="@+id/delverytime"
             android:gravity="center"
+            android:textSize="@dimen/medium"
             android:textColor="@color/black"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"

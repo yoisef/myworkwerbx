@@ -4,16 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="67dp"
     android:background="@color/appcolor"
-    android:orientation="horizontal">
+    >
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="5dp"
             android:padding="9dp"
-            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+
             android:src="@drawable/barcod2"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="start"
             android:id="@+id/aboutus"
            />
 
@@ -22,10 +23,10 @@
             android:layout_height="wrap_content"
             android:text="@string/mycashier"
             android:textColor="@color/black"
-
+            android:layout_marginStart="140dp"
+            android:layout_centerVertical="true"
             android:gravity="center"
             android:textSize="@dimen/xx_large"
-            android:layout_centerHorizontal="true"
             android:textStyle="bold"
             android:fontFamily="serif"
             android:padding="10dp"

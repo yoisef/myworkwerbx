@@ -30,10 +30,10 @@ import customer.barcode.barcodewebx.RoomDatabase.productViewmodel;
 
 public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewholder> {
 
-  private   Context con;
+    private   Context con;
     private productViewmodel mWordViewModel;
 
-   private Thread mythread ;
+    private Thread mythread ;
 
 
     private final LayoutInflater mInflater;
@@ -47,7 +47,7 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
 
 
-       mWordViewModel = ViewModelProviders.of((FragmentActivity) context).get(productViewmodel.class);
+        mWordViewModel = ViewModelProviders.of((FragmentActivity) context).get(productViewmodel.class);
 
     }
 
@@ -67,80 +67,80 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
             holder.namee.setText(current.getPname());
 
 
-          GlideApp
+            GlideApp
                     .with(con)
                     .load(current.getPimg())
-                  .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.productimage);
 
 
 
 
-          holder.showitems_number.setText(String.valueOf(current.getPitemn()));
+            holder.showitems_number.setText(String.valueOf(current.getPitemn()));
 
 
-           holder.showitems_number.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-               @Override
-               public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            holder.showitems_number.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-                   if (actionId==EditorInfo.IME_ACTION_DONE)
-                   {
-                       mWordViewModel.updateproduct(Long.parseLong(holder.showitems_number.getText().toString()),Long.parseLong(current.getPbar()));
-                          return true;
-                   }
-                   return false;
-               }
-           });
+                    if (actionId==EditorInfo.IME_ACTION_DONE)
+                    {
+                        mWordViewModel.updateproduct(Long.parseLong(holder.showitems_number.getText().toString()),Long.parseLong(current.getPbar()));
+                        return true;
+                    }
+                    return false;
+                }
+            });
 
 
 
 
             Double coast=current.getPitemn()*Double.parseDouble(current.getPprice());
 
-           holder.total_itemscoast.setText(String.valueOf(coast));
+            holder.total_itemscoast.setText(String.valueOf(coast));
 
-           holder.unitprice.setText(current.getPprice());
+            holder.unitprice.setText(current.getPprice());
 
-           holder.barcodeee.setText(current.getPbar());
-           holder.add_items.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-
-
-                   int num=Integer.parseInt(holder.showitems_number.getText().toString());
-                   int currentnum=num+1;
-
-                   holder.showitems_number.setText(String.valueOf(currentnum));
-
-                   Double Uprice=Double.parseDouble(current.getPprice());
-
-                   Double totalpriceP=currentnum*Uprice;
-                   holder.total_itemscoast.setText(String.valueOf(totalpriceP));
-                 mWordViewModel.updateproduct(Long.parseLong(holder.showitems_number.getText().toString()),Long.parseLong(current.getPbar()));
+            holder.barcodeee.setText(current.getPbar());
+            holder.add_items.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
 
-               }
-           });
+                    int num=Integer.parseInt(holder.showitems_number.getText().toString());
+                    int currentnum=num+1;
 
-           holder.remove_item.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   int num=Integer.parseInt(holder.showitems_number.getText().toString());
-                   if (num <= 1) {
-                       holder.showitems_number.setText(String.valueOf(1));
+                    holder.showitems_number.setText(String.valueOf(currentnum));
 
-                   } else {
-                       int cunum=num-1;
-                       holder.showitems_number.setText(String.valueOf(cunum));
+                    Double Uprice=Double.parseDouble(current.getPprice());
 
-                       Double Uprice=Double.parseDouble(current.getPprice());
-                      Double totalp=Uprice*cunum;
-                       holder.total_itemscoast.setText(String.valueOf(totalp));
-                     mWordViewModel.updateproduct(Long.parseLong(holder.showitems_number.getText().toString()),Long.parseLong(current.getPbar()));
+                    Double totalpriceP=currentnum*Uprice;
+                    holder.total_itemscoast.setText(String.valueOf(totalpriceP));
+                    mWordViewModel.updateproduct(Long.parseLong(holder.showitems_number.getText().toString()),Long.parseLong(current.getPbar()));
 
-                   }
-               }
-           });
+
+                }
+            });
+
+            holder.remove_item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int num=Integer.parseInt(holder.showitems_number.getText().toString());
+                    if (num <= 1) {
+                        holder.showitems_number.setText(String.valueOf(1));
+
+                    } else {
+                        int cunum=num-1;
+                        holder.showitems_number.setText(String.valueOf(cunum));
+
+                        Double Uprice=Double.parseDouble(current.getPprice());
+                        Double totalp=Uprice*cunum;
+                        holder.total_itemscoast.setText(String.valueOf(totalp));
+                        mWordViewModel.updateproduct(Long.parseLong(holder.showitems_number.getText().toString()),Long.parseLong(current.getPbar()));
+
+                    }
+                }
+            });
 
 
 
@@ -149,57 +149,57 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
 
             holder.rowrecycle.setShowMode(SwipeLayout.ShowMode.PullOut);
-           holder.rowrecycle.addSwipeListener(new SwipeLayout.SwipeListener() {
-               @Override
-               public void onStartOpen(SwipeLayout layout) {
+            holder.rowrecycle.addSwipeListener(new SwipeLayout.SwipeListener() {
+                @Override
+                public void onStartOpen(SwipeLayout layout) {
 
-               }
+                }
 
-               @Override
-               public void onOpen(SwipeLayout layout) {
+                @Override
+                public void onOpen(SwipeLayout layout) {
 
-                   Animation animation=AnimationUtils.loadAnimation(con,R.anim.notify);
-                   holder.xremove.startAnimation(animation);
-                   holder.delete_product.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
+                    Animation animation=AnimationUtils.loadAnimation(con,R.anim.notify);
+                    holder.xremove.startAnimation(animation);
+                    holder.delete_product.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                           int i=holder.getAdapterPosition();
-
-
-                           mWordViewModel.delterow(mWords.get(i));
-                           mWords.remove(i);
-                           notifyItemRemoved(i);
-                           notifyDataSetChanged();
+                            int i=holder.getAdapterPosition();
 
 
+                            mWordViewModel.delterow(mWords.get(i));
+                            mWords.remove(i);
+                            notifyItemRemoved(i);
+                            notifyDataSetChanged();
 
 
-                       }
-                   });
 
-               }
 
-               @Override
-               public void onStartClose(SwipeLayout layout) {
+                        }
+                    });
 
-               }
+                }
 
-               @Override
-               public void onClose(SwipeLayout layout) {
+                @Override
+                public void onStartClose(SwipeLayout layout) {
 
-               }
+                }
 
-               @Override
-               public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+                @Override
+                public void onClose(SwipeLayout layout) {
 
-               }
+                }
 
-               @Override
-               public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+                @Override
+                public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
 
-               }
-           });
+                }
+
+                @Override
+                public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+
+                }
+            });
         } else {
             // Covers the case of data not being ready yet.
             holder.namee.setText("No Word");
@@ -225,8 +225,8 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
     int getadapterposition()
     {
-      int i = getadapterposition();
-      return i;
+        int i = getadapterposition();
+        return i;
 
     }
 
@@ -244,10 +244,10 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
     class viewholder extends RecyclerView.ViewHolder {
 
-       ImageView productimage,add_items,remove_item,xremove;
+        ImageView productimage,add_items,remove_item,xremove;
         SwipeLayout rowrecycle;
         TextView namee,unitprice,barcodeee,total_itemscoast,delete_product;
-     EditText showitems_number;
+        EditText showitems_number;
 
         public viewholder(View itemView) {
             super(itemView);
@@ -276,21 +276,6 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
 
 
-   public class Asyntasc extends AsyncTask<String,Void,Void>{
 
-       @Override
-       protected Void doInBackground(String... strings) {
-
-                    mWordViewModel.updateproduct(Long.parseLong(strings[0]),Long.parseLong(strings[1]));
-
-           return null;
-
-       }
-
-       @Override
-       protected void onPostExecute(Void integer) {
-           super.onPostExecute(integer);
-       }
-   }
 
 }
