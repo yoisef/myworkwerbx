@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,13 +17,21 @@ public class Retailer_details extends AppCompatActivity {
 
     private Spinner retailertype;
     private TextView currency;
-    private EditText storeid;
+    private EditText storeid,renam,retemail,retapass,retairetpepass,remobile;
+    private Button register;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_retailer_details);
+
+        renam=findViewById(R.id.retailernam);
+        retemail=findViewById(R.id.retaileremail);
+
+        retapass=findViewById(R.id.retailerpass);
+        retairetpepass=findViewById(R.id.retailerrepass);
+        remobile=findViewById(R.id.retailermobile);
 
         storeid=findViewById(R.id.storid);
 
@@ -44,53 +53,15 @@ public class Retailer_details extends AppCompatActivity {
         retailertype.setAdapter(adapter);
     }
 
-    private void registeruser() {
+    private void validteretailer()
+    {
+        String nam,email,pas1,pas2,mob;
 
-    /*
-        String email=emailedit.getText().toString();
-        String passwordd=passwordedit.getText().toString().trim();
-        String retpingpass=Retypingpass.getText().toString().trim();
-
-
-        if (email.isEmpty())
-        {
-            emailedit.setError("email is required");
-            emailedit.requestFocus();
-            return;
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
-        {
-            emailedit.setError("please Enter a valid email");
-            emailedit.requestFocus();
-            return;
-        }
-        if (passwordd.isEmpty())
-        {
-            passwordedit.setError("Password is required");
-            passwordedit.requestFocus();
-            return;
-        }
-        if (passwordd.length()<6)
-        {
-            passwordedit.setError("Minimum Length of password should be 6");
-            passwordedit.requestFocus();
-            return;
-        }
-        if (retpingpass.isEmpty())
-        {
-            Retypingpass.setError("Password is required");
-            Retypingpass.requestFocus();
-            return;
-        }
-        if (retpingpass.length()<6) {
-            Retypingpass.setError("Minimum Length of password should be 6");
-            Retypingpass.requestFocus();
-            return;
-        }
-
-        if (!retpingpass.equals(passwordd))
-
-        */
-
+        nam=renam.getText().toString().trim();
+        email=retemail.getText().toString().trim();
+        pas1=retapass.getText().toString().trim();
+        pas2
     }
+
+
 }

@@ -74,7 +74,7 @@
             android:layout_marginTop="15dp"
             android:hint="@string/entermoile"
             android:gravity="center"
-            android:id="@+id/retailermonile"
+            android:id="@+id/retailermobile"
             android:layout_marginBottom="10dp"
             android:textColor="@color/black"
             android:layout_marginStart="20dp"

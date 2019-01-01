@@ -61,13 +61,37 @@
                 android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/Active"
+                android:textSize="@dimen/medium"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
 
 
         <EditText
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"
             android:hint="@string/entername"
-            android:id="@+id/retailernam"
+            android:id="@+id/storernam"
             android:gravity="center"
             android:textColor="@color/black"
             android:layout_marginStart="20dp"
@@ -117,7 +141,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"
             android:hint="@string/delcharge"
-            android:id="@+id/delcharge"
+            android:id="@+id/delchargec"
             android:gravity="center"
             android:textColor="@color/black"
             android:layout_marginStart="20dp"

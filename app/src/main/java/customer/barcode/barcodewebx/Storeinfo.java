@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -41,12 +42,25 @@ public class Storeinfo extends AppCompatActivity {
     CurrencyPicker picker;
     private Spinner distruborspinnerr,  subdistributer;
     private RelativeLayout addimg;
+    private EditText name,email,pass,retypepass,phonenum,delcharg,descr,address;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storeinfo);
+
+        name=findViewById(R.id.storernam);
+        email=findViewById(R.id.storeemail);
+        pass=findViewById(R.id.storepass);
+        retypepass=findViewById(R.id.storpassretype);
+        phonenum=findViewById(R.id.phonenum);
+        delcharg=findViewById(R.id.delchargec);
+        address=findViewById(R.id.description);
+
+
+
 
         addimg = findViewById(R.id.relativeLayout);
 
@@ -94,7 +108,8 @@ public class Storeinfo extends AppCompatActivity {
            @Override
            public void onClick(View v) {
 
-               startActivity(new Intent(Storeinfo.this,Retailer_details.class));
+               intilazeviewswithvaildate();
+
            }
        });
 
@@ -249,5 +264,158 @@ public class Storeinfo extends AppCompatActivity {
         Format formatter;
         formatter = new SimpleDateFormat("h:mm a");
         return formatter.format(tme);
+    }
+
+
+    private void intilazeviewswithvaildate()
+    {
+        String emailtxt,passtxt,passretpetxt,phonenumtxt,delchargetxt,addresstxt,
+                ChoseCuretxt,openttxt,clottxt,opedeltxt,closedelitxt,deliverytimetxt,
+                closettxt,namtxt;
+
+
+
+        namtxt =name.getText().toString().trim();
+        emailtxt=email.getText().toString().trim();
+        passtxt=pass.getText().toString().trim();
+        passretpetxt=retypepass.getText().toString().trim();
+        phonenumtxt=phonenum.getText().toString().trim();
+        delchargetxt=delcharg.getText().toString().trim();
+        ChoseCuretxt=currencychoose.getText().toString().trim();
+        openttxt=openT.getText().toString().trim();
+        closettxt=closT.getText().toString().trim();
+        opedeltxt=openD.getText().toString().trim();
+        closedelitxt=closD.getText().toString().trim();
+        deliverytimetxt=Dleiverytime.getText().toString().trim();
+        addresstxt=address.getText().toString().trim();
+
+
+
+        if (namtxt.isEmpty())
+        {
+            name.setError("Name is Required");
+            name.requestFocus();
+
+            return ;
+        }
+
+        if (emailtxt.isEmpty())
+        {
+            email.setError("email is required");
+            email.requestFocus();
+            return ;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(emailtxt).matches())
+        {
+            email.setError("please Enter a valid email");
+            email.requestFocus();
+            return ;
+        }
+        if (passtxt.isEmpty())
+        {
+            pass.setError("Password is required");
+            pass.requestFocus();
+            return;
+        }
+        if (passtxt.length()<6)
+        {
+            pass.setError("Minimum Length of password should be 6");
+            pass.requestFocus();
+            return;
+        }
+        if (passretpetxt.isEmpty())
+        {
+            retypepass.setError("Password is required");
+            retypepass.requestFocus();
+            return;
+        }
+        if (passretpetxt.length()<6) {
+            retypepass.setError("Minimum Length of password should be 6");
+            retypepass.requestFocus();
+            return;
+        }
+
+        if (!passretpetxt.equals(passtxt))
+        {
+            retypepass.setError("Not Match With Password");
+            retypepass.requestFocus();
+            return;
+        }
+        if (phonenumtxt.isEmpty())
+        {
+            phonenum.setError("Phone number Required");
+            phonenum.requestFocus();
+            return;
+        }
+        if (delchargetxt.isEmpty())
+        {
+            delcharg.setError("Delete Charge is required");
+            delcharg.requestFocus();
+            return;
+        }
+        if (ChoseCuretxt.isEmpty())
+        {
+             currencychoose.setError("Choose Currency");
+             currencychoose.requestFocus();
+             return;
+        }
+        if (openttxt.isEmpty())
+        {
+            openT.setError("determined open time");
+            currencychoose.requestFocus();
+            return;
+        }
+        if (closettxt.isEmpty())
+        {
+            closT.setError("determined close time");
+            closT.requestFocus();
+            return;
+        }
+        if (opedeltxt.isEmpty())
+        {
+            openD.setError("determined open delivery time");
+            openD.requestFocus();
+            return;
+        }
+        if (closedelitxt.isEmpty())
+        {
+            closD.setError("determined close delivery time");
+            closD.requestFocus();
+            return;
+        }
+        if (deliverytimetxt.isEmpty())
+        {
+            Dleiverytime.setError("determined delivery time");
+            Dleiverytime.requestFocus();
+        }
+        if (distruborspinnerr.getSelectedItemPosition()==0)
+        {
+            ((TextView)distruborspinnerr.getSelectedView()).setError("Select distributor");
+            ((TextView)distruborspinnerr.getSelectedView()).requestFocus();
+            return;
+
+        }
+        if (subdistributer.getSelectedItemPosition()==0)
+        {
+            ((TextView)subdistributer.getSelectedView()).setError("Select distributor");
+            ((TextView)subdistributer.getSelectedView()).requestFocus();
+            return;
+        }
+        if (addresstxt.isEmpty())
+        {
+            address.setError("determined address");
+            address.requestFocus();
+        }
+
+
+        startActivity(new Intent(Storeinfo.this,Retailer_details.class));
+
+
+
+
+
+
+
+
     }
 }
