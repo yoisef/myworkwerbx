@@ -56,7 +56,7 @@
     <string name="phonenumber">رقم التليفون</string>
     <string name="next">التالي </string>
     <string name="currency">اختر العملة</string>
-    <string name="opentime">وقت الغتح</string>
+    <string name="opentime">وقت الفتح</string>
     <string name="CloseTime">وقت الغلق</string>
     <string name="opendelivery">بداية وقت التوصيل</string>
     <string name="closedelivery">انتهاء وقت التوصيل</string>
@@ -85,6 +85,8 @@
     <string name="opendV">حدد بداية وقت التوصيل </string>
     <string name="closedV">حدد انتهاء وقت التوصيل </string>
     <string name="detimeV">حدد وقت التوصيل </string>
+    <string name="addressV">أدخل العنوان</string>
+
 
 
 

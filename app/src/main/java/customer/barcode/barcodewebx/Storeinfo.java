@@ -57,7 +57,7 @@ public class Storeinfo extends AppCompatActivity {
         retypepass=findViewById(R.id.storpassretype);
         phonenum=findViewById(R.id.phonenum);
         delcharg=findViewById(R.id.delchargec);
-        address=findViewById(R.id.description);
+        address=findViewById(R.id.addresss);
 
 
 
@@ -293,7 +293,7 @@ public class Storeinfo extends AppCompatActivity {
 
         if (namtxt.isEmpty())
         {
-            name.setError(getResources().getString(R.string.namV);
+            name.setError(getResources().getString(R.string.namV));
             name.requestFocus();
 
             return ;
@@ -359,11 +359,32 @@ public class Storeinfo extends AppCompatActivity {
              currencychoose.requestFocus();
              return;
         }
+        else {
+            currencychoose.setError(null);
+        }
+
+        if (distruborspinnerr.getSelectedItemPosition()==0)
+        {
+            ((TextView)distruborspinnerr.getSelectedView()).setError(getResources().getString(R.string.distuboterV));
+            ((TextView)distruborspinnerr.getSelectedView()).requestFocus();
+            return;
+
+        }
+        if (subdistributer.getSelectedItemPosition()==0)
+        {
+            ((TextView)subdistributer.getSelectedView()).setError(getResources().getString(R.string.subdistV));
+            ((TextView)subdistributer.getSelectedView()).requestFocus();
+            return;
+        }
         if (openttxt.isEmpty())
         {
             openT.setError(getResources().getString(R.string.opentV));
-            currencychoose.requestFocus();
+            openT.requestFocus();
             return;
+        }
+        else {
+            openT.setError(null);
+
         }
         if (closettxt.isEmpty())
         {
@@ -371,11 +392,17 @@ public class Storeinfo extends AppCompatActivity {
             closT.requestFocus();
             return;
         }
+        else {
+            closT.setError(null);
+        }
         if (opedeltxt.isEmpty())
         {
             openD.setError(getResources().getString(R.string.opendV));
             openD.requestFocus();
             return;
+        }
+        else{
+            openD.setError(null);
         }
         if (closedelitxt.isEmpty())
         {
@@ -383,28 +410,27 @@ public class Storeinfo extends AppCompatActivity {
             closD.requestFocus();
             return;
         }
+        else {
+            closD.setError(null);
+        }
         if (deliverytimetxt.isEmpty())
         {
             Dleiverytime.setError(getResources().getString(R.string.detimeV));
             Dleiverytime.requestFocus();
         }
-        if (distruborspinnerr.getSelectedItemPosition()==0)
-        {
-            ((TextView)distruborspinnerr.getSelectedView()).setError("Select distributor");
-            ((TextView)distruborspinnerr.getSelectedView()).requestFocus();
-            return;
+        else {
+            Dleiverytime.setError(null);
+        }
 
-        }
-        if (subdistributer.getSelectedItemPosition()==0)
-        {
-            ((TextView)subdistributer.getSelectedView()).setError("Select distributor");
-            ((TextView)subdistributer.getSelectedView()).requestFocus();
-            return;
-        }
+
         if (addresstxt.isEmpty())
         {
-            address.setError("determined address");
+            address.setError(getResources().getString(R.string.addressV));
             address.requestFocus();
+            return;
+        }
+        else {
+            address.setError(null);
         }
 
 

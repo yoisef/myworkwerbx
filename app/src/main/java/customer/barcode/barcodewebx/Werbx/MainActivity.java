@@ -34,9 +34,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import customer.barcode.barcodewebx.Endpoints;
 import customer.barcode.barcodewebx.R;
@@ -254,8 +257,16 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
+                        Locale locale = new Locale("ar", "KW");
+                        SimpleDateFormat sdf = new SimpleDateFormat("E, dd-MMMM-yy");
+                        Date currDate = new Date();
 
-                        historytable myhis = new historytable(1, Calendar.getInstance().getTime().toString(),myproducts, String.valueOf(totalordercoast), String.valueOf(totalorderitems));
+
+                        String formattedDate = sdf.format(currDate);
+
+
+
+                        historytable myhis = new historytable(1, formattedDate,myproducts, String.valueOf(totalordercoast), String.valueOf(totalorderitems));
                         mWordViewModel.inserthis(myhis);
 
                         alertDialog1.cancel();

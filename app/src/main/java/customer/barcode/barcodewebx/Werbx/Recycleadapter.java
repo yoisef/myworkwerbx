@@ -57,6 +57,8 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
         return new viewholder(itemView);
     }
 
+
+
     @Override
     public void onBindViewHolder(final viewholder holder,  int position) {
 
@@ -206,6 +208,7 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
         }
 
     }
+
 
     void setWords(List<mytable> words) {
         mWords = words;

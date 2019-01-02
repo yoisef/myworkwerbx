@@ -109,6 +109,12 @@ public class salesAdapter extends RecyclerView.Adapter<salesAdapter.viewholder> 
         notifyDataSetChanged();
     }
 
+    void sethistoryfilter(List<historytable> table)
+    {
+        mHistory=table;
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getItemCount() {

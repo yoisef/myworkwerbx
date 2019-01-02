@@ -95,7 +95,7 @@
             android:layout_width="match_parent"
             android:background="@color/blue"
             android:textColor="@color/white"
-            android:id="@+id/register"
+            android:id="@+id/registerr"
             android:textSize="@dimen/large"
             android:text="@string/signup"
             android:textStyle="bold"

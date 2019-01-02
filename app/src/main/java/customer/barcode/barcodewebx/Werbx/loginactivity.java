@@ -63,37 +63,47 @@ public class loginactivity extends AppCompatActivity {
         signintext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signprogress.setVisibility(View.VISIBLE);
-                validatePassword();
-                validateemail() ;
-                String currentemail=emailuser.getText().toString();
-                String currpass=userpass.getText().toString();
-                signin(currentemail,currpass);
+
+               boolean result= validesignin();
+               if (result)
+               {
+                   signprogress.setVisibility(View.VISIBLE);
+               }
+
+
+
             }
         });
     }
 
 
-    private void validatePassword() {
-        if (emailuser.getText().toString().trim().isEmpty()) {
-            emailuser.setError(getString(R.string.empty_email));
-            requestFocus(emailuser);
-        }
-    }
+  private boolean validesignin()
+  {
+      String retaileremail,retailerpass;
+      retaileremail=emailuser.getText().toString().trim();
+      retailerpass=userpass.getText().toString().trim();
 
-    private void validateemail()
-    {
-        if (userpass.getText().toString().trim().isEmpty())
-        {
-            userpass.setError(getString(R.string.empty_pass));
-            requestFocus(userpass);
-        }
-    }
-    private void requestFocus(View view) {
-        if (view.requestFocus()) {
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        }
-    }
+      if (retaileremail.isEmpty())
+      {
+          emailuser.setError(getResources().getString(R.string.emailV));
+          emailuser.requestFocus();
+          return false;
+      }
+
+
+     if(retailerpass.isEmpty())
+      {
+          userpass.setError(getResources().getString(R.string.passV));
+          userpass.requestFocus();
+          return false;
+      }
+
+
+
+      signin(retaileremail,retailerpass);
+
+      return true;
+  }
 
     public void signin(String email ,String password)
     {
