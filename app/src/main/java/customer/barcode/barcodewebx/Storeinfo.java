@@ -293,7 +293,7 @@ public class Storeinfo extends AppCompatActivity {
 
         if (namtxt.isEmpty())
         {
-            name.setError("Name is Required");
+            name.setError(getResources().getString(R.string.namV);
             name.requestFocus();
 
             return ;
@@ -301,91 +301,91 @@ public class Storeinfo extends AppCompatActivity {
 
         if (emailtxt.isEmpty())
         {
-            email.setError("email is required");
+            email.setError(getResources().getString(R.string.emailV));
             email.requestFocus();
             return ;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(emailtxt).matches())
         {
-            email.setError("please Enter a valid email");
+            email.setError(getResources().getString(R.string.vaildemailV));
             email.requestFocus();
             return ;
         }
         if (passtxt.isEmpty())
         {
-            pass.setError("Password is required");
+            pass.setError(getResources().getString(R.string.passV));
             pass.requestFocus();
             return;
         }
         if (passtxt.length()<6)
         {
-            pass.setError("Minimum Length of password should be 6");
+            pass.setError(getResources().getString(R.string.minumV));
             pass.requestFocus();
             return;
         }
         if (passretpetxt.isEmpty())
         {
-            retypepass.setError("Password is required");
+            retypepass.setError(getResources().getString(R.string.passRV));
             retypepass.requestFocus();
             return;
         }
         if (passretpetxt.length()<6) {
-            retypepass.setError("Minimum Length of password should be 6");
+            retypepass.setError(getResources().getString(R.string.passRV));
             retypepass.requestFocus();
             return;
         }
 
         if (!passretpetxt.equals(passtxt))
         {
-            retypepass.setError("Not Match With Password");
+            retypepass.setError(getResources().getString(R.string.passRV));
             retypepass.requestFocus();
             return;
         }
         if (phonenumtxt.isEmpty())
         {
-            phonenum.setError("Phone number Required");
+            phonenum.setError(getResources().getString(R.string.phoneV));
             phonenum.requestFocus();
             return;
         }
         if (delchargetxt.isEmpty())
         {
-            delcharg.setError("Delete Charge is required");
+            delcharg.setError(getResources().getString(R.string.delchargeV));
             delcharg.requestFocus();
             return;
         }
         if (ChoseCuretxt.isEmpty())
         {
-             currencychoose.setError("Choose Currency");
+             currencychoose.setError(getResources().getString(R.string.currencyV));
              currencychoose.requestFocus();
              return;
         }
         if (openttxt.isEmpty())
         {
-            openT.setError("determined open time");
+            openT.setError(getResources().getString(R.string.opentV));
             currencychoose.requestFocus();
             return;
         }
         if (closettxt.isEmpty())
         {
-            closT.setError("determined close time");
+            closT.setError(getResources().getString(R.string.closetV));
             closT.requestFocus();
             return;
         }
         if (opedeltxt.isEmpty())
         {
-            openD.setError("determined open delivery time");
+            openD.setError(getResources().getString(R.string.opendV));
             openD.requestFocus();
             return;
         }
         if (closedelitxt.isEmpty())
         {
-            closD.setError("determined close delivery time");
+            closD.setError(getResources().getString(R.string.closedV));
             closD.requestFocus();
             return;
         }
         if (deliverytimetxt.isEmpty())
         {
-            Dleiverytime.setError("determined delivery time");
+            Dleiverytime.setError(getResources().getString(R.string.detimeV));
             Dleiverytime.requestFocus();
         }
         if (distruborspinnerr.getSelectedItemPosition()==0)

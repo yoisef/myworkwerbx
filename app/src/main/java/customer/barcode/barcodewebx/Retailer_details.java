@@ -17,7 +17,7 @@ public class Retailer_details extends AppCompatActivity {
 
     private Spinner retailertype;
     private TextView currency;
-    private EditText storeid,renam,retemail,retapass,retairetpepass,remobile;
+    private EditText storeid,renam,retemail,retapass,retailer_retype_pass,remobile;
     private Button register;
 
 
@@ -30,7 +30,7 @@ public class Retailer_details extends AppCompatActivity {
         retemail=findViewById(R.id.retaileremail);
 
         retapass=findViewById(R.id.retailerpass);
-        retairetpepass=findViewById(R.id.retailerrepass);
+        retailer_retype_pass=findViewById(R.id.retailerrepass);
         remobile=findViewById(R.id.retailermobile);
 
         storeid=findViewById(R.id.storid);
@@ -55,12 +55,54 @@ public class Retailer_details extends AppCompatActivity {
 
     private void validteretailer()
     {
-        String nam,email,pas1,pas2,mob;
+        String nam,email,pas1,pas2,mob,storeidd;
 
         nam=renam.getText().toString().trim();
         email=retemail.getText().toString().trim();
         pas1=retapass.getText().toString().trim();
-        pas2
+        pas2=retailer_retype_pass.getText().toString().trim();
+        mob=remobile.getText().toString().trim();
+        storeidd=storeid.getText().toString().trim();
+
+
+        if (storeidd.isEmpty())
+        {
+            storeid.setError(getResources().getString(R.string.storeidV));
+            storeid.requestFocus();
+            return;
+        }
+        if (nam.isEmpty())
+        {
+            renam.setError(getResources().getString(R.string.namV));
+            renam.requestFocus();
+            return;
+        }
+        if (email.isEmpty())
+        {
+            retemail.setError(getResources().getString(R.string.emailV));
+            retemail.requestFocus();
+            return;
+        }
+        if (pas1.isEmpty())
+        {
+            retapass.setError(getResources().getString(R.string.passRV));
+            retapass.requestFocus();
+
+            return;
+        }
+        if (pas2.isEmpty())
+        {
+            retailer_retype_pass.setError(getResources().getString(R.string.passRV));
+            retailer_retype_pass.requestFocus();
+
+            return;
+        }
+        if (mob.isEmpty())
+        {
+            remobile.setError(getResources().getString(R.string.mobileV));
+            remobile.requestFocus();
+            return;
+        }
     }
 
 

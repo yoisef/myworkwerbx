@@ -67,6 +67,24 @@
     <string name="location">الموقع</string>
     <string name="delcharge">قيمة الغاء الطلب</string>
     <string name="image">صورة</string>
+    
+    //validation
+    <string name="storeidV">أدخل الرقم التعريفي للمخزن</string>
+    <string name="namV">أدخل الإسم</string>
+    <string name="emailV">البريد الالكتروني فارغ</string>
+    <string name="vaildemailV">من فضلك ادخل إيميل صحيح</string>
+    <string name="minumV">يجب ان لا يقل كلمة السر عن 6 خانات</string>
+    <string name="passV">أدخل كلمة السر  </string>
+    <string name="passRV">كلمة السر غير متطابقة</string>
+    <string name="mobileV">رقم الهاتف فارغ</string>
+    <string name="phoneV">رقم التليفون فارغ</string>
+    <string name="delchargeV">أدخل قيمة إلغاء الطلب</string>
+    <string name="currencyV">أختر نوع العملة</string>
+    <string name="opentV">حدد وقت الفتح</string>
+    <string name="closetV">حدد وقت الغلق </string>
+    <string name="opendV">حدد بداية وقت التوصيل </string>
+    <string name="closedV">حدد انتهاء وقت التوصيل </string>
+    <string name="detimeV">حدد وقت التوصيل </string>
 
 
 
