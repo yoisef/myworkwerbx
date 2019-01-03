@@ -65,6 +65,8 @@
     <string name="location">Location</string>
     <string name="delcharge">Del Charge</string>
     <string name="image">Image</string>
+    <string name="salesview">Sales View</string>
+
 
     //validation
     <string name="storeidV">Enter Store ID</string>

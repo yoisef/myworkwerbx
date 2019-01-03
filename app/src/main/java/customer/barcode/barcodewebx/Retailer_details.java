@@ -12,7 +12,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.util.CachedHashCodeArrayMap;
+
 import java.security.PrivateKey;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Retailer_details extends AppCompatActivity {
 
@@ -52,11 +57,14 @@ public class Retailer_details extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.levels, android.R.layout.simple_spinner_item);
 
-       spinneradapter madapter=new spinneradapter(this,android.R.layout.simple_spinner_item,R.array.levels);
-       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        List<CharSequence> list=new ArrayList<>();
+        list.addAll(Arrays.asList(getResources().getStringArray(R.array.levels)));
+
+       spinneradapter madapter=new spinneradapter(this,android.R.layout.simple_spinner_item,list);
+       madapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
-        retailertype.setAdapter(adapter);
+        retailertype.setAdapter(madapter);
 
 
 

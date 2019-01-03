@@ -26,7 +26,10 @@ import java.io.IOException;
 import java.sql.Time;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 import customer.barcode.barcodewebx.Werbx.MainActivity;
 
@@ -146,15 +149,22 @@ public class Storeinfo extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.distrbuter, android.R.layout.simple_spinner_item);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        distruborspinnerr.setAdapter(adapter);
+
+        List<CharSequence> list=new ArrayList<>();
+        list.addAll(Arrays.asList(getResources().getStringArray(R.array.distrbuter)));
+
+        spinneradapter madapter=new spinneradapter(this,android.R.layout.simple_spinner_item,list);
+        madapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        distruborspinnerr.setAdapter(madapter);
 
         subdistributer=findViewById(R.id.storesubdis);
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
-                R.array.subdist, android.R.layout.simple_spinner_item);
+        List<CharSequence> listt=new ArrayList<>();
+        listt.addAll(Arrays.asList(getResources().getStringArray(R.array.subdist)));
 
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        subdistributer.setAdapter(adapter1);
+        spinneradapter madapterr=new spinneradapter(this,android.R.layout.simple_spinner_item,listt);
+        madapterr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        subdistributer.setAdapter(madapterr);
 
 
     }

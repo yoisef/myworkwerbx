@@ -67,6 +67,7 @@
     <string name="location">الموقع</string>
     <string name="delcharge">قيمة الغاء الطلب</string>
     <string name="image">صورة</string>
+    <string name="salesview">عرض المبيعات</string>
     
     //validation
     <string name="storeidV">أدخل الرقم التعريفي للمخزن</string>
@@ -114,6 +115,16 @@
         <item>مورد 3 </item>
 
     </string-array>
+
+    <string-array name="salesway">
+        <item>حدد طريقة العرض </item>
+        <item>مبيعات اليوم </item>
+        <item>مبيعات الاسبوع</item>
+        <item>مبيعات الشهر </item>
+
+
+    </string-array>
+
 
 
 
