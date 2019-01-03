@@ -56,6 +56,7 @@ public class sales_history extends AppCompatActivity {
         remove_history=findViewById(R.id.removehistory);
 
 
+
         history_recycle = findViewById(R.id.saleshistoryrecucle);
         history_recycle.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -66,6 +67,8 @@ public class sales_history extends AppCompatActivity {
         mAdapter = new salesAdapter(this);
         history_recycle.setAdapter(mAdapter);
         history_recycle.scheduleLayoutAnimation();
+        intlaze_toolbar();
+
 
 
 
@@ -102,17 +105,17 @@ public class sales_history extends AppCompatActivity {
 
         sales_spinner.setAdapter(madapter);
 
-        sales_spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        sales_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position)
                 {
                     case 1:{
-
+                        choosefilter(1);
                         break;
                     }
                     case 2:{
-
+                        choosefilter(2);
                         break;
                     }
                     case 3:{
@@ -121,7 +124,14 @@ public class sales_history extends AppCompatActivity {
                     }
                 }
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
         });
+
+
 
 
     }
