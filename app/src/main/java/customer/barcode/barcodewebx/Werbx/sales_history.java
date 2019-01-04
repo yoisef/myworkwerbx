@@ -78,7 +78,17 @@ public class sales_history extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<historytable> historytables) {
 
+                Double allordercoast=0.0;
+                for (int i=0;i<historytables.size();i++)
+                {
+                    historytable mtable=historytables.get(i);
+                    Double currentamount=Double.parseDouble(mtable.getOramount()) ;
+                    allordercoast=allordercoast+currentamount;
+                }
                 mAdapter.setHistory(historytables);
+                orders_coast.setText(String.valueOf(allordercoast));
+
+
             }
         });
 
@@ -131,12 +141,11 @@ public class sales_history extends AppCompatActivity {
                 switch (position)
                 {
                     case 1:{
-                        weektable.clear();
+
                         choosefilter(1);
                         break;
                     }
                     case 2:{
-                        daytable.clear();
                         choosefilter(2);
                         break;
                     }
@@ -170,15 +179,13 @@ public class sales_history extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable final List<historytable> historytables) {
 
-
-
+               Double monthcoast=0.0;
+               Double daycoast=0.0;
+               Double weekcoast=0.0;
                 Double allordercoast=0.0;
                 SimpleDateFormat sdf = new SimpleDateFormat("E, dd-MMMM-yy");
 
               //  String dataformat = sdf.format(dateBefore7Days);
-
-
-
                 for (int i=0;i<historytables.size();i++)
                 {
                     Log.e("historyrow","for");
@@ -192,7 +199,8 @@ public class sales_history extends AppCompatActivity {
 
                     if (myhis.getOrdata().trim().equals(formattedDate.trim()))
                     {
-                        Log.e("historyrow","daycond");
+                        Double currentamount=Double.parseDouble(myhis.getOramount()) ;
+                        daycoast=daycoast+currentamount;
                         daytable.add(myhis);
                     }
 
@@ -211,6 +219,9 @@ public class sales_history extends AppCompatActivity {
 
                         if (hisdata.after(dateBefore7Days))
                         {
+
+                            Double currentamount=Double.parseDouble(myhis.getOramount()) ;
+                            weekcoast=weekcoast+currentamount;
 
                             weektable.add(myhis);
                         }
@@ -236,6 +247,9 @@ public class sales_history extends AppCompatActivity {
                         {
                             Log.e("addmonth",dateBefore30Days.toString());
 
+                         Double currentamount=Double.parseDouble(myhis.getOramount()) ;
+                         monthcoast=monthcoast+currentamount;
+
                             monthtable.add(myhis);
                         }
                     } catch (ParseException e) {
@@ -246,23 +260,6 @@ public class sales_history extends AppCompatActivity {
 
 
 
-
-
-
-                    /*
-                    // String dayOfTheWeek = (String) DateFormat.format("EEEE", currDate);
-                    Locale locale = new Locale("ar", "KW");
-                    SimpleDateFormat sdf = new SimpleDateFormat("E, dd-MMMM-yy");
-                    Date currDate = new Date();
-                    String formattedDate = sdf.format(currDate);
-                    Toast.makeText(sales_history.this,formattedDate,Toast.LENGTH_LONG).show();
-*/
-
-
-
-                    Double currentamount=Double.parseDouble(myhis.getOramount()) ;
-                    allordercoast=allordercoast+currentamount;
-
                 }
 
                 switch (i)
@@ -271,6 +268,7 @@ public class sales_history extends AppCompatActivity {
                         weektable.clear();
                         monthtable.clear();
                         mAdapter.sethistoryfilter(daytable);
+                        orders_coast.setText(String.valueOf(daycoast));
                         break;
                     }
 
@@ -278,20 +276,24 @@ public class sales_history extends AppCompatActivity {
                         daytable.clear();
                         monthtable.clear();
                         mAdapter.sethistoryfilter(weektable);
+                        orders_coast.setText(String.valueOf(weekcoast));
                         break;
                     }
                     case 3:{
                         weektable.clear();
                         daytable.clear();
                         mAdapter.sethistoryfilter(monthtable);
+                        orders_coast.setText(String.valueOf(monthcoast));
                         break;
                     }
 
-                    default:mAdapter.setHistory(historytables);
+                    default:orders_coast.setText(String.valueOf(allordercoast));
+                        mAdapter.setHistory(historytables);
+
                 }
 
 
-                orders_coast.setText(String.valueOf(allordercoast));
+
 
             }
         });

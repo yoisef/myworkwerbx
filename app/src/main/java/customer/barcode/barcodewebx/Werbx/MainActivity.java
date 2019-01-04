@@ -171,16 +171,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
+       getSupportActionBar().setDisplayShowHomeEnabled(false);
+       getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        getSupportActionBar().setCustomView(R.layout.cutom_action_bar);
-        View view = getSupportActionBar().getCustomView();
+      //  getSupportActionBar().setCustomView(R.layout.cutom_action_bar);
 
 
 
-        barcodimg = view.findViewById(R.id.aboutus);
+
+        barcodimg = findViewById(R.id.aboutus);
 
         barcodimg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,16 +216,7 @@ public class MainActivity extends AppCompatActivity {
                         int totalorderitems = 0;
                         Double totalordercoast= 0.0;
                         int i;
-                        payprpgressbarr.post(new Runnable() {
-                            @Override
-                            public void run() {
 
-                                payprpgressbarr.setVisibility(View.VISIBLE);
-
-                            }
-
-
-                        });
 
                         for (i = 0; i < myproducts.size(); i++) {
 
@@ -252,19 +243,11 @@ public class MainActivity extends AppCompatActivity {
 
                         String formattedDate = sdf.format(currDate);
 
-                        Date data = new Date();
-                        Calendar cal = Calendar.getInstance();
-                        cal.setTime(data);
-                        cal.add(Calendar.DATE, -35);
-                        Date dateBefore7Days = cal.getTime();
-
-
-                        SimpleDateFormat df = new SimpleDateFormat("E, dd-MMMM-yy");
-                        String vb=df.format(dateBefore7Days);
 
 
 
-                        historytable myhis = new historytable(1,vb,myproducts, String.valueOf(totalordercoast), String.valueOf(totalorderitems));
+
+                        historytable myhis = new historytable(1,formattedDate,myproducts, String.valueOf(totalordercoast), String.valueOf(totalorderitems));
                         mWordViewModel.inserthis(myhis);
 
                         alertDialog1.cancel();

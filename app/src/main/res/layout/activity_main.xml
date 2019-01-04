@@ -15,11 +15,39 @@
             android:id="@+id/toolbar"
             android:minHeight="?attr/actionBarSize"
             android:layout_width="match_parent"
-            app:contentInsetLeft="0dp"
+            app:contentInsetEnd="0dp"
             app:contentInsetStart="0dp"
             android:layout_height="wrap_content"
             app:titleTextColor="@android:color/white"
             android:background="?attr/colorPrimary">
+
+            <ImageView
+                android:id="@+id/aboutus"
+                android:padding="7dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/barcod2"
+                />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/mycashier"
+                android:textColor="@color/black"
+                android:textSize="@dimen/xx_large"
+                android:textStyle="bold"
+                />
+
         </android.support.v7.widget.Toolbar>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

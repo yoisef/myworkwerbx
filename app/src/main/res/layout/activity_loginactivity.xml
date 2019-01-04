@@ -51,21 +51,7 @@
                     android:layout_gravity="center"
                     android:layout_height="100dp" />
             </FrameLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="@string/login"
-                android:fontFamily="serif"
-                android:padding="3dp"
-                android:layout_margin="10dp"
-                android:textSize="@dimen/xlarge"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginTop="3dp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_below="@id/logoo"
-                android:layout_centerHorizontal="true"
-                android:layout_height="wrap_content"/>
+
         </LinearLayout>
       <LinearLayout
     android:layout_width="match_parent"

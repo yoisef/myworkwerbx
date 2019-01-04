@@ -1,37 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="67dp"
     android:background="@color/appcolor"
     >
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
-            android:padding="9dp"
-            android:layout_centerVertical="true"
-
-            android:src="@drawable/barcod2"
-            android:layout_gravity="start"
-            android:id="@+id/aboutus"
-           />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mycashier"
-            android:textColor="@color/black"
-            android:layout_marginStart="140dp"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:textSize="@dimen/xx_large"
-            android:textStyle="bold"
-            android:fontFamily="serif"
-            android:padding="10dp"
-            android:layout_alignParentTop="true"
-            />
 
 
 
