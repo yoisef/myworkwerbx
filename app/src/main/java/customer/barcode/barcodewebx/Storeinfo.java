@@ -1,9 +1,12 @@
 package customer.barcode.barcodewebx;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,16 +16,19 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.mynameismidori.currencypicker.CurrencyPicker;
 import com.mynameismidori.currencypicker.CurrencyPickerListener;
 
 import java.io.IOException;
+import java.net.URI;
 import java.sql.Time;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -36,7 +42,7 @@ import customer.barcode.barcodewebx.Werbx.MainActivity;
 public class Storeinfo extends AppCompatActivity {
 
 
-    TextView openT, closT, openD, closD, Dleiverytime;
+   private TextView openT, closT, openD, closD, Dleiverytime,imgadd;
     TextView currencychoose;
     private static final int image = 101;
     private android.app.AlertDialog.Builder builder;
@@ -46,6 +52,9 @@ public class Storeinfo extends AppCompatActivity {
     private Spinner distruborspinnerr,  subdistributer;
     private RelativeLayout addimg;
     private EditText name,email,pass,retypepass,phonenum,delcharg,descr,address;
+    private ImageView storeimage;
+    private Uri uriprofileimage;
+    private Boolean imgcond;
 
 
 
@@ -54,6 +63,7 @@ public class Storeinfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storeinfo);
 
+        imgcond=true;
         name=findViewById(R.id.storernam);
         email=findViewById(R.id.storeemail);
         pass=findViewById(R.id.storepass);
@@ -61,6 +71,8 @@ public class Storeinfo extends AppCompatActivity {
         phonenum=findViewById(R.id.phonenum);
         delcharg=findViewById(R.id.delchargec);
         address=findViewById(R.id.addresss);
+        storeimage=findViewById(R.id.storeimg);
+        imgadd=findViewById(R.id.addphototxt);
 
 
 
@@ -93,6 +105,8 @@ public class Storeinfo extends AppCompatActivity {
         currencychoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                currencychoose.setError(null);
                 picker.show(getSupportFragmentManager(), "CURRENCY_PICKER");
             }
         });
@@ -102,6 +116,7 @@ public class Storeinfo extends AppCompatActivity {
            @Override
            public void onClick(View view) {
 
+               imgadd.setError(null);
                chooseimg();
 
            }
@@ -124,14 +139,16 @@ public class Storeinfo extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == image && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            //   uriprofileimage = data.getData();
-            /*
-            try {
-               // Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriprofileimage);
+        if (requestCode == 0 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imgcond=false;
+               uriprofileimage = data.getData();
 
-              //  proilephoto.setBackground(null);
-               // proilephoto.setImageBitmap(bitmap);
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriprofileimage);
+
+               storeimage.setBackground(null);
+               storeimage.setImageBitmap(bitmap);
 
 
             } catch (IOException e) {
@@ -139,10 +156,23 @@ public class Storeinfo extends AppCompatActivity {
             }
 
         }
-    }
-*/
+        if (requestCode == 1 && resultCode == RESULT_OK)
+        {
+
+            if (data.getExtras()!=null)
+            {
+                imgcond=false;
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                storeimage.setBackground(null);
+                storeimage.setImageBitmap(photo);
+            }
+
+            }
         }
-    }
+
+
+
+
     public void intializespinners()
     {
         distruborspinnerr=findViewById(R.id.storedistrbter);
@@ -188,8 +218,9 @@ public class Storeinfo extends AppCompatActivity {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePicture, 0);//zero can be replaced with any action code
+                Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePicture, 1);//zero can be replaced with any action code
+                chossewaydialog.cancel();
 
             }
         });
@@ -198,7 +229,8 @@ public class Storeinfo extends AppCompatActivity {
             public void onClick(View view) {
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto , 1);//one can be replaced with any action code
+                startActivityForResult(pickPhoto , 0);//one can be replaced with any action code
+                chossewaydialog.cancel();
 
             }
         });
@@ -211,6 +243,7 @@ public class Storeinfo extends AppCompatActivity {
         openT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                openT.setError(null);
 
                 datapicker(openT);
 
@@ -220,6 +253,8 @@ public class Storeinfo extends AppCompatActivity {
         openD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                openD.setError(null);
                 datapicker(openD);
             }
         });
@@ -227,6 +262,7 @@ public class Storeinfo extends AppCompatActivity {
         closD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                closD.setError(null);
 
                 datapicker(closD);
             }
@@ -236,12 +272,16 @@ public class Storeinfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                closT.setError(null);
+
                 datapicker(closT);
             }
         });
         Dleiverytime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Dleiverytime.setError(null);
 
                 datapicker(Dleiverytime);
             }
@@ -281,7 +321,9 @@ public class Storeinfo extends AppCompatActivity {
     {
         String emailtxt,passtxt,passretpetxt,phonenumtxt,delchargetxt,addresstxt,
                 ChoseCuretxt,openttxt,clottxt,opedeltxt,closedelitxt,deliverytimetxt,
-                closettxt,namtxt;
+                closettxt,namtxt,imgcondition;
+
+        Drawable imgstore;
 
 
 
@@ -298,7 +340,17 @@ public class Storeinfo extends AppCompatActivity {
         closedelitxt=closD.getText().toString().trim();
         deliverytimetxt=Dleiverytime.getText().toString().trim();
         addresstxt=address.getText().toString().trim();
+        imgcondition=imgadd.getText().toString();
 
+
+
+        if (imgcond)
+        {
+            imgadd.setError(getResources().getString(R.string.imgV));
+            imgadd.requestFocus();
+            return;
+
+        }
 
 
         if (namtxt.isEmpty())
@@ -369,9 +421,7 @@ public class Storeinfo extends AppCompatActivity {
              currencychoose.requestFocus();
              return;
         }
-        else {
-            currencychoose.setError(null);
-        }
+
 
         if (distruborspinnerr.getSelectedItemPosition()==0)
         {
@@ -392,45 +442,34 @@ public class Storeinfo extends AppCompatActivity {
             openT.requestFocus();
             return;
         }
-        else {
-            openT.setError(null);
 
-        }
         if (closettxt.isEmpty())
         {
             closT.setError(getResources().getString(R.string.closetV));
             closT.requestFocus();
             return;
         }
-        else {
-            closT.setError(null);
-        }
+
         if (opedeltxt.isEmpty())
         {
             openD.setError(getResources().getString(R.string.opendV));
             openD.requestFocus();
             return;
         }
-        else{
-            openD.setError(null);
-        }
+
         if (closedelitxt.isEmpty())
         {
             closD.setError(getResources().getString(R.string.closedV));
             closD.requestFocus();
             return;
         }
-        else {
-            closD.setError(null);
-        }
+
         if (deliverytimetxt.isEmpty())
         {
             Dleiverytime.setError(getResources().getString(R.string.detimeV));
             Dleiverytime.requestFocus();
         }
-        else {
-            Dleiverytime.setError(null);
-        }
+
 
 
         if (addresstxt.isEmpty())
@@ -439,9 +478,7 @@ public class Storeinfo extends AppCompatActivity {
             address.requestFocus();
             return;
         }
-        else {
-            address.setError(null);
-        }
+
 
 
         startActivity(new Intent(Storeinfo.this,Retailer_details.class));

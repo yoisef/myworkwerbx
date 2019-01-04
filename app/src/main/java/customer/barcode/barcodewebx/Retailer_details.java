@@ -92,12 +92,16 @@ public class Retailer_details extends AppCompatActivity {
         storeidd=storeid.getText().toString().trim();
 
 
-        if (storeidd.isEmpty())
+        if (storeid.getVisibility()==View.VISIBLE)
         {
-            storeid.setError(getResources().getString(R.string.storeidV));
-            storeid.requestFocus();
-            return;
+            if (storeidd.isEmpty())
+            {
+                storeid.setError(getResources().getString(R.string.storeidV));
+                storeid.requestFocus();
+                return;
+            }
         }
+
         if (nam.isEmpty())
         {
             renam.setError(getResources().getString(R.string.namV));

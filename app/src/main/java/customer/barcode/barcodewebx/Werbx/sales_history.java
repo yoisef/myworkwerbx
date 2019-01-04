@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class sales_history extends AppCompatActivity {
     private List<historytable> daytable,weektable,monthtable;
     private Spinner sales_spinner;
     private android.support.v7.widget.Toolbar salestool;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,23 @@ public class sales_history extends AppCompatActivity {
         history_recycle.scheduleLayoutAnimation();
         intlaze_toolbar();
 
+        mWordViewModel = ViewModelProviders.of(this).get(productViewmodel.class);
+
+        mWordViewModel.getAllhistory().observe(this, new Observer<List<historytable>>() {
+            @Override
+            public void onChanged(@Nullable List<historytable> historytables) {
+
+                mAdapter.setHistory(historytables);
+            }
+        });
+
+        remove_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mWordViewModel.deleteallhist();
+            }
+        });
 
 
 
@@ -76,7 +96,7 @@ public class sales_history extends AppCompatActivity {
 
 
 
-    }
+            }
 
 
     private void intlaze_toolbar()
@@ -111,14 +131,17 @@ public class sales_history extends AppCompatActivity {
                 switch (position)
                 {
                     case 1:{
+                        weektable.clear();
                         choosefilter(1);
                         break;
                     }
                     case 2:{
+                        daytable.clear();
                         choosefilter(2);
                         break;
                     }
                     case 3:{
+                        choosefilter(3);
 
                         break;
                     }
@@ -139,70 +162,132 @@ public class sales_history extends AppCompatActivity {
     private void choosefilter(final int i)
     {
 
+
+
         mWordViewModel = ViewModelProviders.of(this).get(productViewmodel.class);
 
         mWordViewModel.getAllhistory().observe(this, new Observer<List<historytable>>() {
             @Override
             public void onChanged(@Nullable final List<historytable> historytables) {
 
+
+
                 Double allordercoast=0.0;
+                SimpleDateFormat sdf = new SimpleDateFormat("E, dd-MMMM-yy");
+
+              //  String dataformat = sdf.format(dateBefore7Days);
+
+
 
                 for (int i=0;i<historytables.size();i++)
                 {
+                    Log.e("historyrow","for");
+
+
+                    historytable myhis=historytables.get(i);
+                    Locale locale = new Locale("ar", "KW");
+
+                    Date currDate = new Date();
+                    String formattedDate = sdf.format(currDate);
+
+                    if (myhis.getOrdata().trim().equals(formattedDate.trim()))
+                    {
+                        Log.e("historyrow","daycond");
+                        daytable.add(myhis);
+                    }
+
+                    String rowhis=myhis.getOrdata();
+                    Date data = new Date();
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(data);
+                    cal.add(Calendar.DATE, -7);
+                    Date dateBefore7Days = cal.getTime();
+
+
+                    SimpleDateFormat df = new SimpleDateFormat("E, dd-MMMM-yy");
+                    try {
+                        Date hisdata=df.parse(rowhis);
+
+
+                        if (hisdata.after(dateBefore7Days))
+                        {
+
+                            weektable.add(myhis);
+                        }
+                    } catch (ParseException e) {
+                        Log.e("exceptionyabne",e.getMessage()+"weekcon");
+                    }
+
+
+
+                    Calendar calm = Calendar.getInstance();
+                    calm.setTime(data);
+                    calm.add(Calendar.DATE, -30);
+                    Date dateBefore30Days = calm.getTime();
+
+
+                    SimpleDateFormat dfm = new SimpleDateFormat("E, dd-MMMM-yy");
+                    try {
+                        Date datamonth=dfm.parse(rowhis);
+                        Log.e("trymonth",datamonth.toString());
+
+
+                        if (datamonth.after(dateBefore30Days))
+                        {
+                            Log.e("addmonth",dateBefore30Days.toString());
+
+                            monthtable.add(myhis);
+                        }
+                    } catch (ParseException e) {
+                        Log.e("exceptionyabne",e.getMessage()+"weekcon");
+                    }
+
+
+
+
+
+
+
+
+                    /*
                     // String dayOfTheWeek = (String) DateFormat.format("EEEE", currDate);
                     Locale locale = new Locale("ar", "KW");
                     SimpleDateFormat sdf = new SimpleDateFormat("E, dd-MMMM-yy");
                     Date currDate = new Date();
                     String formattedDate = sdf.format(currDate);
                     Toast.makeText(sales_history.this,formattedDate,Toast.LENGTH_LONG).show();
-
-                    historytable myhis=historytables.get(i);
-                    switch (i)
-                    {
-                        case 1:{
-                            if (myhis.getOrdata().trim().equals(formattedDate.trim()))
-                            {
-                                daytable.add(myhis);
+*/
 
 
-                            }
-                            break;
-
-                        }
-                        case 2:{
-                            for (int z=0;z<7;z++)
-                            {
-                                Date data = new Date();
-                                Calendar cal = Calendar.getInstance();
-                                cal.setTime(data);
-                                cal.add(Calendar.DATE, -z);
-                                Date dateBefore30Days = cal.getTime();
-                                String dataformat = sdf.format(currDate);
-                                if (myhis.getOrdata().trim().equals(dataformat.trim()))
-                                {
-                                    weektable.add(myhis);
-
-                                }
-                            }
-
-
-                        }
-                    }
 
                     Double currentamount=Double.parseDouble(myhis.getOramount()) ;
                     allordercoast=allordercoast+currentamount;
+
                 }
+
                 switch (i)
                 {
                     case 1:{
+                        weektable.clear();
+                        monthtable.clear();
                         mAdapter.sethistoryfilter(daytable);
                         break;
                     }
 
                     case 2:{
+                        daytable.clear();
+                        monthtable.clear();
                         mAdapter.sethistoryfilter(weektable);
                         break;
                     }
+                    case 3:{
+                        weektable.clear();
+                        daytable.clear();
+                        mAdapter.sethistoryfilter(monthtable);
+                        break;
+                    }
+
+                    default:mAdapter.setHistory(historytables);
                 }
 
 
@@ -211,13 +296,7 @@ public class sales_history extends AppCompatActivity {
             }
         });
 
-        remove_history.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                mWordViewModel.deleteallhist();
-            }
-        });
 
 
     }

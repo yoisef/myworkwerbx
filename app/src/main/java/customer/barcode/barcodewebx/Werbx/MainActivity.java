@@ -34,6 +34,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -233,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                             int items = myproducts.get(i).getPitemn();
                             totalorderitems = totalorderitems + items;
                             Double totalproduct=currentcoast*items;
-                         totalordercoast = totalordercoast + totalproduct;
+                            totalordercoast = totalordercoast + totalproduct;
 
                             if (myproducts.size() == 0) {
 
@@ -244,19 +245,6 @@ public class MainActivity extends AppCompatActivity {
 
                         }
 
-
-
-
-
-                        payprpgressbarr.post(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                payprpgressbarr.setVisibility(View.GONE);
-
-                            }
-                        });
-
                         Locale locale = new Locale("ar", "KW");
                         SimpleDateFormat sdf = new SimpleDateFormat("E, dd-MMMM-yy");
                         Date currDate = new Date();
@@ -264,16 +252,24 @@ public class MainActivity extends AppCompatActivity {
 
                         String formattedDate = sdf.format(currDate);
 
+                        Date data = new Date();
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(data);
+                        cal.add(Calendar.DATE, -35);
+                        Date dateBefore7Days = cal.getTime();
 
 
-                        historytable myhis = new historytable(1, formattedDate,myproducts, String.valueOf(totalordercoast), String.valueOf(totalorderitems));
+                        SimpleDateFormat df = new SimpleDateFormat("E, dd-MMMM-yy");
+                        String vb=df.format(dateBefore7Days);
+
+
+
+                        historytable myhis = new historytable(1,vb,myproducts, String.valueOf(totalordercoast), String.valueOf(totalorderitems));
                         mWordViewModel.inserthis(myhis);
 
                         alertDialog1.cancel();
 
                     }
-
-
                 });
                 canceel.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -45,11 +45,13 @@ public class loginactivity extends AppCompatActivity {
 
         requestPermission();
 
+
         emailuser=findViewById(R.id.useremaill);
         userpass=findViewById(R.id.userpasss);
         signintext=findViewById(R.id.signinbutton);
         signprogress=findViewById(R.id.loginprogressbar);
         sign_up=findViewById(R.id.retailer_new);
+        validesignin();
 
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override

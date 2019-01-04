@@ -87,6 +87,9 @@
     <string name="closedV">حدد انتهاء وقت التوصيل </string>
     <string name="detimeV">حدد وقت التوصيل </string>
     <string name="addressV">أدخل العنوان</string>
+    <string name="distuboterV">أختر الموزع</string>
+    <string name="subdistV">أختر الموزع الفرعي</string>
+    <string name="imgV">من فضلك ضع صورة للمخزن</string>
 
 
 
