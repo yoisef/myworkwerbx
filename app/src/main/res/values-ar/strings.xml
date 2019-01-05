@@ -68,7 +68,9 @@
     <string name="delcharge">قيمة الغاء الطلب</string>
     <string name="image">صورة</string>
     <string name="salesview">عرض المبيعات</string>
-    
+    <string name="google_maps_key">AIzaSyAK2B6GG54HNY0JCa9H2G35vMG5YWh0kjs</string>
+
+
     //validation
     <string name="storeidV">أدخل الرقم التعريفي للمخزن</string>
     <string name="namV">أدخل الإسم</string>

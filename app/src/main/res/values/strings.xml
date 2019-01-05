@@ -66,8 +66,9 @@
     <string name="delcharge">Del Charge</string>
     <string name="image">Image</string>
     <string name="salesview">Sales View</string>
+    <string name="google_maps_key">AIzaSyAK2B6GG54HNY0JCa9H2G35vMG5YWh0kjs</string>
 
-
+        AIzaSyAK2B6GG54HNY0JCa9H2G35vMG5YWh0kjs
     //validation
     <string name="storeidV">Enter Store ID</string>
     <string name="namV">Enter Name </string>

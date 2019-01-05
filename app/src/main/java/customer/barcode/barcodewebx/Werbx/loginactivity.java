@@ -167,7 +167,7 @@ public class loginactivity extends AppCompatActivity {
     private void requestPermission() {
 
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.CAMERA},
+                new String[]{Manifest.permission.CAMERA,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION},
                 1);
     }
 

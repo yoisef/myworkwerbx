@@ -6,6 +6,8 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +26,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.mynameismidori.currencypicker.CurrencyPicker;
 import com.mynameismidori.currencypicker.CurrencyPickerListener;
 
@@ -36,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import customer.barcode.barcodewebx.Werbx.MainActivity;
 
@@ -51,10 +58,15 @@ public class Storeinfo extends AppCompatActivity {
     CurrencyPicker picker;
     private Spinner distruborspinnerr,  subdistributer;
     private RelativeLayout addimg;
-    private EditText name,email,pass,retypepass,phonenum,delcharg,descr,address;
-    private ImageView storeimage;
+    private EditText name,email,pass,retypepass,phonenum,delcharg,descr,addressedit;
+    private ImageView storeimage,placepicker;
     private Uri uriprofileimage;
     private Boolean imgcond;
+    private final static int PLACE_PICKER_REQUEST = 999;
+    private Geocoder geocoder;
+    private List<Address> addresses;
+
+
 
 
 
@@ -64,15 +76,27 @@ public class Storeinfo extends AppCompatActivity {
         setContentView(R.layout.activity_storeinfo);
 
         imgcond=true;
+        geocoder = new Geocoder(this, Locale.getDefault());
         name=findViewById(R.id.storernam);
         email=findViewById(R.id.storeemail);
         pass=findViewById(R.id.storepass);
         retypepass=findViewById(R.id.storpassretype);
         phonenum=findViewById(R.id.phonenum);
         delcharg=findViewById(R.id.delchargec);
-        address=findViewById(R.id.addresss);
+        addressedit=findViewById(R.id.addresss);
         storeimage=findViewById(R.id.storeimg);
         imgadd=findViewById(R.id.addphototxt);
+        placepicker=findViewById(R.id.openplacepicker);
+
+
+        placepicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                openplacepicker();
+
+            }
+        });
 
 
 
@@ -168,6 +192,31 @@ public class Storeinfo extends AppCompatActivity {
             }
 
             }
+
+            if (requestCode==PLACE_PICKER_REQUEST&&resultCode==RESULT_OK)
+            {
+
+                Place place = PlacePicker.getPlace(this, data);
+                String placeName = String.format("Place: %s", place.getName());
+                double latitude = place.getLatLng().latitude;
+                double longitude = place.getLatLng().longitude;
+
+                try {
+                    addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                String city = addresses.get(0).getLocality();
+                String state = addresses.get(0).getAdminArea();
+                String country = addresses.get(0).getCountryName();
+                String postalCode = addresses.get(0).getPostalCode();
+                String knownName = addresses.get(0).getFeatureName();
+
+                addressedit.setText(address+""+city+""+state+""+country);
+
+            }
         }
 
 
@@ -198,6 +247,21 @@ public class Storeinfo extends AppCompatActivity {
 
 
     }
+
+    private void openplacepicker()
+    {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            // for activty
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+            // for fragment
+            //startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }    }
+
 
 
 
@@ -339,7 +403,7 @@ public class Storeinfo extends AppCompatActivity {
         opedeltxt=openD.getText().toString().trim();
         closedelitxt=closD.getText().toString().trim();
         deliverytimetxt=Dleiverytime.getText().toString().trim();
-        addresstxt=address.getText().toString().trim();
+        addresstxt=addressedit.getText().toString().trim();
         imgcondition=imgadd.getText().toString();
 
 
@@ -474,8 +538,8 @@ public class Storeinfo extends AppCompatActivity {
 
         if (addresstxt.isEmpty())
         {
-            address.setError(getResources().getString(R.string.addressV));
-            address.requestFocus();
+            addressedit.setError(getResources().getString(R.string.addressV));
+            addressedit.requestFocus();
             return;
         }
 
