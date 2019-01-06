@@ -12,7 +12,7 @@
     <string name="transfer">نقل</string>
     <string name="epbarcode">أدخل باركود المنتج</string>
     <string name="ok">موافق</string>
-    <string name="hintemail">أدخل الإيميل او رقم الموبايل</string>
+    <string name="hintemail">أدخل رقم الهاتف </string>
     <string name="hintpass">أدخل كلمة السر  </string>
     <string name="logout">تسجيل الخروج</string>
     <string name="quedeleteitem">أحذف المنتج</string>
@@ -22,7 +22,7 @@
     <string name="submit">تأكيد</string>
     <string name="chooseitemnu">أختر عدد الوحدات </string>
     <string name="empty_email">أدخل البريد الإلكتروني او رقم الموبايل </string>
-    <string name="empty_pass">أدخل كلمة السر</string>
+    <string name="empty_pass">أدخل كلمة المرور</string>
     <string name="items"> الوحدات </string>
     <string name="ordercustomer">طلب العميل </string>
     <string name="orderamount">تكلفة الطلب $</string>
@@ -41,15 +41,15 @@
     <string name="unitprice">سعر الوحدة</string>
     <string name="notrecorded">غير مسجل في قاعدة البيانات</string>
     <string name="newwretailer"> تاجر جديد</string>
-    <string name="forgetpass">نسيت كلمة السر</string>
+    <string name="forgetpass">نسيت كلمة المرور</string>
     <string name="havestore">لديك مخزن ؟</string>
     <string name="newstore">إنشاء مخزن جديد</string>
     <string name="enterstorenum">أدخل رقم المخزن</string>
-    <string name="entername">أدخل الإسم</string>
-    <string name="enteremail">أدخل البريد الإلكتروني</string>
+    <string name="entername">أسم المسئول</string>
+    <string name="enteremail">رقم الهاتف</string>
 
-    <string name="retypepass">تأكيد كلمة السر</string>
-    <string name="entermoile">أدخل رقم الموبايل</string>
+    <string name="retypepass">تأكيد كلمة المرور</string>
+    <string name="entermoile">أدخل رقم الهاتف</string>
     <string name="level">حدد المستوي</string>
     <string name="signup">تسجيل </string>
 
@@ -73,9 +73,8 @@
 
     //validation
     <string name="storeidV">أدخل الرقم التعريفي للمخزن</string>
-    <string name="namV">أدخل الإسم</string>
-    <string name="emailV">البريد الالكتروني فارغ</string>
-    <string name="vaildemailV">من فضلك ادخل إيميل صحيح</string>
+    <string name="namV">أدخل أسم المسئول</string>
+    <string name="emailV">أدخل رقم الهاتف</string>
     <string name="minumV">يجب ان لا يقل كلمة السر عن 6 خانات</string>
     <string name="passV">أدخل كلمة السر  </string>
     <string name="passRV">كلمة السر غير متطابقة</string>
@@ -92,6 +91,10 @@
     <string name="distuboterV">أختر الموزع</string>
     <string name="subdistV">أختر الموزع الفرعي</string>
     <string name="imgV">من فضلك ضع صورة للمخزن</string>
+    <string name="storenam">أسم المخزن</string>
+    <string name="subscripe">إشتراك</string>
+
+
 
 
 

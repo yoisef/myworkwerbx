@@ -12,7 +12,7 @@
     <string name="transfer">Transfer</string>
     <string name="epbarcode">Enter Product Barcode</string>
     <string name="ok">Ok</string>
-    <string name="hintemail">Enter your email or Mobile number </string>
+    <string name="hintemail">Enter Mobile number </string>
     <string name="hintpass">Enter your Password </string>
     <string name="logout">Logout</string>
     <string name="quedeleteitem">Delete item ?</string>
@@ -21,7 +21,7 @@
     <string name="defayltproductname">Product</string>
     <string name="submit">Submit</string>
     <string name="chooseitemnu">Choose Items Numbers</string>
-    <string name="empty_email">Fill Email Address or phone Number</string>
+    <string name="empty_email">Fill With phone Number</string>
     <string name="empty_pass">Fill With Password</string>
     <string name="items">Items</string>
     <string name="ordercustomer">Order Customer</string>
@@ -45,9 +45,9 @@
     <string name="havestore">Have A Store ?</string>
     <string name="newstore">Create New Store</string>
     <string name="enterstorenum">Enter Store ID</string>
-    <string name="entername">Enter Name</string>
-    <string name="enteremail">Enter Email</string>
-    <string name="retypepass">Retype Password</string>
+    <string name="entername">Admin Name</string>
+    <string name="enteremail">Enter Phone Number</string>
+    <string name="retypepass">Confirm Password</string>
     <string name="entermoile">Enter Mobile Number</string>
     <string name="level">Choose Level</string>
     <string name="signup">Sign Up</string>
@@ -71,8 +71,8 @@
         AIzaSyAK2B6GG54HNY0JCa9H2G35vMG5YWh0kjs
     //validation
     <string name="storeidV">Enter Store ID</string>
-    <string name="namV">Enter Name </string>
-    <string name="emailV">Enter Email</string>
+    <string name="namV">Admin Name </string>
+    <string name="emailV">Enter Mobile Number</string>
     <string name="vaildemailV">Please Enter valid Email</string>
     <string name="minumV">Minimum Length of password should be 6</string>
     <string name="passV">Enter Password  </string>
@@ -90,6 +90,8 @@
     <string name="subdistV">Choose Sub Distributor</string>
     <string name="addressV">Enter Address</string>
     <string name="imgV">Please Pust Image For Store</string>
+    <string name="storenam">Store Name</string>
+    <string name="subscripe">Subscription</string>
 
 
     //store
