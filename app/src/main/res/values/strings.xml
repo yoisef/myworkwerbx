@@ -12,8 +12,8 @@
     <string name="transfer">Transfer</string>
     <string name="epbarcode">Enter Product Barcode</string>
     <string name="ok">Ok</string>
-    <string name="hintemail">Enter Mobile number </string>
-    <string name="hintpass">Enter your Password </string>
+    <string name="hintemail">Enter Phone number </string>
+    <string name="hintpass">Password </string>
     <string name="logout">Logout</string>
     <string name="quedeleteitem">Delete item ?</string>
     <string name="ansdeleteitem">Yes Delete</string>
@@ -21,8 +21,8 @@
     <string name="defayltproductname">Product</string>
     <string name="submit">Submit</string>
     <string name="chooseitemnu">Choose Items Numbers</string>
-    <string name="empty_email">Fill With phone Number</string>
-    <string name="empty_pass">Fill With Password</string>
+    <string name="empty_email"> phone Number</string>
+    <string name="empty_pass"> Password</string>
     <string name="items">Items</string>
     <string name="ordercustomer">Order Customer</string>
     <string name="orderamount">Order Amount $</string>
@@ -40,15 +40,15 @@
     <string name="mycashier"> Cashier </string>
     <string name="unitprice">Unit Price</string>
     <string name="notrecorded">Not recorded in data base</string>
-    <string name="newwretailer">New Retailer</string>
+    <string name="newwretailer">New Subscription</string>
     <string name="forgetpass">Forgot Password ?</string>
     <string name="havestore">Have A Store ?</string>
     <string name="newstore">Create New Store</string>
     <string name="enterstorenum">Enter Store ID</string>
     <string name="entername">Admin Name</string>
-    <string name="enteremail">Enter Phone Number</string>
+    <string name="enteremail"> Phone Number</string>
     <string name="retypepass">Confirm Password</string>
-    <string name="entermoile">Enter Mobile Number</string>
+    <string name="entermoile"> Mobile Number</string>
     <string name="level">Choose Level</string>
     <string name="signup">Sign Up</string>
     <string name="phonenumber">Phone Number</string>
@@ -60,7 +60,7 @@
     <string name="closedelivery">Close Delivery</string>
     <string name="deliverytime">Delivery Time</string>
     <string name="storedescription">Description</string>
-    <string name="address">Address</string>
+    <string name="address">Store Address</string>
     <string name="Active">Active</string>
     <string name="location">Location</string>
     <string name="delcharge">Del Charge</string>
@@ -68,16 +68,15 @@
     <string name="salesview">Sales View</string>
     <string name="google_maps_key">AIzaSyAK2B6GG54HNY0JCa9H2G35vMG5YWh0kjs</string>
 
-        AIzaSyAK2B6GG54HNY0JCa9H2G35vMG5YWh0kjs
     //validation
     <string name="storeidV">Enter Store ID</string>
     <string name="namV">Admin Name </string>
-    <string name="emailV">Enter Mobile Number</string>
+    <string name="emailV">Enter Phone Number</string>
     <string name="vaildemailV">Please Enter valid Email</string>
     <string name="minumV">Minimum Length of password should be 6</string>
     <string name="passV">Enter Password  </string>
     <string name="passRV">Password Not Match</string>
-    <string name="mobileV">Enter Mobile Number</string>
+    <string name="mobileV">Enter Phone Number</string>
     <string name="phoneV">Enter Phone Number</string>
     <string name="delchargeV">Enter Delete Charge</string>
     <string name="currencyV">Choose Currency </string>
@@ -92,6 +91,7 @@
     <string name="imgV">Please Pust Image For Store</string>
     <string name="storenam">Store Name</string>
     <string name="subscripe">Subscription</string>
+    <string name="addphoto">Add Photo</string>
 
 
     //store
@@ -129,6 +129,8 @@
 
 
     </string-array>
+    <string name="title_activity_reigster_user">Map</string>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>

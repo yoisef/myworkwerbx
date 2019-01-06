@@ -12,7 +12,7 @@
     <string name="transfer">نقل</string>
     <string name="epbarcode">أدخل باركود المنتج</string>
     <string name="ok">موافق</string>
-    <string name="hintemail">أدخل رقم الهاتف </string>
+    <string name="hintemail"> رقم الهاتف </string>
     <string name="hintpass">أدخل كلمة السر  </string>
     <string name="logout">تسجيل الخروج</string>
     <string name="quedeleteitem">أحذف المنتج</string>
@@ -21,7 +21,7 @@
     <string name="defayltproductname">منتج</string>
     <string name="submit">تأكيد</string>
     <string name="chooseitemnu">أختر عدد الوحدات </string>
-    <string name="empty_email">أدخل البريد الإلكتروني او رقم الموبايل </string>
+    <string name="empty_email">أدخل رقم الهاتف </string>
     <string name="empty_pass">أدخل كلمة المرور</string>
     <string name="items"> الوحدات </string>
     <string name="ordercustomer">طلب العميل </string>
@@ -40,7 +40,7 @@
     <string name="mycashier">كاشيري</string>
     <string name="unitprice">سعر الوحدة</string>
     <string name="notrecorded">غير مسجل في قاعدة البيانات</string>
-    <string name="newwretailer"> تاجر جديد</string>
+    <string name="newwretailer"> إشتراك جديد</string>
     <string name="forgetpass">نسيت كلمة المرور</string>
     <string name="havestore">لديك مخزن ؟</string>
     <string name="newstore">إنشاء مخزن جديد</string>
@@ -68,6 +68,7 @@
     <string name="delcharge">قيمة الغاء الطلب</string>
     <string name="image">صورة</string>
     <string name="salesview">عرض المبيعات</string>
+    <string name="addphoto">أضف صورة </string>
     <string name="google_maps_key">AIzaSyAK2B6GG54HNY0JCa9H2G35vMG5YWh0kjs</string>
 
 

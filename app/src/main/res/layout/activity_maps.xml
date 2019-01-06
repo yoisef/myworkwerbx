@@ -22,7 +22,6 @@
                 android:id="@+id/storid"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:textColor="@color/black"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_height="wrap_content" />
@@ -41,29 +40,32 @@
                     android:layout_width="100dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_shop"
+                    android:padding="10dp"
                     android:id="@+id/storeimg"
                     android:layout_height="100dp" />
 
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
                     android:hint="@string/storenam"
                     android:id="@+id/retailernam"
+                    android:padding="5dp"
                     android:gravity="center"
-                    android:textColor="@color/black"
+                    android:textSize="@dimen/large"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_height="wrap_content" />
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:textSize="@dimen/large"
                     android:hint="@string/address"
                     android:gravity="center"
                     android:id="@+id/retailermobile"
                     android:layout_marginBottom="10dp"
-                    android:textColor="@color/black"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_height="wrap_content" />
@@ -79,39 +81,51 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="15dp"
                 android:id="@+id/retailername"
-                android:textColor="@color/black"
                 android:hint="@string/entername"
-                android:gravity="center"
+                android:singleLine="true"
+                android:gravity="start"
+                android:paddingStart="10dp"
+                android:paddingEnd="5dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_height="wrap_content" />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
+                android:inputType="phone"
                 android:id="@+id/retailemobile"
                 android:hint="@string/entermoile"
-                android:gravity="center"
-                android:textColor="@color/black"
+                android:singleLine="true"
+                android:gravity="start"
+                android:paddingStart="10dp"
+                android:paddingEnd="5dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_height="wrap_content" />
             <EditText
+
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:id="@+id/retailerpass"
                 android:hint="@string/empty_pass"
-                android:gravity="center"
-                android:textColor="@color/black"
+                android:singleLine="true"
+                android:inputType="textPassword"
+                android:gravity="start"
+                android:paddingStart="10dp"
+                android:paddingEnd="5dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_height="wrap_content" />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
+                android:inputType="textPassword"
                 android:id="@+id/retailerrepass"
                 android:hint="@string/retypepass"
-                android:gravity="center"
-                android:textColor="@color/black"
+                android:singleLine="true"
+                android:gravity="start"
+                android:paddingStart="10dp"
+                android:paddingEnd="5dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_height="wrap_content" />

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -24,8 +25,9 @@ public class Retailer_details extends AppCompatActivity {
 
     private Spinner retailertype;
     private TextView currency;
-    private EditText storeid,renam,retemail,retapass,retailer_retype_pass,remobile;
+    private EditText renam,retemail,retapass,retailer_retype_pass,remobile;
     private Button register;
+    private SearchView storeid;
 
 
     @Override
@@ -52,19 +54,7 @@ public class Retailer_details extends AppCompatActivity {
       }
 
 
-        retailertype=findViewById(R.id.retailerspinner);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.levels, android.R.layout.simple_spinner_item);
-
-        List<CharSequence> list=new ArrayList<>();
-        list.addAll(Arrays.asList(getResources().getStringArray(R.array.levels)));
-
-       spinneradapter madapter=new spinneradapter(this,android.R.layout.simple_spinner_item,list);
-       madapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
-        retailertype.setAdapter(madapter);
 
 
 
@@ -89,18 +79,7 @@ public class Retailer_details extends AppCompatActivity {
         pas1=retapass.getText().toString().trim();
         pas2=retailer_retype_pass.getText().toString().trim();
         mob=remobile.getText().toString().trim();
-        storeidd=storeid.getText().toString().trim();
 
-
-        if (storeid.getVisibility()==View.VISIBLE)
-        {
-            if (storeidd.isEmpty())
-            {
-                storeid.setError(getResources().getString(R.string.storeidV));
-                storeid.requestFocus();
-                return;
-            }
-        }
 
         if (nam.isEmpty())
         {

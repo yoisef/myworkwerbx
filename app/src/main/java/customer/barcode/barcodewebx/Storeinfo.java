@@ -57,7 +57,7 @@ public class Storeinfo extends AppCompatActivity {
     private Button next;
     CurrencyPicker picker;
     private Spinner distruborspinnerr,  subdistributer;
-    private RelativeLayout addimg;
+    private LinearLayout addimg;
     private EditText name,email,pass,retypepass,phonenum,delcharg,descr,addressedit;
     private ImageView storeimage,placepicker;
     private Uri uriprofileimage;
@@ -81,8 +81,6 @@ public class Storeinfo extends AppCompatActivity {
         email=findViewById(R.id.storeemail);
         pass=findViewById(R.id.storepass);
         retypepass=findViewById(R.id.storpassretype);
-        phonenum=findViewById(R.id.phonenum);
-        delcharg=findViewById(R.id.delchargec);
         addressedit=findViewById(R.id.addresss);
         storeimage=findViewById(R.id.storeimg);
         imgadd=findViewById(R.id.addphototxt);
@@ -105,35 +103,6 @@ public class Storeinfo extends AppCompatActivity {
 
      //   distruborspinnerr=findViewById(R.id.storedistrbter);
     //    subdistributer=findViewById(R.id.storesubdis);
-        intializespinners();
-
-        openT = findViewById(R.id.Optime);
-        openD = findViewById(R.id.opdeliv);
-        closT = findViewById(R.id.clostim);
-        closD = findViewById(R.id.clodeliv);
-        currencychoose=findViewById(R.id.choosecurrency);
-        next=findViewById(R.id.nextstep);
-        Dleiverytime = findViewById(R.id.delverytime);
-
-        intialzedatapicker();
-
-        picker = CurrencyPicker.newInstance("Select Currency");  // dialog title
-        picker.setListener(new CurrencyPickerListener() {
-            @Override
-            public void onSelectCurrency(String name, String code, String symbol, int flagDrawableResID) {
-                currencychoose.setText(name);
-                picker.dismiss();
-          }
-        });
-
-        currencychoose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                currencychoose.setError(null);
-                picker.show(getSupportFragmentManager(), "CURRENCY_PICKER");
-            }
-        });
 
 
        addimg.setOnClickListener(new View.OnClickListener() {
@@ -146,14 +115,7 @@ public class Storeinfo extends AppCompatActivity {
            }
        });
 
-       next.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
 
-               intilazeviewswithvaildate();
-
-           }
-       });
 
 
 
@@ -206,15 +168,19 @@ public class Storeinfo extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                if (addresses!=null)
+                {
+                    String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    String city = addresses.get(0).getLocality();
+                    String state = addresses.get(0).getAdminArea();
+                    String country = addresses.get(0).getCountryName();
+                    String postalCode = addresses.get(0).getPostalCode();
+                    String knownName = addresses.get(0).getFeatureName();
 
-                String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getAdminArea();
-                String country = addresses.get(0).getCountryName();
-                String postalCode = addresses.get(0).getPostalCode();
-                String knownName = addresses.get(0).getFeatureName();
+                    addressedit.setText(address+""+city+""+state+""+country);
+                }
 
-                addressedit.setText(address+""+city+""+state+""+country);
+
 
             }
         }
@@ -222,31 +188,6 @@ public class Storeinfo extends AppCompatActivity {
 
 
 
-    public void intializespinners()
-    {
-        distruborspinnerr=findViewById(R.id.storedistrbter);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.distrbuter, android.R.layout.simple_spinner_item);
-
-
-        List<CharSequence> list=new ArrayList<>();
-        list.addAll(Arrays.asList(getResources().getStringArray(R.array.distrbuter)));
-
-        spinneradapter madapter=new spinneradapter(this,android.R.layout.simple_spinner_item,list);
-        madapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        distruborspinnerr.setAdapter(madapter);
-
-        subdistributer=findViewById(R.id.storesubdis);
-        List<CharSequence> listt=new ArrayList<>();
-        listt.addAll(Arrays.asList(getResources().getStringArray(R.array.subdist)));
-
-        spinneradapter madapterr=new spinneradapter(this,android.R.layout.simple_spinner_item,listt);
-        madapterr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        subdistributer.setAdapter(madapterr);
-
-
-    }
 
     private void openplacepicker()
     {

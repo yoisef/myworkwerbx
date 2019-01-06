@@ -7,56 +7,45 @@
     android:layout_height="match_parent"
     >
 
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_margin="5dp"
+        android:padding="5dp"
         android:background="@color/appcolor"
-        android:layout_weight="1"
 
-        android:layout_height="0dp">
-        <RelativeLayout
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-
-            android:elevation="16dp"
-            android:orientation="vertical"
-            android:layout_above="@+id/addphoto"
-            android:layout_centerHorizontal="true"
             android:id="@+id/relativeLayout">
 
             <ImageView
                 android:id="@+id/storeimg"
                 android:layout_width="100dp"
+                android:layout_gravity="center"
+                android:padding="10dp"
                 android:layout_height="100dp"
                 android:src="@drawable/ic_shop"
                 android:layout_centerHorizontal="true" />
 
-            <ProgressBar
-                android:id="@+id/proimage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:indeterminateTint="@color/blue"
-                android:indeterminateTintMode="src_in"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:elevation="16dp"
                 android:id="@+id/addphototxt"
+
                 android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@id/storeimg"
-                android:layout_marginBottom="20dp"
-
+                 android:layout_below="@id/storeimg"
                 android:gravity="center"
-                android:text="Add photo"
+                android:text="@string/addphoto"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -64,9 +53,7 @@
 
 
 
-        </RelativeLayout>
-
-
+        </LinearLayout>
 
 
         <EditText
@@ -143,6 +130,7 @@
             android:id="@+id/storepass"
             android:hint="@string/empty_pass"
             android:singleLine="true"
+            android:inputType="textPassword"
             android:gravity="start"
             android:paddingStart="10dp"
             android:paddingEnd="5dp"
@@ -155,6 +143,35 @@
             android:layout_marginTop="10dp"
             android:id="@+id/storpassretype"
             android:hint="@string/retypepass"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:gravity="start"
+            android:paddingStart="10dp"
+            android:paddingEnd="5dp"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:id="@+id/description"
+            android:hint="@string/storedescription"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:gravity="start"
+            android:paddingStart="10dp"
+            android:paddingEnd="5dp"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:id="@+id/deletcharge"
+            android:hint="@string/delcharge"
+            android:inputType="textPassword"
             android:singleLine="true"
             android:gravity="start"
             android:paddingStart="10dp"
@@ -169,6 +186,7 @@
 
 
     </LinearLayout>
+</ScrollView>
     <Button
         android:layout_width="match_parent"
         android:textStyle="bold"

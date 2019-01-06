@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.hbb20.CountryCodePicker;
+
 import customer.barcode.barcodewebx.Endpoints;
 import customer.barcode.barcodewebx.R;
 import customer.barcode.barcodewebx.modelsauth.Roottoken;
@@ -37,6 +39,7 @@ public class loginactivity extends AppCompatActivity {
     private Call<Roottoken> mcall;
     private EditText emailuser,userpass;
     private ProgressBar signprogress;
+    private CountryCodePicker ccp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class loginactivity extends AppCompatActivity {
 
         requestPermission();
 
-
+        ccp = findViewById(R.id.ccp);
         emailuser=findViewById(R.id.useremaill);
         userpass=findViewById(R.id.userpasss);
         signintext=findViewById(R.id.signinbutton);

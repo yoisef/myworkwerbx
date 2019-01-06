@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import customer.barcode.barcodewebx.MapsActivity;
 import customer.barcode.barcodewebx.R;
-import customer.barcode.barcodewebx.Retailer_details;
 import customer.barcode.barcodewebx.Storeinfo;
 
 public class Choose_Store extends AppCompatActivity {
@@ -31,7 +31,7 @@ public class Choose_Store extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent myintent=new Intent(Choose_Store.this, Retailer_details.class);
+                Intent myintent=new Intent(Choose_Store.this, MapsActivity.class);
                 myintent.putExtra("havestore",1);
 
                 startActivity(myintent);

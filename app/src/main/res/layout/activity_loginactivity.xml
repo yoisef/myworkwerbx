@@ -73,9 +73,31 @@
             android:padding="10dp"
             android:background="@drawable/squarewhate"
             android:layout_height="220dp">
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/text_input_layout"
+
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <com.hbb20.CountryCodePicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:ccp_defaultNameCode="EG"
+                    app:ccp_showFullName="false"
+                    app:ccpDialog_showTitle="false"
+                    app:ccp_showNameCode="false"
+                    app:ccp_showFlag="false"
+
+                    android:id="@+id/ccp"
+                  />
+
+
+
+                <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_input_layout"
+                android:layout_width="0dp"
+                android:layout_weight="3"
                 android:layout_margin="3dp"
                 android:layout_height="wrap_content">
                 <EditText
@@ -83,11 +105,14 @@
                     android:id="@+id/useremaill"
                     android:textColorHint="@color/blue"
                     android:singleLine="true"
+                    android:inputType="phone"
                     android:drawableEnd="@drawable/person"
                     android:hint="@string/hintemail"
                     android:layout_margin="8dp"
                     android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/text"
                 android:layout_width="match_parent"
@@ -97,6 +122,7 @@
                     android:layout_width="match_parent"
                     android:textColorHint="@color/blue"
                     android:singleLine="true"
+                    android:inputType="textPassword"
                     android:drawableEnd="@drawable/ic_lock_outline_black_24dp"
                     android:hint="@string/hintpass"
                     android:id="@+id/userpasss"
