@@ -1,6 +1,10 @@
 package customer.barcode.barcodewebx;
 
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
 import java.util.Observable;
 
 import customer.barcode.barcodewebx.modelsauth.Roottoken;
@@ -49,7 +53,7 @@ public interface Endpoints {
 
     @Multipart
     @POST("image")
-    Call<ResponseBody> uploadimg(@Part MultipartBody.Part img ,@Part("type") RequestBody mtype);
+    Call<ResponseBody> uploadimg(@Part MultipartBody.Part img , @Part("type") RequestBody mtype);
 
 
 

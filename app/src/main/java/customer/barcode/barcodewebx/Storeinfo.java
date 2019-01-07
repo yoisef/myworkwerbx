@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +32,12 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.gson.JsonObject;
 import com.mynameismidori.currencypicker.CurrencyPicker;
 import com.mynameismidori.currencypicker.CurrencyPickerListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -160,19 +165,19 @@ public class Storeinfo extends AppCompatActivity {
         if (requestCode == 0 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imgcond=false;
                uriprofileimage = data.getData();
-               File myfile=new File(uriprofileimage.getPath());
-
+          /*
             String filePath = getRealPathFromURIPath(uriprofileimage, Storeinfo.this);
-            File file = new File(filePath);
+           File mfile= new File(uriprofileimage.getPath());
 
-            RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), file);
-            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), mFile);
+            RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), mfile);
+            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", mfile.getName(), mFile);
             RequestBody type = RequestBody.create(MediaType.parse("text/plain"), "3");
 
+            uploadimg(fileToUpload,type);
+*/
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriprofileimage);
-
 
                 File f = new File(this.getCacheDir(), "file");
                 try {
@@ -182,46 +187,43 @@ public class Storeinfo extends AppCompatActivity {
                 }
 
 //Convert bitmap to byte array
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+                FileOutputStream fos = null;
+                try {
+                    fos = new FileOutputStream(f);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    fos.write(bitmapdata);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    fos.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), f);
+                MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", f.getName(), mFile);
+                RequestBody type = RequestBody.create(MediaType.parse("text/plain"), "3");
+                uploadimg(fileToUpload,type);
 
 
 
-                OkHttpClient.Builder builderr = new OkHttpClient.Builder();
-
-                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-                builderr.addInterceptor(loggingInterceptor);
 
 
-                Retrofit retrofitt = new Retrofit.Builder()
-                        .baseUrl("https://www.werpx.net/api/v1/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(builderr.build())
-                        .build();
-
-                final Endpoints myendpoints = retrofitt.create(Endpoints.class);
-
-                uploadcall=myendpoints.uploadimg(fileToUpload,type);
-                uploadcall.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                        if (response.isSuccessful())
-                        {
-                            Toast.makeText(Storeinfo.this,"uploaded",Toast.LENGTH_LONG).show();
-                        }
-                        else
-                        {
-                            Toast.makeText(Storeinfo.this,"not uploaded",Toast.LENGTH_LONG).show();
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                    }
-                });
+//Convert bitmap to byte array
                storeimage.setBackground(null);
                storeimage.setImageBitmap(bitmap);
 
@@ -236,8 +238,49 @@ public class Storeinfo extends AppCompatActivity {
 
             if (data.getExtras()!=null)
             {
-                imgcond=false;
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
+
+                File f = new File(this.getCacheDir(), "file");
+                try {
+                    f.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+//Convert bitmap to byte array
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+                FileOutputStream fos = null;
+                try {
+                    fos = new FileOutputStream(f);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    fos.write(bitmapdata);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    fos.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), f);
+                MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", f.getName(), mFile);
+                RequestBody type = RequestBody.create(MediaType.parse("text/plain"), "3");
+                uploadimg(fileToUpload,type);
+
+                imgcond=false;
 
 
                 storeimage.setBackground(null);
@@ -292,7 +335,8 @@ public class Storeinfo extends AppCompatActivity {
             e.printStackTrace();
         } catch (GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
-        }    }
+        }
+    }
 
     private String getRealPathFromURIPath(Uri contentURI, Activity activity) {
         Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
@@ -303,6 +347,66 @@ public class Storeinfo extends AppCompatActivity {
             int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
             return cursor.getString(idx);
         }
+    }
+
+    private void uploadimg(MultipartBody.Part img ,RequestBody parmeter)
+    {
+
+        OkHttpClient.Builder builderr = new OkHttpClient.Builder();
+
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        builderr.addInterceptor(loggingInterceptor);
+
+
+        Retrofit retrofitt = new Retrofit.Builder()
+                .baseUrl("https://www.werpx.net/api/v1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(builderr.build())
+                .build();
+
+
+        final Endpoints myendpoints = retrofitt.create(Endpoints.class);
+
+        uploadcall=myendpoints.uploadimg(img,parmeter);
+        uploadcall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if (response.isSuccessful())
+                {
+
+                  //  Toast.makeText(Storeinfo.this,mresonse,Toast.LENGTH_LONG).show();
+
+                    try {
+                        String mresonse=response.body().string();
+                        JSONObject uploadcond=new JSONObject(mresonse);
+                        String operation=uploadcond.getString("operation");
+                        Log.e("Operation",operation);
+
+                    } catch (JSONException e) {
+                        Log.e("theer",e.toString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    Toast.makeText(Storeinfo.this,"uploaded",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Toast.makeText(Storeinfo.this,"not uploaded",Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
     }
 
 
