@@ -60,6 +60,7 @@
     <string name="level">Choose Level</string>
     <string name="signup">Sign Up</string>
     <string name="phonenumber">Phone Number</string>
+    <string name="phoneexample">1122330867</string>
     <string name="next">Next</string>
     <string name="currency">Choose Currency</string>
     <string name="opentime">Open Time</string>

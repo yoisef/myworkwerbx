@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
@@ -33,6 +34,10 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import com.mynameismidori.currencypicker.CurrencyPicker;
 import com.mynameismidori.currencypicker.CurrencyPickerListener;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.sql.Time;
@@ -43,8 +48,20 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Observable;
 
 import customer.barcode.barcodewebx.Werbx.MainActivity;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Storeinfo extends AppCompatActivity {
 
@@ -66,7 +83,7 @@ public class Storeinfo extends AppCompatActivity {
     private Geocoder geocoder;
     private List<Address> addresses;
     private EditText Store_Name,Store_Admin,Store_pass,Store_passconfirm,Store_phone,Store_desc,Store_deletecharge,Store_address;
-
+    private Call<ResponseBody> uploadcall;
 
 
 
@@ -143,11 +160,68 @@ public class Storeinfo extends AppCompatActivity {
         if (requestCode == 0 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imgcond=false;
                uriprofileimage = data.getData();
+               File myfile=new File(uriprofileimage.getPath());
+
+            String filePath = getRealPathFromURIPath(uriprofileimage, Storeinfo.this);
+            File file = new File(filePath);
+
+            RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), file);
+            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), mFile);
+            RequestBody type = RequestBody.create(MediaType.parse("text/plain"), "3");
 
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriprofileimage);
 
+
+                File f = new File(this.getCacheDir(), "file");
+                try {
+                    f.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+//Convert bitmap to byte array
+
+
+
+                OkHttpClient.Builder builderr = new OkHttpClient.Builder();
+
+                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+                builderr.addInterceptor(loggingInterceptor);
+
+
+                Retrofit retrofitt = new Retrofit.Builder()
+                        .baseUrl("https://www.werpx.net/api/v1/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(builderr.build())
+                        .build();
+
+                final Endpoints myendpoints = retrofitt.create(Endpoints.class);
+
+                uploadcall=myendpoints.uploadimg(fileToUpload,type);
+                uploadcall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                        if (response.isSuccessful())
+                        {
+                            Toast.makeText(Storeinfo.this,"uploaded",Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(Storeinfo.this,"not uploaded",Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
                storeimage.setBackground(null);
                storeimage.setImageBitmap(bitmap);
 
@@ -164,6 +238,8 @@ public class Storeinfo extends AppCompatActivity {
             {
                 imgcond=false;
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
+
+
                 storeimage.setBackground(null);
                 storeimage.setImageBitmap(photo);
             }
@@ -217,6 +293,17 @@ public class Storeinfo extends AppCompatActivity {
         } catch (GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }    }
+
+    private String getRealPathFromURIPath(Uri contentURI, Activity activity) {
+        Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            return contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(idx);
+        }
+    }
 
 
 

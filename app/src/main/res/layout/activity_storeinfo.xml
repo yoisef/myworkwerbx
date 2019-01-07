@@ -111,53 +111,106 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_height="wrap_content" />
-        <EditText
+        <TextView
+            android:layout_width="match_parent"
+            android:textSize="@dimen/medium"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/phonenumber"
+            android:layout_height="wrap_content" />
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <com.hbb20.CountryCodePicker
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                app:ccp_defaultNameCode="EG"
+                app:ccp_showFullName="false"
+                app:ccpDialog_showTitle="false"
+                app:ccp_showNameCode="false"
+                app:ccp_showFlag="false"
+                android:id="@+id/ccp"
+                />
+        <EditText
+            android:layout_width="match_parent"
             android:id="@+id/storephone"
             android:textColor="@color/black"
-            android:hint="@string/enteremail"
+            android:inputType="phone"
+            android:layout_gravity="center"
             android:singleLine="true"
+            android:hint="1123560981"
             android:gravity="start"
-            android:paddingStart="10dp"
-            android:paddingEnd="5dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_height="wrap_content" />
-        <EditText
+
+            </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:id="@+id/storepass"
-            android:hint="@string/empty_pass"
-            android:singleLine="true"
-            android:inputType="textPassword"
-            android:gravity="start"
-            android:paddingStart="10dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/black"
+            android:orientation="vertical"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:layout_height="wrap_content" />
-        <EditText
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/passV"
+                android:textSize="@dimen/medium"
+                android:layout_gravity="start"
+
+                android:gravity="center"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/storepass"
+                android:singleLine="true"
+                android:inputType="textPassword"
+                android:layout_gravity="center"
+                android:textColorHint="@color/darkgray"
+                android:paddingStart="10dp"
+                android:paddingEnd="5dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:id="@+id/storpassconfirm"
-            android:hint="@string/retypepass"
-            android:inputType="textPassword"
-            android:singleLine="true"
-            android:gravity="start"
-            android:paddingStart="10dp"
-            android:paddingEnd="5dp"
-            android:textColor="@color/black"
+            android:orientation="vertical"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/retypepass"
+                android:textSize="@dimen/medium"
+                android:layout_gravity="start"
+
+                android:gravity="center"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:textColorHint="@color/darkgray"
+                android:id="@+id/storpassconfirm"
+                android:singleLine="true"
+                android:paddingStart="10dp"
+                android:paddingEnd="5dp"
+
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
         <EditText
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:id="@+id/storedescription"
             android:hint="@string/storedescription"
-            android:inputType="textPassword"
             android:singleLine="true"
             android:gravity="start"
             android:paddingStart="10dp"
