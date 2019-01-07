@@ -37,7 +37,7 @@ public class loginactivity extends AppCompatActivity {
 
     private TextView signintext,sign_up;
     private Call<Roottoken> mcall;
-    private EditText emailuser,userpass;
+    private EditText log_phone,log_pass;
     private ProgressBar signprogress;
     private CountryCodePicker ccp;
 
@@ -49,8 +49,8 @@ public class loginactivity extends AppCompatActivity {
         requestPermission();
 
         ccp = findViewById(R.id.ccp);
-        emailuser=findViewById(R.id.useremaill);
-        userpass=findViewById(R.id.userpasss);
+       log_phone=findViewById(R.id.logphone);
+        log_pass=findViewById(R.id.logpass);
         signintext=findViewById(R.id.signinbutton);
         signprogress=findViewById(R.id.loginprogressbar);
         sign_up=findViewById(R.id.retailer_new);
@@ -84,21 +84,21 @@ public class loginactivity extends AppCompatActivity {
   private boolean validesignin()
   {
       String retaileremail,retailerpass;
-      retaileremail=emailuser.getText().toString().trim();
-      retailerpass=userpass.getText().toString().trim();
+      retaileremail=log_phone.getText().toString().trim();
+      retailerpass=log_pass.getText().toString().trim();
 
       if (retaileremail.isEmpty())
       {
-          emailuser.setError(getResources().getString(R.string.emailV));
-          emailuser.requestFocus();
+          log_phone.setError(getResources().getString(R.string.emailV));
+          log_phone.requestFocus();
           return false;
       }
 
 
      if(retailerpass.isEmpty())
       {
-          userpass.setError(getResources().getString(R.string.passV));
-          userpass.requestFocus();
+          log_pass.setError(getResources().getString(R.string.passV));
+          log_pass.requestFocus();
           return false;
       }
 

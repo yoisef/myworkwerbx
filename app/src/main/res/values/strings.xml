@@ -1,4 +1,12 @@
 <resources>
+
+
+    //loginactivity
+    <string name="phonenum">Phone Number</string>
+    <string name="pass">Password</string>
+
+
+
     <string name="app_name">Werpx</string>
     <string name="enterbar">Enter Barcode </string>
     <string name="alertpay">please wait for the Merchant Terminal for verifying the Cart items</string>
@@ -11,7 +19,7 @@
     <string name="productaddedtocart">Product added to cart</string>
     <string name="transfer">Transfer</string>
     <string name="epbarcode">Enter Product Barcode</string>
-    <string name="ok">Ok</string>
+    <string name="ok"> OK</string>
     <string name="hintemail">Enter Phone number </string>
     <string name="hintpass">Password </string>
     <string name="logout">Logout</string>
@@ -23,7 +31,7 @@
     <string name="chooseitemnu">Choose Items Numbers</string>
     <string name="empty_email"> phone Number</string>
     <string name="empty_pass"> Password</string>
-    <string name="items">Items</string>
+    <string name="items"> Items </string>
     <string name="ordercustomer">Order Customer</string>
     <string name="orderamount">Order Amount $</string>
     <string name="totalsales">Total sales :</string>

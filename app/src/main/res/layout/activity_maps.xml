@@ -16,15 +16,29 @@
             android:layout_weight="1"
             android:background="@color/appcolor"
             android:layout_height="0dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/medium"
+                    android:id="@+id/storeidtext"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"
+                    android:text="@string/storeidV"
+                    android:layout_height="wrap_content" />
             <SearchView
                 android:layout_width="match_parent"
                 android:hint="@string/enterstorenum"
-                android:id="@+id/storid"
-                android:layout_marginTop="10dp"
+                android:id="@+id/searchstore"
                 android:gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+
                 android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,19 +54,17 @@
                     android:layout_width="100dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_shop"
-                    android:padding="10dp"
+                    android:padding="15dp"
                     android:id="@+id/storeimg"
                     android:layout_height="100dp" />
-
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
                     android:hint="@string/storenam"
-                    android:id="@+id/retailernam"
                     android:padding="5dp"
                     android:gravity="center"
-                    android:textSize="@dimen/large"
+                    android:textSize="@dimen/medium"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_height="wrap_content" />
@@ -61,10 +73,9 @@
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
                     android:padding="5dp"
-                    android:textSize="@dimen/large"
+                    android:textSize="@dimen/medium"
                     android:hint="@string/address"
                     android:gravity="center"
-                    android:id="@+id/retailermobile"
                     android:layout_marginBottom="10dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
@@ -80,7 +91,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_marginTop="15dp"
-                android:id="@+id/retailername"
+                android:id="@+id/Name_retailer"
                 android:hint="@string/entername"
                 android:singleLine="true"
                 android:gravity="start"
@@ -93,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:inputType="phone"
-                android:id="@+id/retailemobile"
+                android:id="@+id/Phone_retailer"
                 android:hint="@string/entermoile"
                 android:singleLine="true"
                 android:gravity="start"
@@ -103,10 +114,9 @@
                 android:layout_marginEnd="20dp"
                 android:layout_height="wrap_content" />
             <EditText
-
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
-                android:id="@+id/retailerpass"
+                android:id="@+id/Pass_retailer"
                 android:hint="@string/empty_pass"
                 android:singleLine="true"
                 android:inputType="textPassword"
@@ -120,7 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:inputType="textPassword"
-                android:id="@+id/retailerrepass"
+                android:id="@+id/repass_retailer"
                 android:hint="@string/retypepass"
                 android:singleLine="true"
                 android:gravity="start"
@@ -138,7 +148,7 @@
         android:textColor="@color/white"
         android:id="@+id/registerr"
         android:textSize="@dimen/large"
-        android:text="@string/signup"
+        android:text="@string/subscripe"
         android:textStyle="bold"
         android:layout_height="wrap_content" />
 </LinearLayout>

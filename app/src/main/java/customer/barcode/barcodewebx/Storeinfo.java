@@ -54,17 +54,18 @@ public class Storeinfo extends AppCompatActivity {
     private static final int image = 101;
     private android.app.AlertDialog.Builder builder;
     private android.app.AlertDialog chossewaydialog;
-    private Button next;
+    private Button register_store;
     CurrencyPicker picker;
     private Spinner distruborspinnerr,  subdistributer;
     private LinearLayout addimg;
-    private EditText name,email,pass,retypepass,phonenum,delcharg,descr,addressedit;
+
     private ImageView storeimage,placepicker;
     private Uri uriprofileimage;
     private Boolean imgcond;
     private final static int PLACE_PICKER_REQUEST = 999;
     private Geocoder geocoder;
     private List<Address> addresses;
+    private EditText Store_Name,Store_Admin,Store_pass,Store_passconfirm,Store_phone,Store_desc,Store_deletecharge,Store_address;
 
 
 
@@ -77,14 +78,28 @@ public class Storeinfo extends AppCompatActivity {
 
         imgcond=true;
         geocoder = new Geocoder(this, Locale.getDefault());
-        name=findViewById(R.id.storernam);
-        email=findViewById(R.id.storeemail);
-        pass=findViewById(R.id.storepass);
-        retypepass=findViewById(R.id.storpassretype);
-        addressedit=findViewById(R.id.addresss);
+        Store_Name=findViewById(R.id.storernam);
+        Store_phone=findViewById(R.id.storephone);
+        Store_pass=findViewById(R.id.storepass);
+        Store_passconfirm=findViewById(R.id.storpassconfirm);
+        register_store=findViewById(R.id.storesubsc);
+        Store_address=findViewById(R.id.storeaddress);
+        Store_desc=findViewById(R.id.storedescription);
+        Store_Admin=findViewById(R.id.storeadmin);
         storeimage=findViewById(R.id.storeimg);
         imgadd=findViewById(R.id.addphototxt);
         placepicker=findViewById(R.id.openplacepicker);
+
+
+
+        register_store.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                intilazeviewswithvaildate();
+
+            }
+        });
 
 
         placepicker.setOnClickListener(new View.OnClickListener() {
@@ -177,7 +192,7 @@ public class Storeinfo extends AppCompatActivity {
                     String postalCode = addresses.get(0).getPostalCode();
                     String knownName = addresses.get(0).getFeatureName();
 
-                    addressedit.setText(address+""+city+""+state+""+country);
+                    Store_address.setText(address+""+city+""+state+""+country);
                 }
 
 
@@ -243,55 +258,7 @@ public class Storeinfo extends AppCompatActivity {
     }
 
 
-    private void intialzedatapicker()
-    {
-        openT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openT.setError(null);
-
-                datapicker(openT);
-
-            }
-        });
-
-        openD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                openD.setError(null);
-                datapicker(openD);
-            }
-        });
-
-        closD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                closD.setError(null);
-
-                datapicker(closD);
-            }
-        });
-
-        closT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                closT.setError(null);
-
-                datapicker(closT);
-            }
-        });
-        Dleiverytime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Dleiverytime.setError(null);
-
-                datapicker(Dleiverytime);
-            }
-        });
-    }
+   /*
 
     public void datapicker(final TextView Mtext)
     {
@@ -320,32 +287,25 @@ public class Storeinfo extends AppCompatActivity {
         formatter = new SimpleDateFormat("h:mm a");
         return formatter.format(tme);
     }
+    */
 
 
     private void intilazeviewswithvaildate()
     {
-        String emailtxt,passtxt,passretpetxt,phonenumtxt,delchargetxt,addresstxt,
-                ChoseCuretxt,openttxt,clottxt,opedeltxt,closedelitxt,deliverytimetxt,
-                closettxt,namtxt,imgcondition;
-
-        Drawable imgstore;
+        String namestore,addressstore,adminstore,phonestore,passstore,confipassstore,descstore,deletstore;
 
 
 
-        namtxt =name.getText().toString().trim();
-        emailtxt=email.getText().toString().trim();
-        passtxt=pass.getText().toString().trim();
-        passretpetxt=retypepass.getText().toString().trim();
-        phonenumtxt=phonenum.getText().toString().trim();
-        delchargetxt=delcharg.getText().toString().trim();
-        ChoseCuretxt=currencychoose.getText().toString().trim();
-        openttxt=openT.getText().toString().trim();
-        closettxt=closT.getText().toString().trim();
-        opedeltxt=openD.getText().toString().trim();
-        closedelitxt=closD.getText().toString().trim();
-        deliverytimetxt=Dleiverytime.getText().toString().trim();
-        addresstxt=addressedit.getText().toString().trim();
-        imgcondition=imgadd.getText().toString();
+        namestore =Store_Name.getText().toString().trim();
+        addressstore=Store_address.getText().toString().trim();
+        adminstore=Store_Admin.getText().toString().trim();
+        phonestore=Store_phone.getText().toString().trim();
+        passstore=Store_pass.getText().toString().trim();
+        confipassstore=Store_passconfirm.getText().toString().trim();
+        descstore=Store_desc.getText().toString().trim();
+
+
+
 
 
 
@@ -354,139 +314,61 @@ public class Storeinfo extends AppCompatActivity {
             imgadd.setError(getResources().getString(R.string.imgV));
             imgadd.requestFocus();
             return;
+        }
 
+        if (namestore.isEmpty())
+        {
+            Store_Name.setError(getResources().getString(R.string.enterstorenum));
+            Store_Name.requestFocus();
+            return;
         }
 
 
-        if (namtxt.isEmpty())
+        if (addressstore.isEmpty())
         {
-            name.setError(getResources().getString(R.string.namV));
-            name.requestFocus();
-
+            Store_address.setError(getResources().getString(R.string.emailV));
+            Store_address.requestFocus();
             return ;
         }
 
-        if (emailtxt.isEmpty())
+        if (adminstore.isEmpty())
         {
-            email.setError(getResources().getString(R.string.emailV));
-            email.requestFocus();
-            return ;
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(emailtxt).matches())
-        {
-            email.setError(getResources().getString(R.string.vaildemailV));
-            email.requestFocus();
-            return ;
-        }
-        if (passtxt.isEmpty())
-        {
-            pass.setError(getResources().getString(R.string.passV));
-            pass.requestFocus();
-            return;
-        }
-        if (passtxt.length()<6)
-        {
-            pass.setError(getResources().getString(R.string.minumV));
-            pass.requestFocus();
-            return;
-        }
-        if (passretpetxt.isEmpty())
-        {
-            retypepass.setError(getResources().getString(R.string.passRV));
-            retypepass.requestFocus();
-            return;
-        }
-        if (passretpetxt.length()<6) {
-            retypepass.setError(getResources().getString(R.string.passRV));
-            retypepass.requestFocus();
+            Store_Admin.setError(getResources().getString(R.string.passV));
+            Store_Admin.requestFocus();
             return;
         }
 
-        if (!passretpetxt.equals(passtxt))
+        if (phonestore.isEmpty())
         {
-            retypepass.setError(getResources().getString(R.string.passRV));
-            retypepass.requestFocus();
+            Store_phone.setError(getResources().getString(R.string.phoneV));
+            Store_phone.requestFocus();
             return;
         }
-        if (phonenumtxt.isEmpty())
+        if (passstore.length()<6)
         {
-            phonenum.setError(getResources().getString(R.string.phoneV));
-            phonenum.requestFocus();
+            Store_pass.setError(getResources().getString(R.string.minumV));
+           Store_pass.requestFocus();
             return;
         }
-        if (delchargetxt.isEmpty())
+        if (confipassstore.isEmpty())
         {
-            delcharg.setError(getResources().getString(R.string.delchargeV));
-            delcharg.requestFocus();
-            return;
-        }
-        if (ChoseCuretxt.isEmpty())
-        {
-             currencychoose.setError(getResources().getString(R.string.currencyV));
-             currencychoose.requestFocus();
-             return;
-        }
-
-
-        if (distruborspinnerr.getSelectedItemPosition()==0)
-        {
-            ((TextView)distruborspinnerr.getSelectedView()).setError(getResources().getString(R.string.distuboterV));
-            ((TextView)distruborspinnerr.getSelectedView()).requestFocus();
-            return;
-
-        }
-        if (subdistributer.getSelectedItemPosition()==0)
-        {
-            ((TextView)subdistributer.getSelectedView()).setError(getResources().getString(R.string.subdistV));
-            ((TextView)subdistributer.getSelectedView()).requestFocus();
-            return;
-        }
-        if (openttxt.isEmpty())
-        {
-            openT.setError(getResources().getString(R.string.opentV));
-            openT.requestFocus();
+            Store_passconfirm.setError(getResources().getString(R.string.passRV));
+           Store_passconfirm.requestFocus();
             return;
         }
 
-        if (closettxt.isEmpty())
+
+        if (!confipassstore.equals(passstore))
         {
-            closT.setError(getResources().getString(R.string.closetV));
-            closT.requestFocus();
-            return;
-        }
-
-        if (opedeltxt.isEmpty())
-        {
-            openD.setError(getResources().getString(R.string.opendV));
-            openD.requestFocus();
-            return;
-        }
-
-        if (closedelitxt.isEmpty())
-        {
-            closD.setError(getResources().getString(R.string.closedV));
-            closD.requestFocus();
-            return;
-        }
-
-        if (deliverytimetxt.isEmpty())
-        {
-            Dleiverytime.setError(getResources().getString(R.string.detimeV));
-            Dleiverytime.requestFocus();
-        }
-
-
-
-        if (addresstxt.isEmpty())
-        {
-            addressedit.setError(getResources().getString(R.string.addressV));
-            addressedit.requestFocus();
+            Store_passconfirm.setError(getResources().getString(R.string.passRV));
+            Store_passconfirm.requestFocus();
             return;
         }
 
 
 
-        startActivity(new Intent(Storeinfo.this,Retailer_details.class));
+
+        startActivity(new Intent(Storeinfo.this,MainActivity.class));
 
 
 

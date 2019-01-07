@@ -31,7 +31,7 @@
                 android:id="@+id/storeimg"
                 android:layout_width="100dp"
                 android:layout_gravity="center"
-                android:padding="10dp"
+                android:padding="15dp"
                 android:layout_height="100dp"
                 android:src="@drawable/ic_shop"
                 android:layout_centerHorizontal="true" />
@@ -81,7 +81,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:hint="@string/address"
-                android:id="@+id/addresss"
+                android:id="@+id/storeaddress"
                 android:singleLine="true"
                 android:gravity="start"
                 android:paddingStart="10dp"
@@ -114,7 +114,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
-            android:id="@+id/storeemail"
+            android:id="@+id/storephone"
             android:textColor="@color/black"
             android:hint="@string/enteremail"
             android:singleLine="true"
@@ -141,7 +141,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
-            android:id="@+id/storpassretype"
+            android:id="@+id/storpassconfirm"
             android:hint="@string/retypepass"
             android:inputType="textPassword"
             android:singleLine="true"
@@ -155,7 +155,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
-            android:id="@+id/description"
+            android:id="@+id/storedescription"
             android:hint="@string/storedescription"
             android:inputType="textPassword"
             android:singleLine="true"
@@ -169,14 +169,12 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
-            android:id="@+id/deletcharge"
+            android:id="@+id/storedeletcharge"
             android:hint="@string/delcharge"
-            android:inputType="textPassword"
             android:singleLine="true"
             android:gravity="start"
             android:paddingStart="10dp"
             android:paddingEnd="5dp"
-            android:textColor="@color/black"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_height="wrap_content" />
@@ -190,6 +188,7 @@
     <Button
         android:layout_width="match_parent"
         android:textStyle="bold"
+        android:id="@+id/storesubsc"
         android:text="@string/subscripe"
         android:textSize="@dimen/large"
         android:textColor="@color/white"

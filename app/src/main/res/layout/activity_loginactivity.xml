@@ -79,35 +79,31 @@
                 android:orientation="horizontal"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
-
                 <com.hbb20.CountryCodePicker
                     android:layout_width="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
                     app:ccp_defaultNameCode="EG"
                     app:ccp_showFullName="false"
                     app:ccpDialog_showTitle="false"
                     app:ccp_showNameCode="false"
                     app:ccp_showFlag="false"
-
                     android:id="@+id/ccp"
-                  />
-
-
+                    />
 
                 <android.support.design.widget.TextInputLayout
                 android:id="@+id/text_input_layout"
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_margin="3dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText
+
+                    <EditText
                     android:layout_width="match_parent"
-                    android:id="@+id/useremaill"
+                    android:id="@+id/logphone"
                     android:textColorHint="@color/blue"
                     android:singleLine="true"
                     android:inputType="phone"
                     android:drawableEnd="@drawable/person"
-                    android:hint="@string/hintemail"
+                    android:hint="@string/phonenum"
                     android:layout_margin="8dp"
                     android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
@@ -124,8 +120,8 @@
                     android:singleLine="true"
                     android:inputType="textPassword"
                     android:drawableEnd="@drawable/ic_lock_outline_black_24dp"
-                    android:hint="@string/hintpass"
-                    android:id="@+id/userpasss"
+                    android:hint="@string/pass"
+                    android:id="@+id/logpass"
                     android:layout_margin="8dp"
                     android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
