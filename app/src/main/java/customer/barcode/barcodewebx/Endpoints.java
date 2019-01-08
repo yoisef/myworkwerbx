@@ -55,10 +55,21 @@ public interface Endpoints {
     @POST("image")
     Call<ResponseBody> uploadimg(@Part MultipartBody.Part img , @Part("type") RequestBody mtype);
 
-
+    @FormUrlEncoded
     @POST("appstore")
-    Call<ResponseBody> registerstore(@Field("active") boolean active ,@Field("address") String addres
-    ,@Field("city")String city,@Field("close_delivery"))
+    Call<ResponseBody> registerstore(@Field("latitude") String lat,@Field("longitude") String longtitude
+            ,@Field("address") String addres  ,@Field("image_id") String imgid,@Field("active") boolean active
+    ,@Field("city")String city,@Field("close_delivery") String Cdelivery
+    ,@Field("close_time") String Ctime,@Field("currency") String currency,@Field("del_charge")String deletecharge,
+    @Field("delivery_time") String Dtime,@Field("description")String desc,@Field("email") String email
+    ,@Field("name") String nam,@Field("open_delivery") String Odelivery,@Field("open_time") String Otime
+     ,@Field("phone") String phone,@Field("place_id")String placeid,@Field("website") String web);
+
+
+    @FormUrlEncoded
+    @POST("appretailer")
+    Call<ResponseBody> registerretailer(@Field("store")String id,@Field("name")String adminname,@Field("email")String email
+    ,@Field("password") String pass,@Field("mobile") String mob ,@Field("level") String level);
 
 
 }

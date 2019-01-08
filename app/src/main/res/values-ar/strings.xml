@@ -73,7 +73,7 @@
 
 
     //validation
-    <string name="storeidV">أدخل الرقم التعريفي للمخزن</string>
+    <string name="storeidV"> رقم للمخزن</string>
     <string name="namV">أدخل أسم المسئول</string>
     <string name="emailV">أدخل رقم الهاتف</string>
     <string name="minumV">يجب ان لا يقل كلمة السر عن 6 خانات</string>

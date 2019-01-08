@@ -59,6 +59,7 @@ import java.util.Locale;
 import java.util.Observable;
 
 import customer.barcode.barcodewebx.Werbx.MainActivity;
+import customer.barcode.barcodewebx.productmodels.Rootproductdetail;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -74,7 +75,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Storeinfo extends AppCompatActivity {
 
 
-   private TextView openT, closT, openD, closD, Dleiverytime,imgadd;
+   private TextView openT, closT, openD, closD, Dleiverytime,imgadd,Store_address;
     TextView currencychoose;
     private static final int image = 101;
     private android.app.AlertDialog.Builder builder;
@@ -90,9 +91,10 @@ public class Storeinfo extends AppCompatActivity {
     private final static int PLACE_PICKER_REQUEST = 999;
     private Geocoder geocoder;
     private List<Address> addresses;
-    private EditText Store_Name,Store_Admin,Store_pass,Store_passconfirm,Store_phone,Store_desc,Store_deletecharge,Store_address;
-    private Call<ResponseBody> uploadcall;
+    private EditText Store_Name,Store_Admin,Store_pass,Store_passconfirm,Store_phone,Store_desc,Store_deletecharge;
+    private Call<ResponseBody> uploadcall,registerstore,registerretailer;
     private ProgressBar upload_progress_bar;
+    private LinearLayout Map_Open;
 
 
 
@@ -117,6 +119,7 @@ public class Storeinfo extends AppCompatActivity {
         imgadd=findViewById(R.id.addphototxt);
         placepicker=findViewById(R.id.openplacepicker);
         upload_progress_bar=findViewById(R.id.proimage);
+        Map_Open=findViewById(R.id.openmap);
 
 
 
@@ -125,16 +128,63 @@ public class Storeinfo extends AppCompatActivity {
             public void onClick(View v) {
 
                 intilazeviewswithvaildate();
+                Retrofitclient myretro=Retrofitclient.getInstance();
+                Retrofit retrofittok=  myretro.getretro();
+                final Endpoints myendpoints = retrofittok.create(Endpoints.class);
+                SharedPreferences preferences=getSharedPreferences("store", Context.MODE_PRIVATE);
+                String storeid=preferences.getString("id",null);
+                registerretailer=myendpoints.registerretailer(storeid,Store_Admin.getText().toString(),null,Store_pass.getText().toString(),Store_phone.getText().toString(),"retailerAdmin");
+                registerretailer.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful())
+                        {
+                            try {
+                                String retailerresponse=response.body().string();
+                                JSONObject retailerecond=new JSONObject(retailerresponse);
+                                String operation=retailerecond.getString("operation");
+                                if (operation.trim().equals("success"))
+                                {
+                                    Toast.makeText(Storeinfo.this,"Successful Register",Toast.LENGTH_LONG).show();
+
+                                }
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+
 
             }
         });
 
 
-        placepicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                openplacepicker();
+
+        Map_Open.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Store_address.setError(null);
+
+                if (imgcond)
+                {
+                    imgadd.setError(getResources().getString(R.string.imgV));
+                    imgadd.requestFocus();
+
+                }
+                else{
+                    openplacepicker();
+                }
 
             }
         });
@@ -226,6 +276,13 @@ public class Storeinfo extends AppCompatActivity {
                 String placeName = String.format("Place: %s", place.getName());
                 double latitude = place.getLatLng().latitude;
                 double longitude = place.getLatLng().longitude;
+                SharedPreferences preferences=getSharedPreferences("image",Context.MODE_PRIVATE);
+               String idimg= preferences.getString("id",null);
+                if (idimg!=null)
+                {
+                    registerstore(idimg,Store_address.getText().toString(),Store_Name.getText().toString(),String.valueOf(longitude),String.valueOf(latitude));
+
+                }
 
                 try {
                     addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
@@ -268,26 +325,62 @@ public class Storeinfo extends AppCompatActivity {
         }
     }
 
+  private void registerstore(String imgid,String address,String storenam,String lon,String lat)
+  {
+      Retrofitclient myretro=Retrofitclient.getInstance();
+      Retrofit retrofittok=  myretro.getretro();
+      final Endpoints myendpoints = retrofittok.create(Endpoints.class);
 
+      registerstore=myendpoints.registerstore(lat,lon,address,imgid,true,"ss","00:00 AM","00:00 AM"
+      ,"EGYPT Pounds","1","5",null,null,storenam,"00:00 AM","00:00 AM"
+      ,"123456","123456","web");
+
+      registerstore.enqueue(new Callback<ResponseBody>() {
+          @Override
+          public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+              if (response.isSuccessful())
+              {
+                  try {
+                      String storeresponse= response.body().string();
+                      JSONObject storecond=new JSONObject(storeresponse);
+                      String operstore=storecond.getString("operation");
+                      if (operstore.trim().equals("success"))
+                      {
+                          String storeid=storecond.getString("store_id");
+                          if (storeid!=null)
+                          {
+                              Toast.makeText(Storeinfo.this,storeid,Toast.LENGTH_LONG).show();
+
+                              SharedPreferences preferences=getSharedPreferences("store", Context.MODE_PRIVATE);
+                              SharedPreferences.Editor editor=preferences.edit();
+                              editor.putString("id",storeid);
+                              editor.apply();
+                          }
+                      }
+
+                  } catch (IOException e) {
+                      e.printStackTrace();
+                  } catch (JSONException e) {
+                      e.printStackTrace();
+                  }
+              }
+
+
+          }
+
+          @Override
+          public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+          }
+      });
+  }
     private void uploadimg(MultipartBody.Part img ,RequestBody parmeter)
     {
 
-        OkHttpClient.Builder builderr = new OkHttpClient.Builder();
+        Retrofitclient myretro=Retrofitclient.getInstance();
+        Retrofit retrofittok=  myretro.getretro();
+        final Endpoints myendpoints = retrofittok.create(Endpoints.class);
 
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        builderr.addInterceptor(loggingInterceptor);
-
-
-        Retrofit retrofitt = new Retrofit.Builder()
-                .baseUrl("https://www.werpx.net/api/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(builderr.build())
-                .build();
-
-
-        final Endpoints myendpoints = retrofitt.create(Endpoints.class);
 
         uploadcall=myendpoints.uploadimg(img,parmeter);
         uploadcall.enqueue(new Callback<ResponseBody>() {
@@ -316,6 +409,7 @@ public class Storeinfo extends AppCompatActivity {
                         String imagid=uploadcond.getString("id");
                         if (imagid!=null)
                         {
+                            Log.e("idbimage",imagid);
                             SharedPreferences preferences=getSharedPreferences("image", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor=preferences.edit();
                             editor.putString("id",imagid);
