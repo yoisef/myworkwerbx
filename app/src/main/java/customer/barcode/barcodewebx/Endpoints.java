@@ -56,5 +56,9 @@ public interface Endpoints {
     Call<ResponseBody> uploadimg(@Part MultipartBody.Part img , @Part("type") RequestBody mtype);
 
 
+    @POST("appstore")
+    Call<ResponseBody> registerstore(@Field("active") boolean active ,@Field("address") String addres
+    ,@Field("city")String city,@Field("close_delivery"))
+
 
 }

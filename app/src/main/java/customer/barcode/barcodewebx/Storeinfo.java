@@ -3,7 +3,9 @@ package customer.barcode.barcodewebx;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -22,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -79,7 +82,7 @@ public class Storeinfo extends AppCompatActivity {
     private Button register_store;
     CurrencyPicker picker;
     private Spinner distruborspinnerr,  subdistributer;
-    private LinearLayout addimg;
+    private RelativeLayout addimg;
 
     private ImageView storeimage,placepicker;
     private Uri uriprofileimage;
@@ -89,6 +92,8 @@ public class Storeinfo extends AppCompatActivity {
     private List<Address> addresses;
     private EditText Store_Name,Store_Admin,Store_pass,Store_passconfirm,Store_phone,Store_desc,Store_deletecharge,Store_address;
     private Call<ResponseBody> uploadcall;
+    private ProgressBar upload_progress_bar;
+
 
 
 
@@ -111,6 +116,7 @@ public class Storeinfo extends AppCompatActivity {
         storeimage=findViewById(R.id.storeimg);
         imgadd=findViewById(R.id.addphototxt);
         placepicker=findViewById(R.id.openplacepicker);
+        upload_progress_bar=findViewById(R.id.proimage);
 
 
 
@@ -164,62 +170,17 @@ public class Storeinfo extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imgcond=false;
+            upload_progress_bar.setVisibility(View.VISIBLE);
                uriprofileimage = data.getData();
-          /*
-            String filePath = getRealPathFromURIPath(uriprofileimage, Storeinfo.this);
-           File mfile= new File(uriprofileimage.getPath());
 
-            RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), mfile);
-            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", mfile.getName(), mFile);
-            RequestBody type = RequestBody.create(MediaType.parse("text/plain"), "3");
-
-            uploadimg(fileToUpload,type);
-*/
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriprofileimage);
-
-                File f = new File(this.getCacheDir(), "file");
-                try {
-                    f.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-//Convert bitmap to byte array
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-                byte[] bitmapdata = bos.toByteArray();
-
-//write the bytes in file
-                FileOutputStream fos = null;
-                try {
-                    fos = new FileOutputStream(f);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    fos.write(bitmapdata);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    fos.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+                File f=convert_bitmap_to_file(bitmap);
                 RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), f);
                 MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", f.getName(), mFile);
                 RequestBody type = RequestBody.create(MediaType.parse("text/plain"), "3");
                 uploadimg(fileToUpload,type);
-
-
 
 
 
@@ -236,44 +197,13 @@ public class Storeinfo extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK)
         {
 
+            upload_progress_bar.setVisibility(View.VISIBLE);
+
             if (data.getExtras()!=null)
             {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
 
-                File f = new File(this.getCacheDir(), "file");
-                try {
-                    f.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-//Convert bitmap to byte array
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-                byte[] bitmapdata = bos.toByteArray();
-
-//write the bytes in file
-                FileOutputStream fos = null;
-                try {
-                    fos = new FileOutputStream(f);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    fos.write(bitmapdata);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    fos.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                File f=convert_bitmap_to_file(photo);
 
                 RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), f);
                 MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", f.getName(), mFile);
@@ -338,16 +268,6 @@ public class Storeinfo extends AppCompatActivity {
         }
     }
 
-    private String getRealPathFromURIPath(Uri contentURI, Activity activity) {
-        Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
-        if (cursor == null) {
-            return contentURI.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            return cursor.getString(idx);
-        }
-    }
 
     private void uploadimg(MultipartBody.Part img ,RequestBody parmeter)
     {
@@ -376,6 +296,7 @@ public class Storeinfo extends AppCompatActivity {
 
                 if (response.isSuccessful())
                 {
+                    upload_progress_bar.setVisibility(View.GONE);
 
                   //  Toast.makeText(Storeinfo.this,mresonse,Toast.LENGTH_LONG).show();
 
@@ -383,7 +304,23 @@ public class Storeinfo extends AppCompatActivity {
                         String mresonse=response.body().string();
                         JSONObject uploadcond=new JSONObject(mresonse);
                         String operation=uploadcond.getString("operation");
-                        Log.e("Operation",operation);
+                        if (operation.trim().equals("success"))
+                        {
+                            Toast.makeText(Storeinfo.this,"uploaded",Toast.LENGTH_LONG).show();
+
+                        }
+                        else{
+                            Toast.makeText(Storeinfo.this,"uploaded problem",Toast.LENGTH_LONG).show();
+
+                        }
+                        String imagid=uploadcond.getString("id");
+                        if (imagid!=null)
+                        {
+                            SharedPreferences preferences=getSharedPreferences("image", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor=preferences.edit();
+                            editor.putString("id",imagid);
+                            editor.apply();
+                        }
 
                     } catch (JSONException e) {
                         Log.e("theer",e.toString());
@@ -392,10 +329,10 @@ public class Storeinfo extends AppCompatActivity {
                     }
 
 
-                    Toast.makeText(Storeinfo.this,"uploaded",Toast.LENGTH_LONG).show();
                 }
                 else
                 {
+                    upload_progress_bar.setVisibility(View.GONE);
                     Toast.makeText(Storeinfo.this,"not uploaded",Toast.LENGTH_LONG).show();
 
                 }
@@ -403,6 +340,9 @@ public class Storeinfo extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                upload_progress_bar.setVisibility(View.GONE);
+                Toast.makeText(Storeinfo.this,t.getMessage(),Toast.LENGTH_LONG).show();
+
 
             }
         });
@@ -410,7 +350,46 @@ public class Storeinfo extends AppCompatActivity {
     }
 
 
+    private File convert_bitmap_to_file(Bitmap mybitmap)
+    {
+        File f = new File(this.getCacheDir(), "file");
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+//Convert bitmap to byte array
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        mybitmap.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, bos);
+        byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(f);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.write(bitmapdata);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return f;
+
+    }
 
 
     private void chooseimg()
