@@ -146,7 +146,7 @@ public class Storeinfo extends AppCompatActivity {
                                 if (operation.trim().equals("success"))
                                 {
                                     Toast.makeText(Storeinfo.this,"Successful Register",Toast.LENGTH_LONG).show();
-
+                                    startActivity(new Intent(Storeinfo.this,MainActivity.class));
                                 }
 
                             } catch (IOException e) {
@@ -632,7 +632,7 @@ public class Storeinfo extends AppCompatActivity {
 
 
 
-        startActivity(new Intent(Storeinfo.this,MainActivity.class));
+
 
 
 
