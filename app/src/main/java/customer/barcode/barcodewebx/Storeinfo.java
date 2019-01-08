@@ -59,6 +59,8 @@ import java.util.Locale;
 import java.util.Observable;
 
 import customer.barcode.barcodewebx.Werbx.MainActivity;
+import customer.barcode.barcodewebx.Werbx.loginactivity;
+import customer.barcode.barcodewebx.modelsauth.Roottoken;
 import customer.barcode.barcodewebx.productmodels.Rootproductdetail;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -93,8 +95,9 @@ public class Storeinfo extends AppCompatActivity {
     private List<Address> addresses;
     private EditText Store_Name,Store_Admin,Store_pass,Store_passconfirm,Store_phone,Store_desc,Store_deletecharge;
     private Call<ResponseBody> uploadcall,registerstore,registerretailer;
-    private ProgressBar upload_progress_bar;
+    private ProgressBar upload_progress_bar,registerpro;
     private LinearLayout Map_Open;
+    private Call<Roottoken> mcall;
 
 
 
@@ -120,6 +123,7 @@ public class Storeinfo extends AppCompatActivity {
         placepicker=findViewById(R.id.openplacepicker);
         upload_progress_bar=findViewById(R.id.proimage);
         Map_Open=findViewById(R.id.openmap);
+        registerpro=findViewById(R.id.prosub);
 
 
 
@@ -127,16 +131,22 @@ public class Storeinfo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                registerpro.setVisibility(View.VISIBLE);
+
+
+
                 intilazeviewswithvaildate();
                 Retrofitclient myretro=Retrofitclient.getInstance();
                 Retrofit retrofittok=  myretro.getretro();
                 final Endpoints myendpoints = retrofittok.create(Endpoints.class);
                 SharedPreferences preferences=getSharedPreferences("store", Context.MODE_PRIVATE);
                 String storeid=preferences.getString("id",null);
-                registerretailer=myendpoints.registerretailer(storeid,Store_Admin.getText().toString(),null,Store_pass.getText().toString(),Store_phone.getText().toString(),"retailerAdmin");
+                registerretailer=myendpoints.registerretailer(storeid,Store_Admin.getText().toString(),Store_phone.getText().toString(),Store_pass.getText().toString(),Store_phone.getText().toString(),"retailerAdmin");
                 registerretailer.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                        registerpro.setVisibility(View.GONE);
                         if (response.isSuccessful())
                         {
                             try {
@@ -145,8 +155,20 @@ public class Storeinfo extends AppCompatActivity {
                                 String operation=retailerecond.getString("operation");
                                 if (operation.trim().equals("success"))
                                 {
+
+
+
                                     Toast.makeText(Storeinfo.this,"Successful Register",Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(Storeinfo.this,MainActivity.class));
+
+                                        signin(Store_phone.getText().toString(),Store_pass.getText().toString());
+
+
+
+                                }
+                                else{
+                                    String reason=retailerecond.getString("reason");
+                                    Toast.makeText(Storeinfo.this,reason,Toast.LENGTH_LONG).show();
+
                                 }
 
                             } catch (IOException e) {
@@ -277,12 +299,7 @@ public class Storeinfo extends AppCompatActivity {
                 double latitude = place.getLatLng().latitude;
                 double longitude = place.getLatLng().longitude;
                 SharedPreferences preferences=getSharedPreferences("image",Context.MODE_PRIVATE);
-               String idimg= preferences.getString("id",null);
-                if (idimg!=null)
-                {
-                    registerstore(idimg,Store_address.getText().toString(),Store_Name.getText().toString(),String.valueOf(longitude),String.valueOf(latitude));
 
-                }
 
                 try {
                     addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
@@ -299,6 +316,14 @@ public class Storeinfo extends AppCompatActivity {
                     String knownName = addresses.get(0).getFeatureName();
 
                     Store_address.setText(address+""+city+""+state+""+country);
+
+
+                    String idimg= preferences.getString("id",null);
+                    if (idimg!=null)
+                    {
+                        registerstore(idimg,Store_address.getText().toString(),Store_Name.getText().toString(),String.valueOf(longitude),String.valueOf(latitude));
+
+                    }
                 }
 
 
@@ -639,6 +664,63 @@ public class Storeinfo extends AppCompatActivity {
 
 
 
+
+
+    }
+
+    public void signin(String email ,String password)
+    {
+
+        OkHttpClient.Builder builderr = new OkHttpClient.Builder();
+
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        builderr.addInterceptor(loggingInterceptor);
+
+
+        Retrofit retrofitt = new Retrofit.Builder()
+                .baseUrl("https://www.werpx.net/api/v1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(builderr.build())
+                .build();
+
+        final Endpoints myendpoints = retrofitt.create(Endpoints.class);
+
+        mcall = myendpoints.signuser("application/x-www-form-urlencoded",email,password);
+        mcall.enqueue(new Callback<Roottoken>() {
+            @Override
+            public void onResponse(Call<Roottoken> call, Response<Roottoken> response) {
+                if (response.isSuccessful())
+                {
+
+                    String thetoken= response.body().getData().getToken();
+                    SharedPreferences prefs = getSharedPreferences("token", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor=prefs.edit();
+                    editor.putString("usertoken",thetoken);
+                    editor.apply();
+                    Toast.makeText(Storeinfo.this,"Successful login",Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(Storeinfo.this,MainActivity.class));
+                    finish();
+
+                }
+                else
+                {
+                    Toast.makeText(Storeinfo.this,"Wrong email or password",Toast.LENGTH_LONG).show();
+
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Roottoken> call, Throwable t) {
+
+                Toast.makeText(Storeinfo.this,"Connection Failed",Toast.LENGTH_LONG).show();
+
+
+            }
+        });
 
 
     }
