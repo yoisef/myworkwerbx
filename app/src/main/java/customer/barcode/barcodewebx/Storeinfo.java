@@ -17,8 +17,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -142,6 +144,14 @@ public class Storeinfo extends AppCompatActivity {
             }
         });
 
+        Store_Name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                                                 @Override
+                                                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                                                     Store_address.requestFocus();
+                                                     openplacepicker();
+                                                     return true;
+                                                 }
+                                             });
 
 
 
@@ -246,6 +256,7 @@ public class Storeinfo extends AppCompatActivity {
 
             if (requestCode==PLACE_PICKER_REQUEST&&resultCode==RESULT_OK)
             {
+                Store_Admin.requestFocus();
 
                 Place place = PlacePicker.getPlace(this, data);
                 String placeName = String.format("Place: %s", place.getName());
@@ -313,7 +324,7 @@ public class Storeinfo extends AppCompatActivity {
       final Endpoints myendpoints = retrofittok.create(Endpoints.class);
 
       registerstore=myendpoints.registerstore(lat,lon,address,imgid,true,"ss","00:00 AM","00:00 AM"
-      ,"EGYPT Pounds","1","5",null,null,storenam,"00:00 AM","00:00 AM"
+      ,"EGY","1","5",null,null,storenam,"00:00 AM","00:00 AM"
       ,"123456","123456","web");
 
       registerstore.enqueue(new Callback<ResponseBody>() {

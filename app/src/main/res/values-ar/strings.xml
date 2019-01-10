@@ -58,7 +58,7 @@
     <string name="phoneexample">1122330867</string>
     <string name="vaildemailV">أدخل بريد إلكتروني صحيح</string>
 
-    <string name="phonenumber">رقم التليفون</string>
+    <string name="phonenumber">رقم الهاتف</string>
     <string name="next">التالي </string>
     <string name="currency">اختر العملة</string>
     <string name="opentime">وقت الفتح</string>

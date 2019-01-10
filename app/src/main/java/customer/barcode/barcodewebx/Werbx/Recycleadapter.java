@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,7 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
     private final LayoutInflater mInflater;
     private List<mytable> mWords; // Cached copy of words
+    private  int position;
 
     Recycleadapter(Context context) {
         this.con=context;
@@ -76,9 +79,9 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
                     .into(holder.productimage);
 
 
+              holder.showitems_number.setText(String.valueOf(current.getPitemn()));
 
 
-            holder.showitems_number.setText(String.valueOf(current.getPitemn()));
 
 
             holder.showitems_number.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -101,7 +104,9 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
             holder.total_itemscoast.setText(String.valueOf(coast));
 
+
             holder.unitprice.setText(current.getPprice());
+
 
             holder.barcodeee.setText(current.getPbar());
             holder.add_items.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +153,7 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
 
 
-
+         position=holder.getAdapterPosition();
 
             holder.rowrecycle.setShowMode(SwipeLayout.ShowMode.PullOut);
             holder.rowrecycle.addSwipeListener(new SwipeLayout.SwipeListener() {
@@ -228,7 +233,7 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
 
     int getadapterposition()
     {
-        int i = getadapterposition();
+        int i = position;
         return i;
 
     }
@@ -268,6 +273,13 @@ public class Recycleadapter extends RecyclerView.Adapter<Recycleadapter.viewhold
             unitprice=itemView.findViewById(R.id.unitpricec);
             delete_product=itemView.findViewById(R.id.deleterow);
             xremove=itemView.findViewById(R.id.xsign);
+
+           int pos= getadapterposition();
+       mytable table=  mWords.get(pos);
+          //  showitems_number.setText(String.valueOf(table.getPitemn()));
+
+
+
 
 
 
