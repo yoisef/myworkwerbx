@@ -40,6 +40,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Search_Store=findViewById(R.id.searchstore);
 
+        renam.requestFocus();
+
         Search_Store.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

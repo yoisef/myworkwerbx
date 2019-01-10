@@ -36,6 +36,8 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.gson.JsonObject;
+import com.hbb20.CCPCountry;
+import com.hbb20.CountryCodePicker;
 import com.mynameismidori.currencypicker.CurrencyPicker;
 import com.mynameismidori.currencypicker.CurrencyPickerListener;
 
@@ -77,8 +79,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Storeinfo extends AppCompatActivity {
 
 
-   private TextView openT, closT, openD, closD, Dleiverytime,imgadd,Store_address;
-    TextView currencychoose;
+   private TextView imgadd,Store_address;
     private static final int image = 101;
     private android.app.AlertDialog.Builder builder;
     private android.app.AlertDialog chossewaydialog;
@@ -98,6 +99,7 @@ public class Storeinfo extends AppCompatActivity {
     private ProgressBar upload_progress_bar,registerpro;
     private LinearLayout Map_Open;
     private Call<Roottoken> mcall;
+    private CountryCodePicker ccp;
 
 
 
@@ -124,8 +126,10 @@ public class Storeinfo extends AppCompatActivity {
         upload_progress_bar=findViewById(R.id.proimage);
         Map_Open=findViewById(R.id.openmap);
         registerpro=findViewById(R.id.prosub);
+        ccp=findViewById(R.id.storecodepicker);
 
 
+        Store_Name.requestFocus();
 
         register_store.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,58 +137,7 @@ public class Storeinfo extends AppCompatActivity {
 
                 registerpro.setVisibility(View.VISIBLE);
 
-
-
-                intilazeviewswithvaildate();
-                Retrofitclient myretro=Retrofitclient.getInstance();
-                Retrofit retrofittok=  myretro.getretro();
-                final Endpoints myendpoints = retrofittok.create(Endpoints.class);
-                SharedPreferences preferences=getSharedPreferences("store", Context.MODE_PRIVATE);
-                String storeid=preferences.getString("id",null);
-                registerretailer=myendpoints.registerretailer(storeid,Store_Admin.getText().toString(),Store_phone.getText().toString(),Store_pass.getText().toString(),Store_phone.getText().toString(),"retailerAdmin");
-                registerretailer.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                        registerpro.setVisibility(View.GONE);
-                        if (response.isSuccessful())
-                        {
-                            try {
-                                String retailerresponse=response.body().string();
-                                JSONObject retailerecond=new JSONObject(retailerresponse);
-                                String operation=retailerecond.getString("operation");
-                                if (operation.trim().equals("success"))
-                                {
-
-
-
-                                    Toast.makeText(Storeinfo.this,"Successful Register",Toast.LENGTH_LONG).show();
-
-                                        signin(Store_phone.getText().toString(),Store_pass.getText().toString());
-
-
-
-                                }
-                                else{
-                                    String reason=retailerecond.getString("reason");
-                                    Toast.makeText(Storeinfo.this,reason,Toast.LENGTH_LONG).show();
-
-                                }
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                    }
-                });
-
+                intilazeviewswithvaildateandregister();
 
             }
         });
@@ -352,6 +305,9 @@ public class Storeinfo extends AppCompatActivity {
 
   private void registerstore(String imgid,String address,String storenam,String lon,String lat)
   {
+
+
+
       Retrofitclient myretro=Retrofitclient.getInstance();
       Retrofit retrofittok=  myretro.getretro();
       final Endpoints myendpoints = retrofittok.create(Endpoints.class);
@@ -579,7 +535,7 @@ public class Storeinfo extends AppCompatActivity {
     */
 
 
-    private void intilazeviewswithvaildate()
+    private void intilazeviewswithvaildateandregister()
     {
         String namestore,addressstore,adminstore,phonestore,passstore,confipassstore,descstore,deletstore;
 
@@ -602,6 +558,7 @@ public class Storeinfo extends AppCompatActivity {
         {
             imgadd.setError(getResources().getString(R.string.imgV));
             imgadd.requestFocus();
+            registerpro.setVisibility(View.GONE);
             return;
         }
 
@@ -609,6 +566,7 @@ public class Storeinfo extends AppCompatActivity {
         {
             Store_Name.setError(getResources().getString(R.string.enterstorenum));
             Store_Name.requestFocus();
+            registerpro.setVisibility(View.GONE);
             return;
         }
 
@@ -617,6 +575,7 @@ public class Storeinfo extends AppCompatActivity {
         {
             Store_address.setError(getResources().getString(R.string.emailV));
             Store_address.requestFocus();
+            registerpro.setVisibility(View.GONE);
             return ;
         }
 
@@ -624,6 +583,7 @@ public class Storeinfo extends AppCompatActivity {
         {
             Store_Admin.setError(getResources().getString(R.string.passV));
             Store_Admin.requestFocus();
+            registerpro.setVisibility(View.GONE);
             return;
         }
 
@@ -631,18 +591,21 @@ public class Storeinfo extends AppCompatActivity {
         {
             Store_phone.setError(getResources().getString(R.string.phoneV));
             Store_phone.requestFocus();
+            registerpro.setVisibility(View.GONE);
             return;
         }
         if (passstore.length()<6)
         {
             Store_pass.setError(getResources().getString(R.string.minumV));
            Store_pass.requestFocus();
+            registerpro.setVisibility(View.GONE);
             return;
         }
         if (confipassstore.isEmpty())
         {
             Store_passconfirm.setError(getResources().getString(R.string.passRV));
            Store_passconfirm.requestFocus();
+            registerpro.setVisibility(View.GONE);
             return;
         }
 
@@ -651,22 +614,75 @@ public class Storeinfo extends AppCompatActivity {
         {
             Store_passconfirm.setError(getResources().getString(R.string.passRV));
             Store_passconfirm.requestFocus();
+            registerpro.setVisibility(View.GONE);
             return;
         }
+        String code=ccp.getSelectedCountryCodeWithPlus();
+        StringBuilder phone=new StringBuilder(Store_phone.getText().toString());
+        Character charSequence=phone.charAt(0);
+        if(charSequence=='0')
+        {
+            phone.deleteCharAt(0);
+        }
+        String phoneresult=phone.toString();
+        final String full_number=code+phoneresult;
+
+        Retrofitclient myretro=Retrofitclient.getInstance();
+        Retrofit retrofittok=  myretro.getretro();
+        final Endpoints myendpoints = retrofittok.create(Endpoints.class);
+        SharedPreferences preferences=getSharedPreferences("store", Context.MODE_PRIVATE);
+        String storeid=preferences.getString("id",null);
+        registerretailer=myendpoints.registerretailer(storeid,Store_Admin.getText().toString(),full_number,Store_pass.getText().toString(),full_number,"retailerAdmin");
+        registerretailer.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                registerpro.setVisibility(View.GONE);
+                if (response.isSuccessful())
+                {
+                    try {
+                        String retailerresponse=response.body().string();
+                        JSONObject retailerecond=new JSONObject(retailerresponse);
+                        String operation=retailerecond.getString("operation");
+                        if (operation.trim().equals("success"))
+                        {
+
+
+
+                            Toast.makeText(Storeinfo.this,"Successful Register",Toast.LENGTH_LONG).show();
+
+                            signin(full_number,Store_pass.getText().toString());
+
+
+
+                        }
+                        else{
+                            String reason=retailerecond.getString("reason");
+                            Toast.makeText(Storeinfo.this,reason,Toast.LENGTH_LONG).show();
+
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
 
 
 
 
 
+}
 
 
-
-
-
-
-
-
-    }
 
     public void signin(String email ,String password)
     {
@@ -700,8 +716,9 @@ public class Storeinfo extends AppCompatActivity {
                     editor.putString("usertoken",thetoken);
                     editor.apply();
                     Toast.makeText(Storeinfo.this,"Successful login",Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(Storeinfo.this,MainActivity.class));
-                    finish();
+                    startActivity(new Intent(Storeinfo.this, MainActivity.class));
+                    finishAffinity();
+
 
                 }
                 else
@@ -724,4 +741,15 @@ public class Storeinfo extends AppCompatActivity {
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
 }

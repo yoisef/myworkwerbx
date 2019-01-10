@@ -74,28 +74,46 @@
             android:background="@drawable/squarewhate"
             android:layout_height="220dp">
 
-
-
-
-
-                <android.support.design.widget.TextInputLayout
-                android:id="@+id/text_input_layout"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:textSize="@dimen/medium"
+                android:layout_marginStart="3dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="@string/phonenumber"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_margin="3dp"
 
-                    <EditText
+
+
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <com.hbb20.CountryCodePicker
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    app:ccp_defaultNameCode="EG"
+                    app:ccp_showFullName="false"
+                    app:ccpDialog_showTitle="false"
+                    app:ccp_showNameCode="false"
+                    app:ccp_showFlag="false"
+                    android:id="@+id/logcodepicker"
+                    />
+                <EditText
                     android:layout_width="match_parent"
                     android:id="@+id/logphone"
-                    android:textColorHint="@color/blue"
-                    android:singleLine="true"
+                    android:textColor="@color/black"
                     android:inputType="phone"
-                    android:drawableEnd="@drawable/person"
-                    android:hint="@string/phonenum"
-                    android:layout_margin="8dp"
+                    android:drawableEnd="@drawable/phone"
+                    android:layout_gravity="center"
+                    android:singleLine="true"
+                    android:hint="1123560981"
+                    android:gravity="start"
                     android:layout_height="wrap_content" />
-            </android.support.design.widget.TextInputLayout>
 
-
+            </LinearLayout>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/text"
                 android:layout_width="match_parent"
@@ -109,9 +127,12 @@
                     android:drawableEnd="@drawable/ic_lock_outline_black_24dp"
                     android:hint="@string/pass"
                     android:id="@+id/logpass"
-                    android:layout_margin="8dp"
+                    android:layout_margin="2dp"
                     android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
+
+
+
         </LinearLayout>
 
 

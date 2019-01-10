@@ -152,7 +152,7 @@
                 app:ccpDialog_showTitle="false"
                 app:ccp_showNameCode="false"
                 app:ccp_showFlag="false"
-                android:id="@+id/ccp"
+                android:id="@+id/storecodepicker"
                 />
             <EditText
                 android:layout_width="match_parent"

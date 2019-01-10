@@ -48,7 +48,7 @@ public class loginactivity extends AppCompatActivity {
 
         requestPermission();
 
-        ccp = findViewById(R.id.ccp);
+        ccp = findViewById(R.id.logcodepicker);
        log_phone=findViewById(R.id.logphone);
         log_pass=findViewById(R.id.logpass);
         signintext=findViewById(R.id.signinbutton);
@@ -83,11 +83,24 @@ public class loginactivity extends AppCompatActivity {
 
   private boolean validesignin()
   {
-      String retaileremail,retailerpass;
-      retaileremail=log_phone.getText().toString().trim();
+
+      String code=ccp.getSelectedCountryCodeWithPlus();
+
+
+      String retailerphone,retailerpass;
+      retailerphone=log_phone.getText().toString().trim();
+      StringBuilder phone=new StringBuilder(retailerphone);
+      Character charSequence=phone.charAt(0);
+      if(charSequence=='0')
+      {
+          phone.deleteCharAt(0);
+      }
+      String phoneresult=phone.toString();
+
+      String full_number=code+phoneresult;
       retailerpass=log_pass.getText().toString().trim();
 
-      if (retaileremail.isEmpty())
+      if (retailerphone.isEmpty())
       {
           log_phone.setError(getResources().getString(R.string.emailV));
           log_phone.requestFocus();
@@ -104,7 +117,8 @@ public class loginactivity extends AppCompatActivity {
 
 
 
-      signin(retaileremail,retailerpass);
+
+      signin(full_number,retailerpass);
 
       return true;
   }

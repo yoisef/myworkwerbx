@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="phonenum">رقم الموبايل</string>
+    <string name="pass">كلمة السر</string>
     <string name="app_name">وربكس</string>
     <string name="enterbar">أدخل الباركود </string>
     <string name="alertpay">يرجى الانتظار لمركز التاجر للتحقق من عناصر سلة التسوق</string>
@@ -52,6 +55,8 @@
     <string name="entermoile">أدخل رقم الهاتف</string>
     <string name="level">حدد المستوي</string>
     <string name="signup">تسجيل </string>
+    <string name="phoneexample">1122330867</string>
+    <string name="vaildemailV">أدخل بريد إلكتروني صحيح</string>
 
     <string name="phonenumber">رقم التليفون</string>
     <string name="next">التالي </string>
@@ -94,6 +99,8 @@
     <string name="imgV">من فضلك ضع صورة للمخزن</string>
     <string name="storenam">أسم المخزن</string>
     <string name="subscripe">إشتراك</string>
+    <string name="title_activity_reigster_user">Map</string>
+    <string name="title_activity_maps">Map</string>
 
 
 

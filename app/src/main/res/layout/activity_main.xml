@@ -23,7 +23,7 @@
 
             <ImageView
                 android:id="@+id/aboutus"
-                android:padding="7dp"
+                android:padding="10dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
