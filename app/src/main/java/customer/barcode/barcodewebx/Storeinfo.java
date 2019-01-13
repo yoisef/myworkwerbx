@@ -129,6 +129,8 @@ public class Storeinfo extends AppCompatActivity {
         Map_Open=findViewById(R.id.openmap);
         registerpro=findViewById(R.id.prosub);
         ccp=findViewById(R.id.storecodepicker);
+        addimg = findViewById(R.id.relativeLayout);
+
 
 
         Store_Name.requestFocus();
@@ -177,7 +179,6 @@ public class Storeinfo extends AppCompatActivity {
 
 
 
-        addimg = findViewById(R.id.relativeLayout);
 
      //   distruborspinnerr=findViewById(R.id.storedistrbter);
     //    subdistributer=findViewById(R.id.storesubdis);
@@ -285,7 +286,7 @@ public class Storeinfo extends AppCompatActivity {
                     String idimg= preferences.getString("id",null);
                     if (idimg!=null)
                     {
-                        registerstore(idimg,Store_address.getText().toString(),Store_Name.getText().toString(),String.valueOf(longitude),String.valueOf(latitude));
+                        registerstore(idimg,Store_address.getText().toString(),Store_Name.getText().toString(),String.valueOf(longitude),String.valueOf(latitude),"1",city,"description");
 
                     }
                 }
@@ -314,7 +315,7 @@ public class Storeinfo extends AppCompatActivity {
         }
     }
 
-  private void registerstore(String imgid,String address,String storenam,String lon,String lat)
+  private void registerstore(String imgid,String address,String storenam,String lon,String lat,String deletecharge,String cityy,String description)
   {
 
 
@@ -323,8 +324,8 @@ public class Storeinfo extends AppCompatActivity {
       Retrofit retrofittok=  myretro.getretro();
       final Endpoints myendpoints = retrofittok.create(Endpoints.class);
 
-      registerstore=myendpoints.registerstore(lat,lon,address,imgid,true,"ss","00:00 AM","00:00 AM"
-      ,"EGY","1","5",null,null,storenam,"00:00 AM","00:00 AM"
+      registerstore=myendpoints.registerstore(lat,lon,address,imgid,true,cityy,"00:00 AM","00:00 AM"
+      ,"EGY",deletecharge,"5",description,null,storenam,"00:00 AM","00:00 AM"
       ,"123456","123456","web");
 
       registerstore.enqueue(new Callback<ResponseBody>() {
@@ -409,7 +410,7 @@ public class Storeinfo extends AppCompatActivity {
                         }
 
                     } catch (JSONException e) {
-                        Log.e("theer",e.toString());
+                        e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -658,8 +659,6 @@ public class Storeinfo extends AppCompatActivity {
                         if (operation.trim().equals("success"))
                         {
 
-
-
                             Toast.makeText(Storeinfo.this,"Successful Register",Toast.LENGTH_LONG).show();
 
                             signin(full_number,Store_pass.getText().toString());
@@ -698,21 +697,10 @@ public class Storeinfo extends AppCompatActivity {
     public void signin(String email ,String password)
     {
 
-        OkHttpClient.Builder builderr = new OkHttpClient.Builder();
 
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        builderr.addInterceptor(loggingInterceptor);
-
-
-        Retrofit retrofitt = new Retrofit.Builder()
-                .baseUrl("https://www.werpx.net/api/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(builderr.build())
-                .build();
-
-        final Endpoints myendpoints = retrofitt.create(Endpoints.class);
+        Retrofitclient myretro=Retrofitclient.getInstance();
+        Retrofit retrofittok=  myretro.getretro();
+        final Endpoints myendpoints = retrofittok.create(Endpoints.class);
 
         mcall = myendpoints.signuser("application/x-www-form-urlencoded",email,password);
         mcall.enqueue(new Callback<Roottoken>() {
