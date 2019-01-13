@@ -7,6 +7,12 @@
     <!--If your shape requires only one solid color-->
     <solid
         android:color="#FFFFFF" />
+    <gradient
+
+        android:endColor="@color/white"
+        android:startColor="@color/white"
+        android:type="linear" />
+
 
 
 

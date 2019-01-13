@@ -5,14 +5,14 @@
     android:layout_marginStart="10dp"
     android:layout_marginBottom="3dp"
     android:layout_marginTop="3dp"
-    android:background="@drawable/rowshape" android:layout_width="match_parent"
-    android:layout_height="125dp">
+   android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.daimajia.swipe.SwipeLayout
         android:layout_width="match_parent"
         android:id="@+id/rowswipe"
         android:background="@drawable/rowshape"
-        android:layout_height="match_parent">
+        android:layout_height="125dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -101,15 +101,15 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/unitprice"
-                    android:textSize="@dimen/medium"
-                    android:textColor="@color/black"
-                    android:layout_margin="3dp"
-                    android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:text="@string/unitprice"
+                        android:textSize="@dimen/medium"
+                        android:textColor="@color/black"
+                        android:layout_margin="3dp"
+                        android:layout_height="wrap_content" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:textStyle="bold"
@@ -188,6 +188,8 @@
                     android:layout_weight="1.6"/>
             </LinearLayout>
         </LinearLayout>
+
+
 
     </com.daimajia.swipe.SwipeLayout>
 

@@ -8,10 +8,7 @@ import android.arch.persistence.room.TypeConverters;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import customer.barcode.barcodewebx.converors.categoryconvertor;
-import customer.barcode.barcodewebx.converors.companyconvertor;
-import customer.barcode.barcodewebx.converors.imageconvertor;
-import customer.barcode.barcodewebx.converors.unitconvertor;
+
 import customer.barcode.barcodewebx.productmodels.Category;
 import customer.barcode.barcodewebx.productmodels.Company;
 import customer.barcode.barcodewebx.productmodels.Image;

@@ -7,4 +7,9 @@
         android:dashWidth="5px"
         android:dashGap="5px"
         android:width="1dip"/>
+    <gradient
+        android:endColor="@color/white"
+        android:startColor="@color/white"
+        android:type="linear" />
+
 </shape>

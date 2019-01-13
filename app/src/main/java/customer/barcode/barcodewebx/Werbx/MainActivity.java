@@ -12,8 +12,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -83,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar payprpgressbarr;
     private List<mytable> myproducts;
     private productdatabase mydatabase;
+    private DrawerLayout mDrawerLayout;
+
 
 
 
@@ -93,6 +98,85 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Drawable drawable = ContextCompat.getDrawable(getApplicationContext(),R.drawable.menumain);
+
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+
+
+        mytoolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mytoolbar);
+        mytoolbar.setOverflowIcon(drawable);
+
+
+
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setDisplayShowCustomEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menumain);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+
+                        switch (menuItem.getItemId()) {
+                            case R.id.signout: {
+                                SharedPreferences prefs = getSharedPreferences("token", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.clear().apply();
+                                startActivity(new Intent(MainActivity.this, loginactivity.class));
+                                finish();
+                                break;
+                            }
+
+                            case R.id.sales:{
+
+                                startActivity(new Intent(MainActivity.this,sales_history.class));
+
+                                break;
+                            }
+
+                            case R.id.readbar:{
+
+                                startActivity(new Intent(MainActivity.this,Camera_activity.class));
+
+                                break;
+                            }
+                            case R.id.appknow:{
+
+                                break;
+                            }
+
+                            case R.id.about:{
+
+                                break;
+                            }
+
+                            case R.id.enter_bar:{
+
+                                enterbar_operation();
+
+                            }
+
+
+                            default:
+                                menuItem.setChecked(true);
+                                // close drawer when item is tapped
+                                mDrawerLayout.closeDrawers();
+                        }
+                        return true;
+
+
+                        // Add code here to update the UI based on the item selected
+                        // For example, swap UI fragments here
+
+
+                    }
+                });
 
 
 
@@ -163,19 +247,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        mytoolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mytoolbar);
-   mytoolbar.setOverflowIcon(drawable);
 
 
-
-
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-       getSupportActionBar().setDisplayShowHomeEnabled(false);
-       getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-      //  getSupportActionBar().setCustomView(R.layout.cutom_action_bar);
+        //  getSupportActionBar().setCustomView(R.layout.cutom_action_bar);
 
 
 
@@ -335,6 +409,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+/*
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.signout: {
@@ -382,8 +465,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
-
+*/
+    }
 
     private void loginwithenternumber(final String barcode) {
 
